@@ -252,7 +252,7 @@ ggplot(data_dev_survey, aes(x = "", fill = remote_work)) +
 The pie chart visualizes how respondents prefer to work (e.g., remote, hybrid, in-person). Given the small numbers of categories a pie chart can work OK here, but a bar chart is often better for comparisons.
 
 ```{r}
-#| fig.width: 6
+#| fig.width: 8
 
 # Horizontal bar chart of remote work preferences
 ggplot(data_dev_survey, aes(x = remote_work, fill = remote_work)) +
