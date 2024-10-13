@@ -3,6 +3,7 @@ title: "Statistics in R with the `tidyverse`"
 subtitle: "Day 1 Exercises"
 author: "Dr. Chester Ismay"
 format: html
+output-dir: docs
 ---
 
 ```{r}
