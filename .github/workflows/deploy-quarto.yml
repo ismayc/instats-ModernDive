@@ -36,9 +36,11 @@ jobs:
       run: |
         quarto render your_specified_files/*.qmd
     
-    - name: Deploy to gh-pages
-      uses: peaceiris/actions-gh-pages@v3
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ./  # Ensure your build outputs are placed here
-        keep_files: true
+      # Deploy HTML to GitHub Pages if on main or master branch
+      - name: Deploy to GitHub pages from main/master 🚀
+        if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+        uses: JamesIves/github-pages-deploy-action@v4.6.4
+        with:
+          branch: gh-pages
+#          folder: docs
+          clean: false
