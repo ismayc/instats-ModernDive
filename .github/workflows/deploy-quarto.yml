@@ -36,11 +36,11 @@ jobs:
       run: |
         quarto render your_specified_files/*.qmd
     
-      # Deploy HTML to GitHub Pages if on main or master branch
-      - name: Deploy to GitHub pages from main/master 🚀
-        if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
-        uses: JamesIves/github-pages-deploy-action@v4.6.4
-        with:
-          branch: gh-pages
-#          folder: docs
-          clean: false
+    # Deploy HTML to GitHub Pages if on main or master branch
+    - name: Deploy to GitHub pages from main/master 🚀
+      if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+      uses: JamesIves/github-pages-deploy-action@v4.6.4
+      with:
+        branch: gh-pages
+#       folder: docs
+        clean: false
