@@ -1,0 +1,827 @@
+---
+title: "Statistics in R with the `tidyverse`"
+subtitle: "Day 1 Walkthrough"
+author: "Dr. Chester Ismay"
+format: html
+---
+
+```{r}
+#| include: false
+options(width = 120)
+```
+
+
+# Working with Data in R - Explore, Visualize, Wrangle, Import
+
+## Session 1: Introduction to R and RStudio
+
+### 1. Installing R and RStudio
+
+- You need to install R first from <https://cloud.r-project.org/> and then install RStudio from <https://posit.co/download/rstudio-desktop/>. 
+- Once installed, work in RStudio to interact with R efficiently.
+
+---
+
+### 2. Exploring the RStudio Interface
+
+- In RStudio, you will see three panes: Console, Environment, and Files.
+- The Console is where you type and run your R code.
+- The Environment pane shows all objects (like datasets) currently in memory.
+- The Files pane helps you navigate files in your project.
+
+---
+
+### 3. Installing Packages
+
+```{r}
+#| eval: false
+# To install a package, use the install.packages() function.
+install.packages("moderndive")
+install.packages("dplyr")
+
+# or together using the c() function:
+# install.packages(c("moderndive", "dplyr"))
+```
+
+The `c()` function creates a `vector` in R, which is a sequence of elements. Here, it combines the package names into a single vector for installation.
+
+---
+
+### 4. Loading Packages
+
+```{r}
+#| message: false
+# To load a package, use the library() function.
+library(moderndive)
+library(dplyr)
+
+# TIP: Check help with `?` operator or `help()` function.
+?library
+help(library)
+```
+
+---
+
+### 5. Viewing a Dataset
+
+```{r}
+#| eval: false
+
+# Can load the data into the Environment pane
+data("un_member_states_2024")
+
+# To view a dataset in RStudio, use the View() function
+View(un_member_states_2024)
+```
+
+This opens a spreadsheet-like viewer in RStudio to explore the dataset. This is what is known as a `data frame` in R. More specifically, this is a special kind of data frame called a `tibble`.
+
+The `un_member_states_2024` data contains information on 193 UN member states, with 39 columns capturing various aspects of each country. These columns include details such as the country name, ISO codes, continent, GDP per capita, population, life expectancy, and Olympic participation. It provides a comprehensive dataset for exploring demographic, economic, geographic, and social indicators at the country level.
+
+- Identification variables: `country` and `iso` are the clearest
+- Measurement variables: remaining
+
+---
+
+### 6. Exploring Dataset Structure and Data Types
+
+Each column in a dataset has a data type, such as:  
+
+- `chr` for character (text)  
+- `dbl` for numeric (decimal values)  
+- `lgl` for logical (TRUE/FALSE)   
+- `int` for integer (non-decimal values)  
+- `fct` for factor (categorical)  
+
+`glimpse()` from the `dplyr` package gives a preview of the data types and the first few entries in each column.
+
+```{r}
+# To see an overview of the dataset’s structure:
+glimpse(un_member_states_2024)
+```
+
+---
+
+### 7. Accessing a Single Column
+
+```{r}
+# To access a specific column, use the `$` operator:
+un_member_states_2024$country
+```
+
+This returns the `country` column, showing the names of all UN member states.
+
+---
+
+### 8. Checking the First Few Rows
+
+```{r}
+# To quickly see the first 6 rows of the dataset:
+head(un_member_states_2024)
+```
+
+This helps in getting a peek at the data without overwhelming your screen. It
+can be a little hard to use if lots of columns though. `glimpse()` can be better
+for that.
+
+---
+
+### 9. Basic Operations in R
+
+```{r}
+# You can do basic math in R, like addition:
+2 + 2
+
+# Or create sequences:
+seq(from = 1, to = 10, by = 2)
+```
+
+R will output the results directly in the Console if not assigned to a name.
+
+---
+
+### 10. Using Functions in R
+
+```{r}
+# Using named arguments in functions:
+seq(from = 5, to = 100, by = 5)
+
+# Or using positional arguments:
+seq(5, 100, 5)
+```
+
+---
+
+### Session 1 Review Questions
+
+**(1.1)** Which of the following is required before you can use RStudio effectively?
+
+A. You need to install RStudio first, as R is automatically included.  
+B. R should be installed from the R Project website, and then RStudio can be installed separately.  
+C. R is pre-installed on most operating systems, so only RStudio needs to be downloaded.  
+D. R and RStudio can be used without any installation, directly from a web browser.
+
+---
+
+**(1.2)** What is the purpose of the Environment pane in RStudio?
+
+A. To display the output of the R code you run, including plots and messages.  
+B. To show all objects and datasets currently loaded in your R session.  
+C. To provide a workspace for writing R scripts and functions.  
+D. To navigate and organize the files within your project folder.
+
+---
+
+**(1.3)** How do you install multiple R packages in one step?
+
+A. Use the `install.packages()` function with each package listed individually: `install.packages("ggplot2"), install.packages("dplyr")`.  
+B. You must install each package one by one, as R doesn't allow installing multiple packages in a single command.  
+C. Use the `install.packages()` function with the `c()` function to install several packages at once.  
+D. You can install multiple packages by using the `load()` function for each package separately.
+
+---
+
+**(1.4)** Which of the following correctly loads the `dplyr` package into your R session?
+
+A. `load(dplyr)`  
+B. `library(dplyr)`  
+C. `install.packages("dplyr")`  
+D. `View(dplyr)`
+
+---
+
+**(1.5)** What does the `glimpse()` function from the `dplyr` package do?
+
+A. It provides a detailed report of summary statistics for each variable in the dataset.  
+B. It opens the dataset in a spreadsheet-like viewer for easy exploration.  
+C. It gives a quick overview of the structure of a dataset, showing the data types and the first few entries of each column.  
+D. It creates a visual summary of numeric columns using histograms and scatterplots.
+
+---
+
+### Session 1 Review Question Answers
+
+**(1.1)** Which of the following is required before you can use RStudio effectively?
+
+**Correct Answer:**  
+B. R should be installed from the R Project website, and then RStudio can be installed separately.
+
+**Explanation:**  
+RStudio is an IDE for R, so R must be installed first, as RStudio provides an interface to interact with R.
+
+---
+
+**(1.2)** What is the purpose of the Environment pane in RStudio?
+
+**Correct Answer:**  
+B. To show all objects and datasets currently loaded in your R session.
+
+**Explanation:**  
+The Environment pane allows you to see and manage the datasets and objects that are available in memory during your R session.
+
+---
+
+**(1.3)** How do you install multiple R packages in one step?
+
+**Correct Answer:**  
+C. Use the `install.packages()` function with the `c()` function to install several packages at once.
+
+**Explanation:**  
+The `install.packages()` function can accept multiple package names within the `c()` function, allowing you to install several packages in one step.
+
+---
+
+**(1.4)** Which of the following correctly loads the `dplyr` package into your R session?
+
+**Correct Answer:**  
+B. `library(dplyr)`
+
+**Explanation:**  
+To load a package into your R session, you need to use the `library()` function. This makes the functions from the package available to use.
+
+---
+
+**(1.5)** What does the `glimpse()` function from the `dplyr` package do?
+
+**Correct Answer:**  
+C. It gives a quick overview of the structure of a dataset, showing the data types and the first few entries of each column.
+
+**Explanation:**  
+`glimpse()` provides a compact overview of a dataset, displaying the data types and a preview of the values in each column.
+
+---
+
+## Session 2: Data Visualization with `ggplot2`
+
+### 11. Installing and Loading Necessary Packages
+
+```{r}
+# Load required packages for data visualization
+library(ggplot2)
+library(moderndive) # Not necessary if already loaded
+
+# TIP: You can install packages if not already installed
+# install.packages(c("ggplot2", "moderndive"))
+```
+
+This session requires the `ggplot2` and `dplyr` packages for creating visualizations using the `un_member_states_2024` data.
+
+---
+
+### 12. Visualizing Population Distribution: Histogram
+
+```{r}
+# Create a histogram of population distribution
+ggplot(un_member_states_2024, aes(x = population_2024)) +
+  geom_histogram(fill = "steelblue", color = "white") +
+  # Add labels to better understand plot
+  labs(title = "Population Distribution of UN Member States", 
+       x = "Population", 
+       y = "Frequency")
+```
+
+This histogram helps visualize how the population is distributed across UN member states. The `binwidth` argument controls the width of the population bins.
+
+---
+
+### 13. Visualizing Life Expectancy: Side-by-side Boxplot
+
+```{r}
+# Create a boxplot to see GDP per capita spread by continent
+ggplot(un_member_states_2024, aes(x = continent, y = life_expectancy_2022)) +
+  geom_boxplot() +
+  labs(title = "Life Expectancy in 2022 of UN Member States by Continent", 
+       y = "Life Expectancy")
+```
+
+The boxplot provides insights into the spread and presence of any outliers in the life expectancy of UN member states grouped by continent.
+
+---
+
+### 14. Comparing Number of Countries by Continent: Barplot
+
+```{r}
+# Create a barplot to compare the number of countries by continent
+ggplot(un_member_states_2024, aes(x = continent)) +
+  geom_bar() +
+  labs(title = "Number of Countries by Continent", 
+       x = "Continent", y = "Number of Countries")
+```
+
+The barplot helps compare number of countries across different continents.
+
+---
+
+### 15. Scatterplot: GDP per Capita vs. Life Expectancy
+
+```{r}
+# Create a scatterplot to show the relationship between GDP per capita and life expectancy
+ggplot(un_member_states_2024, aes(x = gdp_per_capita, y = life_expectancy_2022)) +
+  geom_point(color = "darkred") +
+  labs(title = "GDP per Capita vs. Life Expectancy", 
+       x = "GDP per Capita (USD)", y = "Life Expectancy (Years)")
+```
+
+This scatterplot allows us to visualize the relationship between a country’s GDP per capita and its life expectancy.
+
+Check out [Subsection 2.3.2 of ModernDive V2](https://moderndive.com/v2/viz.html#overplotting) for overplotting discussion.
+
+---
+
+### 16. Faceted Scatterplot: GDP per Capita vs. Life Expectancy by Continent
+
+```{r}
+# Faceted scatterplot to see relationship by continent
+ggplot(un_member_states_2024, aes(x = gdp_per_capita, y = life_expectancy_2022)) +
+  geom_point(color = "blue") +
+  facet_wrap(~continent) +
+  labs(title = "GDP per Capita vs. Life Expectancy by Continent", 
+       x = "GDP per Capita (USD)", y = "Life Expectancy (Years)")
+```
+
+Faceting allows us to explore the relationship between GDP per capita and life expectancy, broken down by continent.
+
+---
+
+### 17. Pie Chart vs Bar Chart: Region Distribution
+
+```{r}
+# Create a pie chart for region distribution
+ggplot(un_member_states_2024, aes(x = "", fill = region)) +
+  geom_bar() +
+  labs(title = "Region Distribution of UN Member States") +
+  coord_polar(theta = "y")
+```
+
+The pie chart visualizes how the 193 UN member states are distributed across different continents.
+
+Much better as a flipped bar chart
+
+```{r}
+# As a bar chart instead
+ggplot(un_member_states_2024, aes(x = region)) +
+  geom_bar() +
+  labs(title = "Region Distribution of UN Member States") +
+  coord_flip()
+```
+
+---
+
+### 18. Line Graph: Time Series Data
+
+There isn't a good example of time series data in `un_member_states_2024` since 
+it is missing data with a time component. But here is an example of how you
+could do from the `fivethirtyeight` package:
+
+```{r}
+#install.packages("fivethirtyeight")
+library(fivethirtyeight)
+
+# Create a line graph showing the number of births over 2014
+ggplot(US_births_2000_2014, aes(x = date, y = births)) +
+  geom_line(color = "blue") +
+  labs(title = "Daily U.S. Births", 
+       x = "Date", y = "Number of Births")
+
+```
+
+This line graph is hard to see due to the sheer volume of points. As a lead in
+to the next session, let's focus on just 2014 data and then visualize that:
+
+```{r}
+#| message: false
+# Include package for more easily working with dates
+# install.packages("lubridate")
+library(lubridate)
+
+# Filter the data for 2014
+US_births_2014 <- US_births_2000_2014 |>
+  filter(year(date) == 2014)
+
+# Create a line graph showing the number of births in 2014
+ggplot(US_births_2014, aes(x = date, y = births)) +
+  geom_line(color = "blue") +
+  labs(title = "Daily U.S. Births in 2014", 
+       x = "Date", y = "Number of Births")
+```
+
+### Session 2 Review Questions
+
+**(2.1)** In the following code for creating a scatterplot of Fertility Rate (`fertility_rate_2022`) vs. Human Development Index (`hdi_2022`), which entries should be in quotes?
+
+```r
+ggplot(un_member_states_2024, aes(x = fertility_rate_2022, y = hdi_2022)) + 
+  geom_point()
+```
+
+A. `un_member_states_2024`, `fertility_rate_2022`, and `hdi_2022` should all be in quotes.  
+B. Only `un_member_states_2024` should be in quotes, as it refers to the dataset.  
+C. Only `fertility_rate_2022` and `hdi_2022` should be in quotes, as they are variable names.  
+D. None of the elements in the code should be in quotes.
+
+---
+
+**(2.2)** How can you create a histogram of the population distribution in the `un_member_states_2024` data frame?
+
+A. `geom_bar(aes(x = population_2024))`  
+B. `ggplot(aes(y = population_2024)) + geom_boxplot()`  
+C. `ggplot(un_member_states_2024, aes(x = population_2024)) + geom_histogram()`  
+D. `ggplot(un_member_states_2024, aes(x = continent)) + geom_bar()`  
+
+---
+
+**(2.3)** What does a boxplot created using the `ggplot()` function reveal about life expectancy?
+
+A. The boxplot reveals the mean and standard deviation of life expectancy values.  
+B. It shows how life expectancy is spread and identifies outliers.  
+C. A boxplot represents the frequency of different life expectancy ranges.  
+D. It is used to display the total sum of life expectancy values for each continent.  
+
+---
+
+**(2.4)** How can you compare the number of countries by continent using a barplot?
+
+A. `ggplot(un_member_states_2024, aes(x = continent)) + geom_bar()`  
+B. `ggplot(un_member_states_2024, aes(x = gdp_per_capita)) + geom_bar()`  
+C. `ggplot(un_member_states_2024, aes(x = continent, y = life_expectancy_2022)) + geom_bar()`  
+D. `ggplot(un_member_states_2024, aes(x = continent, fill = population_2024)) + geom_bar()`  
+
+---
+
+**(2.5)** What is an appropriate purpose of facet wrapping in a scatterplot showing Capital Population vs. Obesity Rate 2024?
+
+A. To split the scatterplot into multiple graphs by region.  
+B. To add color to each region based on obesity rate.  
+C. To combine the population of the capital city and the country's obesity rate in a single graph.  
+D. To display the relationship between capital city population and obesity rate over time.  
+
+---
+
+### Session 2 Review Question Answers
+
+**(2.1)** In the following code for creating a scatterplot of GDP per capita vs. life expectancy, which entries should be in quotes?
+
+**Correct Answer:**  
+D. None of the elements in the code should be in quotes because the data frame and variable names do not require them in this context.
+
+**Explanation:**  
+In `ggplot()`, the dataset and the variable names should not be in quotes. Quotes are only used for strings, such as labels or titles, not for referencing data frames or columns. 
+
+---
+
+**(2.2)** How can you create a histogram of the population distribution in the `un_member_states_2024` data frame?
+
+**Correct Answer:**  
+C. `ggplot(un_member_states_2024, aes(x = population_2024)) + geom_histogram()`
+
+**Explanation:**  
+The correct syntax for creating a histogram includes specifying the data frame, defining the x-axis variable inside `aes()`, and using `geom_histogram()` to create the histogram.
+
+---
+
+**(2.3)** What does a boxplot created using the `ggplot()` function reveal about life expectancy?
+
+**Correct Answer:**  
+B. It shows how life expectancy is spread and identifies outliers.
+
+**Explanation:**  
+A boxplot helps to visualize the spread of data by showing the quartiles and highlighting any outliers.
+
+---
+
+**(2.4)** How can you compare the number of countries by continent using a barplot?
+
+**Correct Answer:**  
+A. `ggplot(un_member_states_2024, aes(x = continent)) + geom_bar()`
+
+**Explanation:**  
+Using `geom_bar()` with the `x` aesthetic set to `continent` creates a barplot, where the height of each bar represents the number of countries in each continent.
+
+---
+
+**(2.5)** What is an appropriate purpose of facet wrapping in a scatterplot showing Capital Population vs. Obesity Rate 2024?
+
+**Correct Answer:**  
+A. To split the scatterplot into multiple graphs by region.
+
+**Explanation:**  
+Facet wrapping divides the scatterplot into separate panels for each region, allowing for a clearer comparison of relationships across groups.
+
+One way to produce this facetting:
+
+```{r}
+ggplot(un_member_states_2024, aes(x = capital_population, y = obesity_rate_2024)) +
+  geom_point(aes(color = region)) +
+  facet_wrap(~continent) +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+```
+
+---
+
+## Session 3: Data Wrangling and Tidy Data
+
+### 19. Filtering Rows with `filter()`
+
+The `filter()` function allows us to pick out specific rows that meet certain conditions. For example, let's filter out countries in Africa with a GDP per capita above a certain threshold.
+
+The **pipe operator** `|>` allows us to chain multiple functions together for a clean and readable data transformation process. It makes it easier to pass the result of one function to the next.
+
+```{r filter-example}
+# Filter countries in Africa with GDP per capita greater than $5,000
+african_high_gdp <- un_member_states_2024 |> 
+  filter(continent == "Africa", gdp_per_capita > 5000)
+
+# TIP: Can also use the `&` instead of `,` for AND conditions
+un_member_states_2024 |> 
+  filter(continent == "Africa" & gdp_per_capita > 5000)
+
+# This is not the same as using `|` which is an OR condition
+un_member_states_2024 |> 
+  filter(continent == "Africa" | gdp_per_capita > 5000)
+```
+
+### Explanation:
+
+- **`continent == "Africa"`**: Selects only rows where the continent is Africa.
+- **`gdp_per_capita > 5000`**: Filters for countries with a GDP per capita above $5,000.
+
+---
+
+### 20. Summarizing Data with `summarize()`
+
+The `summarize()` function computes summary statistics for one or more variables. This reduces the data frame to a summary based on the functions applied.
+
+```{r summarize-example}
+# Summarize average life expectancy and population
+summary_stats <- un_member_states_2024 |> 
+  summarize(
+    avg_life_expectancy = mean(life_expectancy_2022, na.rm = TRUE),
+    med_population = median(population_2024, na.rm = TRUE)
+  )
+
+# Can also display as a markdown table
+library(knitr)
+kable(summary_stats)
+```
+
+### Explanation:
+
+- **`mean(life_expectancy_2022, na.rm = TRUE)`**: Calculates the average life expectancy while ignoring missing values.
+- **`median(population_2024, na.rm = TRUE)`**: Computes the median population across all member states.
+
+---
+
+### 21. Grouping Data with `group_by()`
+
+The `group_by()` function is used to split the data frame into groups. You can then apply functions like `summarize()` to calculate statistics for each group separately.
+
+```{r groupby-example}
+# Group by continent and summarize the average life expectancy for each group
+life_expectancy_by_continent <- un_member_states_2024 |> 
+  group_by(continent) |> 
+  summarize(
+    avg_life_expectancy = mean(life_expectancy_2022, na.rm = TRUE),
+    sd_life_expectancy = sd(life_expectancy_2022, na.rm = TRUE)
+  )
+life_expectancy_by_continent
+```
+
+### Explanation:
+
+- **`group_by(continent)`**: Groups the data by continent.
+- **`summarize()`**: Calculates the average life expectancy for each continent.
+
+---
+
+### 22. Creating New Variables with `mutate()`
+
+The `mutate()` function is used to add new variables or transform existing ones. This is useful for creating new columns based on existing data.
+
+```{r mutate-example}
+# Create a new variable that categorizes countries by GDP per capita
+un_member_states_2024 <- un_member_states_2024 |> 
+  mutate(
+    gdp_category = case_when(
+      gdp_per_capita > 30000 ~ "High",
+      gdp_per_capita > 10000 ~ "Medium",
+      TRUE ~ "Low"
+    )
+  )
+```
+
+### Explanation:
+
+- **`mutate()`**: Adds a new column called `gdp_category`.
+- **`case_when()`**: Categorizes countries based on their GDP per capita into "High", "Medium", or "Low" categories.
+
+---
+
+### 23. Arranging Rows with `arrange()`
+
+The `arrange()` function sorts the rows of a data frame. By default, it sorts in ascending order, but you can sort in descending order using the `desc()` function.
+
+```{r arrange-example}
+# Arrange countries by population in descending order
+top_populated_countries <- un_member_states_2024 |> 
+  arrange(desc(population_2024))
+top_populated_countries
+```
+
+### Explanation:
+
+- **`arrange(desc(population_2024))`**: Sorts the countries from highest to lowest population.
+
+---
+
+### 24. Selecting Specific Columns with `select()`
+
+The `select()` function allows you to choose specific columns from a data frame. This is useful when you only need to work with a subset of variables.
+
+```{r select-example}
+# Select country name, continent, and population
+selected_data <- un_member_states_2024 |> 
+  select(country, continent, population_2024)
+selected_data
+```
+
+### Explanation:
+
+- **`select()`**: Chooses the `country`, `continent`, and `population_2024` columns from the data frame.
+
+---
+
+### 25. Putting a Whole `|>`line Together
+
+```{r}
+# Create a pipeline that filters, groups, summarizes, mutates, arranges, 
+# and selects columns for countries in Asia and Europe
+un_member_states_2024 |>
+  filter(continent %in% c("Asia", "Europe")) |>
+  group_by(continent) |>
+  summarize(
+    avg_gdp_per_capita = mean(gdp_per_capita, na.rm = TRUE),
+    avg_life_expectancy = mean(life_expectancy_2022, na.rm = TRUE)
+  ) |>
+  ungroup() |> # Ungroup before creating new variables
+  mutate(
+    gdp_category = case_when(
+      avg_gdp_per_capita > 30000 ~ "High",
+      avg_gdp_per_capita > 10000 ~ "Medium",
+      TRUE ~ "Low"
+    )
+  ) |>
+  arrange(desc(avg_life_expectancy)) |>
+  select(continent, 
+         `Average GDP per capita` = avg_gdp_per_capita, 
+         `Average Life Expectancy` = avg_life_expectancy, 
+         gdp_category)
+```
+
+### 26. Creating data for `geom_col()` use
+
+```{r}
+# Create a data frame for geom_col() use to count number of countries per region
+region_data <- un_member_states_2024 |> 
+  group_by(region) |> 
+  summarize(num_countries = n()) |> 
+  arrange(desc(num_countries))
+
+ggplot(region_data, aes(x = reorder(region, num_countries), y = num_countries)) +
+  geom_col(fill = "skyblue") +
+  coord_flip() +
+  labs(title = "Number of Countries by Region", 
+       x = "Region", y = "Number of Countries")
+```
+
+### 27. Converting wide data into tidy data
+
+```{r}
+# Convert wide data into tidy data
+library(tibble)
+library(tidyr)
+
+# Collected from https://data.worldbank.org/?locations=BR-NG-ID
+wide_unemp <- tibble(
+  country = c("Brazil", "Nigeria", "Indonesia"),
+  `2021` = c(13.2, 5.4, 3.8),
+  `2022` = c(9.2, 3.8, 3.5),
+  `2023` = c(8, 3.1, 3.4)
+)
+
+# Use pivot_longer to convert data
+tidy_unemp <- wide_unemp |> 
+  pivot_longer(cols = -country, 
+               names_to = "year", 
+               values_to = "unemployment_perc") |> 
+  mutate(year = as.integer(year))
+
+# Plot data as a linegraph
+ggplot(tidy_unemp, aes(x = year, y = unemployment_perc, color = country)) +
+  geom_point() +
+  geom_line() +
+  labs(title = "Unemployment Rate Over Time", 
+       x = "Year", y = "Unemployment Rate (%)") +
+  scale_x_continuous(breaks = c(2021, 2022, 2023))
+```
+
+### 28. Importing data from a CSV file
+
+```{r}
+library(readr)
+
+# Load data from data_dev_survey.csv in same file path as this .qmd file
+data_dev_survey <- read_csv("data_dev_survey.csv")
+```
+
+---
+
+### Session 3 Review Questions
+
+**`(3.1)`** What is the role of the pipe operator `|>` in streamlining data wrangling tasks?
+
+A. It combines two datasets into one, merging data from different sources into a unified data frame.  
+B. It allows the output of one function to be passed to the next, improving readability and making code writing more efficient.   
+C. It saves a dataset to a file, preserving changes by writing the transformed data to a CSV or another format.  
+D. It generates plots automatically from a dataset, creating graphs without needing to specify the plotting functions. 
+
+**`(3.2)`** How would you filter countries in the `un_member_states_2024` data frame that are in Asia and have a population greater than 100 million?
+
+A. `filter(un_member_states_2024, continent = "Asia" & population_2024 > 1e8)`  
+B. `un_member_states_2024 |> select(continent = "Asia" & population_2024 > 100000000)`  
+C. `un_member_states_2024 |> filter(continent == "Asia", population_2024 > 100000000)`  
+D. `un_member_states_2024 |> filter(population_2024 > 100000000 | continent == "Asia")`  
+
+**`(3.3)`** Using `group_by()` and `summarize()`, how can you calculate the total population for each continent where the line of code directly above is `us_member_states_2024 |>`?
+
+A. `group_by(continent) |> summarize(total_population = mean(population_2024))`  
+B. `group_by(continent) |> summarize(total_population = sum(population_2024))`  
+C. `summarize(continent, total_population = sum(population_2024))`  
+D. `group_by(population_2024) |> summarize(total_population = sum(continent))`  
+
+**`(3.4)`** How does the `mutate()` function help in creating new categorical variables?
+
+A. `mutate()` always replaces an existing variable with a new one based on a conditional statement.  
+B. `mutate()` drops variables from a dataset based on specific conditions.  
+C. `mutate()` filters rows by removing missing values from a variable.  
+D. `mutate()` adds a new variable based on the transformation of existing variables.  
+
+**`(3.5)`** How can you arrange countries by their GDP per capita in ascending order?
+
+A. `arrange(un_member_states_2024, gdp_per_capita)`    
+B. `arrange(un_member_states_2024 |> gdp_per_capita)`   
+C. `group_by(gdp_per_capita) |> arrange(continent)`  
+D. `arrange(gdp_per_capita, un_member_states_2024)`  
+
+---
+
+### Session 3 Review Question Answers
+
+**`(3.1)`** What is the role of the pipe operator `|>` in streamlining data wrangling tasks?
+
+**Correct Answer:**  
+B. It allows the output of one function to be passed to the next, improving readability and making code writing more efficient.
+
+**Explanation:**  
+The pipe operator `|>` enables a streamlined process for chaining functions together. It makes code more readable by allowing the output of one function to flow into the next function, without having to nest function calls.
+
+---
+
+**`(3.2)`** How would you filter countries in the `un_member_states_2024` data frame that are in Asia and have a population greater than 100 million?
+
+**Correct Answer:**  
+C. `un_member_states_2024 |> filter(continent == "Asia", population_2024 > 100000000)`
+
+**Explanation:**  
+The correct syntax to filter rows requires `==` for equality checks and the proper use of the `|>` pipe. We also use `&` (and) to combine conditions, ensuring both the continent is Asia and the population exceeds 100 million.
+
+---
+
+**`(3.3)`** Using `group_by()` and `summarize()`, how can you calculate the total population for each continent where the line of code directly above is `us_member_states_2024 |>`?
+
+**Correct Answer:**  
+B. `group_by(continent) |> summarize(total_population = sum(population_2024))`
+
+**Explanation:**  
+The correct way to calculate the total population by continent involves first grouping the data by continent with `group_by()`, and then using `summarize()` with the `sum()` function to add up the populations for each group.
+
+---
+
+**`(3.4)`** How does the `mutate()` function help in creating new categorical variables?
+
+**Correct Answer:**  
+D. `mutate()` adds a new variable based on the transformation of existing variables.
+
+**Explanation:**  
+`mutate()` allows you to add new variables or transform existing ones. For example, you can use it to create a new categorical variable based on existing data by applying conditional logic or other operations.
+
+---
+
+**`(3.5)`** How can you arrange countries by their GDP per capita in ascending order?
+
+**Correct Answer:**  
+A. `arrange(un_member_states_2024, gdp_per_capita)`
+
+**Explanation:**  
+The `arrange()` function sorts the rows of a data frame. By default, it arranges the data in ascending order, which is the correct behavior for this case when sorting by `gdp_per_capita`.
+
+

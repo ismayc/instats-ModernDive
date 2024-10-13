@@ -1,0 +1,499 @@
+---
+title: "Statistics in R with the `tidyverse`"
+subtitle: "Day 1 Exercises"
+author: "Dr. Chester Ismay"
+format: html
+---
+
+```{r}
+#| include: false
+options(width = 120)
+```
+
+
+# Working with Data in R - Explore, Visualize, Wrangle, Import
+
+## Session 1: Introduction to R and RStudio
+
+### 1. Installing R and RStudio
+
+*We did this during the course in walkthroughs, but if you haven't done it yet:*
+
+- You need to install R first from <https://cloud.r-project.org/> and then install RStudio from <https://posit.co/download/rstudio-desktop/>. 
+- Once installed, work in RStudio to interact with R efficiently.
+
+---
+
+### 2. Exploring the RStudio Interface
+
+- In RStudio, you will see three panes: Console, Environment, and Files.
+- The Console is where you type and run your R code.
+- The Environment pane shows all objects (like datasets) currently in memory.
+- The Files pane helps you navigate files in your project.
+
+---
+
+### 3. Installing Packages
+
+*We also did this during the walkthroughs, but if you haven't done it yet:*
+
+```{r}
+#| eval: false
+# To install a package, use the install.packages() function.
+install.packages(c("moderndive", "dplyr", "ggplot2", "readr", "tidyr", 
+                   "lubridate", "fivethirtyeight", "knitr"))
+```
+
+The `c()` function creates a `vector` in R, which is a sequence of elements. Here, it combines the package names into a single vector for installation.
+
+---
+
+### 4. Loading Packages
+
+```{r}
+#| message: false
+# To load a package, use the library() function.
+library(moderndive)
+library(dplyr)
+library(ggplot2)
+library(readr)
+library(tidyr)
+library(lubridate)
+library(fivethirtyeight)
+library(knitr)
+```
+
+---
+
+### 5. Loading and Viewing a Dataset
+
+```{r}
+# Load the data_dev_survey dataset 
+# (if you don't have it still loaded from the end of class)
+data_dev_survey <- read_csv("data_dev_survey.csv")
+```
+```{r}
+#| eval: false
+# View the data_dev_survey data
+View(data_dev_survey)
+```
+
+The Stack Overflow survey data stored in `data_dev_survey` includes 1,183 responses from professionals in the data and tech fields, with information on their employment, coding activities, education level, and technical skills. The dataset provides a comprehensive view of respondents' experience levels, preferred programming languages, work environments, and AI perspectives. It captures various demographic and professional details, including their country of work, salary, and views on AI, making it a valuable resource for analyzing trends in the data science and tech professions.
+
+- Identification variable(s): `response_id`
+- Measurement variable(s): remaining columns
+
+---
+
+### 6. Exploring Dataset Structure and Data Types
+
+Each column in a dataset has a data type, such as:  
+
+- `chr` for character (text)  
+- `dbl` for numeric (decimal values)  
+- `lgl` for logical (TRUE/FALSE)   
+- `int` for integer (non-decimal values)  
+- `fct` for factor (categorical)  
+
+`glimpse()` from the `dplyr` package gives a preview of the data types and the first few entries in each column.
+
+```{r}
+# To see an overview of the dataset’s structure:
+glimpse(data_dev_survey)
+```
+
+---
+
+### 7. Accessing a Single Column
+
+```{r}
+# Access the work_exp column from the data_dev_survey dataset
+data_dev_survey$work_exp
+```
+
+---
+
+### 8. Checking the First Few Rows
+
+```{r}
+# To quickly see the first 6 rows of the dataset:
+head(data_dev_survey)
+```
+
+---
+
+### 9. Basic Operations in R
+
+```{r}
+# Use the $ and basic arithmetic operations in R to determine a new vector
+# called ratio_code_pro that is the ratio of years_code_pro to
+# years_code from data_dev_survey
+ratio_code_pro <- data_dev_survey$years_code_pro / data_dev_survey$years_code
+
+# Print out the first six entries of your new vector
+head(ratio_code_pro)
+```
+
+---
+
+### 10. Using Functions in R
+
+```{r}
+#| eval: false
+
+# Check ?View to understand its arguments
+?View
+
+# Provide the names of the arguments to view the dataset and give it the name "Survey Data"
+View(title = "Survey Data", x = data_dev_survey) # Note you can switch the order around!
+
+# Do the same thing again but using positional arguments instead
+View(data_dev_survey, "Survey Data")
+```
+
+---
+
+## Session 2: Data Visualization with `ggplot2`
+
+### 11. Installing and Loading Necessary Packages
+
+```{r}
+# Load required packages for data visualization
+library(ggplot2) # Not necessary if already loaded
+library(moderndive) # Not necessary if already loaded
+
+# TIP: You can install packages if not already installed
+# install.packages(c("ggplot2", "moderndive"))
+```
+
+---
+
+### 12. Visualizing Years of Coding Experience Distribution: Histogram
+
+```{r}
+# Create a histogram of years of pro coding experience
+ggplot(data_dev_survey, aes(x = years_code_pro)) +
+  geom_histogram(binwidth = 2, fill = "orange", color = "black") +
+  labs(title = "Distribution of Professional Coding Experience", 
+       x = "Years of Coding Experience", y = "Count")
+```
+
+---
+
+### 13. Visualizing Years of Pro Coding Experience by Developer Type: Side-by-side Boxplot
+
+```{r}
+# Create a boxplot of years of coding experience by developer type
+ggplot(data_dev_survey, aes(x = dev_type, y = years_code_pro)) +
+  geom_boxplot(fill = "lightgreen") +
+  labs(title = "Years of Professional Coding Experience by Developer Type", 
+       y = "Years of Coding Experience") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+```
+
+---
+
+### 14. Visualizing Developer Types: Barplot
+
+```{r}
+#| fig.height: 8
+# Create a barplot of developer types
+ggplot(data_dev_survey, aes(x = dev_type)) +
+  geom_bar(fill = "lightblue") +
+  labs(title = "Distribution of Employment Types", 
+       x = "Employment Type", y = "Count") +
+  theme(axis.text.x = element_text(angle = 60, hjust = 1))
+```
+
+---
+
+### 15. Scatterplot: Salary vs. Coding Experience
+
+Apply some `alpha` to check for overplotting!
+
+```{r}
+# Scatterplot showing the relationship between salary and years of professional 
+# coding experience
+ggplot(data_dev_survey, aes(x = years_code_pro, y = converted_comp_yearly)) +
+  geom_point(color = "purple", alpha = 0.3) +
+  labs(title = "Salary vs. Years of Professional Coding Experience", 
+       x = "Years of Professional Coding", 
+       y = "Yearly Salary (USD)")
+```
+
+Check out [Subsection 2.3.2 of ModernDive V2](https://moderndive.com/v2/viz.html#overplotting) for overplotting discussion.
+
+---
+
+### 16. Faceted Barplot: Age Distribution by Developer Type
+
+```{r}
+# Faceted barplot showing age distribution across developer types
+ggplot(data_dev_survey, aes(x = age)) +
+  geom_bar(fill = "skyblue") +
+  facet_wrap(~dev_type) +
+  labs(title = "Age by Developer Type", 
+       x = "Age", y = "Count") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+```
+
+---
+
+### 17. Pie Chart vs Bar Chart: Remote Work Distribution
+
+```{r}
+# Pie chart of remote work preferences
+ggplot(data_dev_survey, aes(x = "", fill = remote_work)) +
+  geom_bar(width = 1) +
+  coord_polar(theta = "y") +
+  labs(title = "Remote Work Preferences")
+```
+
+The pie chart visualizes how respondents prefer to work (e.g., remote, hybrid, in-person). Given the small numbers of categories a pie chart can work OK here, but a bar chart is often better for comparisons.
+
+```{r}
+# Bar chart of remote work preferences
+ggplot(data_dev_survey, aes(x = remote_work, fill = remote_work)) +
+  geom_bar() +
+  labs(title = "Remote Work Preferences")
+```
+
+---
+
+### 18. Line Graph: Time Series Data
+
+Modify the code below to look at births in 2012 and 2013 instead of 2014.
+
+```{r}
+#| message: false
+library(fivethirtyeight)
+library(lubridate)
+
+# Old Code
+
+# Filter the data for 2014
+US_births_2014 <- US_births_2000_2014 |>
+  filter(year(date) == 2014)
+
+# Create a line graph showing the number of births in 2014
+ggplot(US_births_2014, aes(x = date, y = births)) +
+  geom_line(color = "blue") +
+  labs(title = "Daily U.S. Births in 2014", 
+       x = "Date", y = "Number of Births")
+
+# Revised code
+# Filter the data for 2012 and 2013
+US_births_2012_2013 <- US_births_2000_2014 |>
+  filter(year(date) == 2012 | year(date) == 2013)
+
+# This can also be done with the `%in%` operator
+US_births_2012_2013 <- US_births_2000_2014 |>
+  filter(year(date) %in% c(2012, 2013))
+
+# Create a line graph showing the number of births in 2014
+ggplot(US_births_2012_2013, aes(x = date, y = births)) +
+  geom_line(color = "blue") +
+  labs(title = "Daily U.S. Births in 2012 and 2013", 
+       x = "Date", y = "Number of Births")
+```
+
+---
+
+## Session 3: Data Wrangling and Tidy Data
+
+### 19. Filtering Rows with `filter()`
+
+```{r filter-example}
+# Filter 18 to 24 year olds with less than 2 years of coding
+young_coders <- data_dev_survey |>
+  filter(age == "18-24 years old", years_code < 2)
+young_coders
+```
+
+---
+
+### 20. Summarizing Data with `summarize()`
+
+```{r summarize-example}
+# Summarize average salary and standard deviation of salary
+summary_stats <- data_dev_survey |> 
+  summarize(
+    avg_salary = mean(converted_comp_yearly, na.rm = TRUE),
+    std_salary = sd(converted_comp_yearly, na.rm = TRUE)
+  )
+summary_stats
+```
+
+---
+
+### 21. Grouping Data with `group_by()`
+
+```{r groupby-example}
+# Use kable() on your summarized data to make it look nice
+library(knitr)
+
+# Group by remote_work and summarize the average salary 
+# and standard deviation of salary
+salary_by_remoteness <- data_dev_survey |> 
+  group_by(remote_work) |> 
+  summarize(
+    avg_salary = mean(converted_comp_yearly, na.rm = TRUE),
+    std_salary = sd(converted_comp_yearly, na.rm = TRUE)
+  )
+kable(salary_by_remoteness)
+```
+
+---
+
+### 22. Creating New Variables with `mutate()`
+
+```{r mutate-example}
+# Create a new variable called coding_experience_category
+# that categorizes developers by years of professional coding experience
+# More than 20 = "Veteran"
+# More than 10 = "Experienced"
+# More than 5 = "Intermediate"
+# Otherwise = "Junior"
+data_dev_survey <- data_dev_survey |> 
+  mutate(
+    coding_experience_category = case_when(
+      years_code_pro > 20 ~ "Veteran",
+      years_code_pro > 10 ~ "Experienced",
+      years_code_pro > 5 ~ "Intermediate",
+      TRUE ~ "Junior"
+    ), .after = years_code_pro
+  )
+
+# Can also do this more explicitly using the `between()` function
+# which is a shortcut for x >= left & x <= right
+# Since the bounds are inclusive, we need to adjust the values
+data_dev_survey <- data_dev_survey |> 
+  mutate(
+    coding_experience_category = case_when(
+      years_code_pro > 20 ~ "Veteran",
+      between(years_code_pro, 11, 20) ~ "Experienced",
+      between(years_code_pro, 6, 10) ~ "Intermediate",
+      TRUE ~ "Junior"
+    ), .after = years_code_pro
+  )
+```
+
+---
+
+### 23. Arranging Rows with `arrange()`
+
+```{r arrange-example}
+# Arrange respondents by years coding in descending order
+data_dev_survey |> 
+  arrange(desc(years_code))
+```
+
+---
+
+### 24. Selecting Specific Columns with `select()`
+
+```{r select-example}
+# After doing the previous arranging, select id, developer type, and professional
+# coding experience columns
+selected_data <- data_dev_survey |> 
+  arrange(desc(years_code)) |> 
+  select(response_id, dev_type, years_code_pro)
+selected_data
+```
+
+---
+
+### 25. Putting a Whole `|>`line Together
+
+```{r}
+# Create a pipeline that filters, groups, summarizes, mutates, arranges, 
+# and selects columns for Database administrators and Data Engineers
+# Group by country and summarize average years of professional coding experience
+# and average salary, categorizing salary as High (> 100000), 
+# Medium (>5e4), or Low
+# Sort by descending years of average professional coding experience
+# Choose country, Average Years Coding, Average Salary, and salary_category 
+# columns
+data_dev_survey |>
+  filter(dev_type %in% c("Database administrator", "Engineer, data")) |>
+  group_by(country) |>
+  summarize(
+    avg_years_code_pro = mean(years_code_pro, na.rm = TRUE),
+    avg_salary = mean(converted_comp_yearly, na.rm = TRUE)
+  ) |>
+  ungroup() |> 
+  mutate(
+    salary_category = case_when(
+      avg_salary > 1e5 ~ "High",
+      avg_salary > 5e4 ~ "Medium",
+      TRUE ~ "Low"
+    )
+  ) |>
+  arrange(desc(avg_years_code_pro)) |>
+  select(country, 
+         `Average Years Coding` = avg_years_code_pro, 
+         `Average Salary` = avg_salary, 
+         salary_category)
+```
+
+### 26. Creating data for `geom_col()` use
+
+```{r}
+# Create a data frame for geom_col() to count the 
+# number of respondents per age group
+age_counts <- data_dev_survey |> 
+  group_by(age) |> 
+  summarize(num_respondents = n()) |> 
+  arrange(desc(num_respondents))
+
+# Use x = reorder(age, num_respondents) to order the age groups by 
+# number of respondents and make a horizontal bar chart
+ggplot(age_counts, aes(x = reorder(age, num_respondents), y = num_respondents)) +
+  geom_col() +
+  coord_flip() +
+  labs(title = "Number of Respondents by Age Group", 
+       x = "Age Group", y = "Number of Respondents")
+```
+
+### 27. Converting wide data into tidy data
+
+```{r}
+# Convert wide data into tidy data
+library(tibble)
+library(tidyr)
+
+# Collected from https://data.worldbank.org/?locations=CA-AR-AU
+# CO2 emissions (metric tons per capita)
+wide_co2_emissions <- tibble(
+  country = c("Canada", "Argentina", "Australia"),
+  `2017` = c(15.5, 4.1, 16.1),
+  `2018` = c(15.6, 4, 15.9),
+  `2019` = c(15, 3.7, 15.6),
+  `2020` = c(13.6, 3.4, 14.8)
+)
+
+# Use pivot_longer to convert data to tidy format making sure to turn year
+# into an integer variable
+tidy_co2 <- wide_co2_emissions |> 
+  pivot_longer(cols = -country, 
+               names_to = "year", 
+               values_to = "co2_emissions") |> 
+  mutate(year = as.integer(year))
+
+# Plot data as a linegraph
+ggplot(tidy_co2, aes(x = year, y = co2_emissions, color = country)) +
+  geom_point() +
+  geom_line() +
+  labs(title = "CO2 Emissions Over Time", 
+       x = "Year", y = "CO2 Emissions") +
+  scale_x_continuous(breaks = c(2017, 2018, 2019, 2020))
+```
+
+### 28. Importing data from a CSV file
+
+```{r}
+#| eval: false
+# Check out the help file for read_csv to learn about the default arguments
+# such as col_names = TRUE that are set automatically if not specified
+?read_csv
+```

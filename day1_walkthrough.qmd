@@ -1,0 +1,487 @@
+---
+title: "Statistics in R with the `tidyverse`"
+subtitle: "Day 1 Walkthrough"
+author: "Dr. Chester Ismay"
+format: html
+---
+
+```{r}
+#| include: false
+options(width = 120)
+```
+
+
+# Working with Data in R - Explore, Visualize, Wrangle, Import
+
+## Session 1: Introduction to R and RStudio
+
+### 1. Installing R and RStudio
+
+- You need to install R first from <https://cloud.r-project.org/> and then install RStudio from <https://posit.co/download/rstudio-desktop/>. 
+- Once installed, work in RStudio to interact with R efficiently.
+
+---
+
+### 2. Exploring the RStudio Interface
+
+- In RStudio, you will see three panes: Console, Environment, and Files.
+- The Console is where you type and run your R code.
+- The Environment pane shows all objects (like datasets) currently in memory.
+- The Files pane helps you navigate files in your project.
+
+---
+
+### 3. Installing Packages
+
+```{r}
+#| eval: false
+# To install a package, use the install.packages() function.
+
+# or together using the c() function:
+
+```
+
+
+```{r}
+#| eval: false
+
+# Install all necessary packages
+
+```
+
+
+---
+
+### 4. Loading Packages
+
+```{r}
+#| message: false
+# To load a package, use the library() function.
+
+
+# TIP: Check help with `?` operator or `help()` function.
+
+```
+
+---
+
+### 5. Viewing a Dataset
+
+```{r}
+#| eval: false
+
+# Can load the data into the Environment pane
+
+
+# To view a dataset in RStudio, use the View() function
+
+```
+
+- Identification variables: 
+- Measurement variables: 
+
+---
+
+### 6. Exploring Dataset Structure and Data Types
+
+```{r}
+# To see an overview of the dataset’s structure:
+
+```
+
+---
+
+### 7. Accessing a Single Column
+
+```{r}
+# To access a specific column, use the `$` operator:
+
+```
+
+---
+
+### 8. Checking the First Few Rows
+
+```{r}
+# To quickly see the first 6 rows of the dataset:
+
+```
+
+---
+
+### 9. Basic Operations in R
+
+```{r}
+# You can do basic math in R, like addition:
+
+
+# Or create sequences:
+
+```
+
+---
+
+### 10. Using Functions in R
+
+```{r}
+# Using named arguments in functions:
+
+
+# Or using positional arguments:
+
+```
+
+---
+
+### Session 1 Review Questions
+
+**(1.1)** Which of the following is required before you can use RStudio effectively?
+
+A. You need to install RStudio first, as R is automatically included.  
+B. R should be installed from the R Project website, and then RStudio can be installed separately.  
+C. R is pre-installed on most operating systems, so only RStudio needs to be downloaded.  
+D. R and RStudio can be used without any installation, directly from a web browser.
+
+---
+
+**(1.2)** What is the purpose of the Environment pane in RStudio?
+
+A. To display the output of the R code you run, including plots and messages.  
+B. To show all objects and datasets currently loaded in your R session.  
+C. To provide a workspace for writing R scripts and functions.  
+D. To navigate and organize the files within your project folder.
+
+---
+
+**(1.3)** How do you install multiple R packages in one step?
+
+A. Use the `install.packages()` function with each package listed individually: `install.packages("ggplot2"), install.packages("dplyr")`.  
+B. You must install each package one by one, as R doesn't allow installing multiple packages in a single command.  
+C. Use the `install.packages()` function with the `c()` function to install several packages at once.  
+D. You can install multiple packages by using the `load()` function for each package separately.
+
+---
+
+**(1.4)** Which of the following correctly loads the `dplyr` package into your R session?
+
+A. `load(dplyr)`  
+B. `library(dplyr)`  
+C. `install.packages("dplyr")`  
+D. `View(dplyr)`
+
+---
+
+**(1.5)** What does the `glimpse()` function from the `dplyr` package do?
+
+A. It provides a detailed report of summary statistics for each variable in the dataset.  
+B. It opens the dataset in a spreadsheet-like viewer for easy exploration.  
+C. It gives a quick overview of the structure of a dataset, showing the data types and the first few entries of each column.  
+D. It creates a visual summary of numeric columns using histograms and scatterplots.
+
+---
+
+## Session 2: Data Visualization with `ggplot2`
+
+### 11. Installing and Loading Necessary Packages
+
+```{r}
+# Load required packages for data visualization
+
+
+# TIP: You can install packages if not already installed
+
+```
+
+---
+
+### 12. Visualizing Population Distribution: Histogram
+
+```{r}
+# Create a histogram of population distribution
+
+```
+
+---
+
+### 13. Visualizing Life Expectancy: Side-by-side Boxplot
+
+```{r}
+# Create a boxplot to see GDP per capita spread by continent
+
+```
+
+
+---
+
+### 14. Comparing Number of Countries by Continent: Barplot
+
+```{r}
+# Create a barplot to compare the number of countries by continent
+
+```
+
+---
+
+### 15. Scatterplot: GDP per Capita vs. Life Expectancy
+
+```{r}
+# Create a scatterplot to show the relationship between GDP per capita and life expectancy
+
+```
+
+Check out [Subsection 2.3.2 of ModernDive V2](https://moderndive.com/v2/viz.html#overplotting) for overplotting discussion.
+
+---
+
+### 16. Faceted Scatterplot: GDP per Capita vs. Life Expectancy by Continent
+
+```{r}
+# Faceted scatterplot to see relationship by continent
+
+```
+
+
+---
+
+### 17. Pie Chart vs Bar Chart: Region Distribution
+
+```{r}
+# Create a pie chart for region distribution
+
+```
+
+
+```{r}
+# As a bar chart instead
+
+```
+
+---
+
+### 18. Line Graph: Time Series Data
+
+
+```{r}
+#install.packages("fivethirtyeight")
+library(fivethirtyeight)
+
+# Create a line graph showing the number of births
+```
+
+
+```{r}
+#| message: false
+# Include package for more easily working with dates
+# install.packages("lubridate")
+library(lubridate)
+library(dplyr)
+
+# Filter the data for 2014
+US_births_2014 <- US_births_2000_2014 |>
+  filter(year(date) == 2014)
+
+# Create a line graph showing the number of births in 2014
+
+```
+
+### Session 2 Review Questions
+
+**(2.1)** In the following code for creating a scatterplot of Fertility Rate (`fertility_rate_2022`) vs. Human Development Index (`hdi_2022`), which entries should be in quotes?
+
+```r
+ggplot(un_member_states_2024, aes(x = fertility_rate_2022, y = hdi_2022)) + 
+  geom_point()
+```
+
+A. `un_member_states_2024`, `fertility_rate_2022`, and `hdi_2022` should all be in quotes.  
+B. Only `un_member_states_2024` should be in quotes, as it refers to the dataset.  
+C. Only `fertility_rate_2022` and `hdi_2022` should be in quotes, as they are variable names.  
+D. None of the elements in the code should be in quotes.
+
+---
+
+**(2.2)** How can you create a histogram of the population distribution in the `un_member_states_2024` data frame?
+
+A. `geom_bar(aes(x = population_2024))`  
+B. `ggplot(aes(y = population_2024)) + geom_boxplot()`  
+C. `ggplot(un_member_states_2024, aes(x = population_2024)) + geom_histogram()`  
+D. `ggplot(un_member_states_2024, aes(x = continent)) + geom_bar()`  
+
+---
+
+**(2.3)** What does a boxplot created using the `ggplot()` function reveal about life expectancy?
+
+A. The boxplot reveals the mean and standard deviation of life expectancy values.  
+B. It shows how life expectancy is spread and identifies outliers.  
+C. A boxplot represents the frequency of different life expectancy ranges.  
+D. It is used to display the total sum of life expectancy values for each continent.  
+
+---
+
+**(2.4)** How can you compare the number of countries by continent using a barplot?
+
+A. `ggplot(un_member_states_2024, aes(x = continent)) + geom_bar()`  
+B. `ggplot(un_member_states_2024, aes(x = gdp_per_capita)) + geom_bar()`  
+C. `ggplot(un_member_states_2024, aes(x = continent, y = life_expectancy_2022)) + geom_bar()`  
+D. `ggplot(un_member_states_2024, aes(x = continent, fill = population_2024)) + geom_bar()`  
+
+---
+
+**(2.5)** What is an appropriate purpose of facet wrapping in a scatterplot showing Capital Population vs. Obesity Rate 2024?
+
+A. To split the scatterplot into multiple graphs by region.  
+B. To add color to each region based on obesity rate.  
+C. To combine the population of the capital city and the country's obesity rate in a single graph.  
+D. To display the relationship between capital city population and obesity rate over time.  
+
+---
+
+## Session 3: Data Wrangling and Tidy Data
+
+### 19. Filtering Rows with `filter()`
+
+```{r filter-example}
+# Filter countries in Africa with GDP per capita greater than $5,000
+
+
+# TIP: Can also use the `&` instead of `,` for AND conditions
+
+
+# This is not the same as using `|` which is an OR condition
+
+```
+
+---
+
+### 20. Summarizing Data with `summarize()`
+
+```{r summarize-example}
+# Summarize average life expectancy and population
+
+# Can also display as a markdown table
+library(knitr)
+
+```
+
+---
+
+### 21. Grouping Data with `group_by()`
+
+```{r groupby-example}
+# Group by continent and summarize the average life expectancy for each group
+
+```
+
+---
+
+### 22. Creating New Variables with `mutate()`
+
+```{r mutate-example}
+# Create a new variable that categorizes countries by GDP per capita
+
+```
+
+---
+
+### 23. Arranging Rows with `arrange()`
+
+```{r arrange-example}
+# Arrange countries by population in descending order
+
+```
+
+---
+
+### 24. Selecting Specific Columns with `select()`
+
+```{r select-example}
+# Select country name, continent, and population
+
+```
+
+---
+
+### 25. Putting a Whole `|>`line Together
+
+```{r}
+# Create a pipeline that filters, groups, summarizes, mutates, arranges, 
+# and selects columns for countries in Asia and Europe
+
+```
+
+### 26. Creating data for `geom_col()` use
+
+```{r}
+# Create a data frame for geom_col() use to count number of countries per region
+
+```
+
+### 27. Converting wide data into tidy data
+
+```{r}
+# Convert wide data into tidy data
+library(tibble)
+library(tidyr)
+
+# Collected from https://data.worldbank.org/?locations=BR-NG-ID
+wide_unemp <- tibble(
+  country = c("Brazil", "Nigeria", "Indonesia"),
+  `2021` = c(13.2, 5.4, 3.8),
+  `2022` = c(9.2, 3.8, 3.5),
+  `2023` = c(8, 3.1, 3.4)
+)
+
+# Use pivot_longer to convert data
+
+
+# Plot data as a linegraph
+
+```
+
+### 28. Importing data from a CSV file
+
+```{r}
+library(readr)
+
+# Load data from data_dev_survey.csv in same file path as this .qmd file
+
+```
+
+---
+
+### Session 3 Review Questions
+
+**`(3.1)`** What is the role of the pipe operator `|>` in streamlining data wrangling tasks?
+
+A. It combines two datasets into one, merging data from different sources into a unified data frame.  
+B. It allows the output of one function to be passed to the next, improving readability and making code writing more efficient.   
+C. It saves a dataset to a file, preserving changes by writing the transformed data to a CSV or another format.  
+D. It generates plots automatically from a dataset, creating graphs without needing to specify the plotting functions. 
+
+**`(3.2)`** How would you filter countries in the `un_member_states_2024` data frame that are in Asia and have a population greater than 100 million?
+
+A. `filter(un_member_states_2024, continent = "Asia" & population_2024 > 1e8)`  
+B. `un_member_states_2024 |> select(continent = "Asia" & population_2024 > 100000000)`  
+C. `un_member_states_2024 |> filter(continent == "Asia", population_2024 > 100000000)`  
+D. `un_member_states_2024 |> filter(population_2024 > 100000000 | continent == "Asia")`  
+
+**`(3.3)`** Using `group_by()` and `summarize()`, how can you calculate the total population for each continent where the line of code directly above is `us_member_states_2024 |>`?
+
+A. `group_by(continent) |> summarize(total_population = mean(population_2024))`  
+B. `group_by(continent) |> summarize(total_population = sum(population_2024))`  
+C. `summarize(continent, total_population = sum(population_2024))`  
+D. `group_by(population_2024) |> summarize(total_population = sum(continent))`  
+
+**`(3.4)`** How does the `mutate()` function help in creating new categorical variables?
+
+A. `mutate()` always replaces an existing variable with a new one based on a conditional statement.  
+B. `mutate()` drops variables from a dataset based on specific conditions.  
+C. `mutate()` filters rows by removing missing values from a variable.  
+D. `mutate()` adds a new variable based on the transformation of existing variables.  
+
+**`(3.5)`** How can you arrange countries by their GDP per capita in ascending order?
+
+A. `arrange(un_member_states_2024, gdp_per_capita)`    
+B. `arrange(un_member_states_2024 |> gdp_per_capita)`  
+C. `group_by(gdp_per_capita) |> arrange(continent)`  
+D. `arrange(gdp_per_capita, un_member_states_2024)`  
