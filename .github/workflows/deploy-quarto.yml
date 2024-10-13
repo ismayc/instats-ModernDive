@@ -34,7 +34,8 @@ jobs:
     
     - name: Render Quarto files to HTML
       run: |
-        quarto render your_specified_files/*.qmd
+        quarto render day1_exercise_answers.qmd
+        quarto render day1_walkthrough_answers.qmd
     
     # Deploy HTML to GitHub Pages if on main or master branch
     - name: Deploy to GitHub pages from main/master 🚀
