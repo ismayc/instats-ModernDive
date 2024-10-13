@@ -5,6 +5,7 @@ on:
     paths:
       - "day1_exercise_answers.qmd"
       - "day1_walkthrough_answers.qmd"
+  workflow_dispatch:
 
 jobs:
   build:
