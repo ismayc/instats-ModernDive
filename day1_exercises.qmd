@@ -230,7 +230,7 @@ Check out [Subsection 2.3.2 of ModernDive V2](https://moderndive.com/v2/viz.html
 The pie chart visualizes how respondents prefer to work (e.g., remote, hybrid, in-person). Given the small numbers of categories a pie chart can work OK here, but a bar chart is often better for comparisons.
 
 ```{r}
-# Bar chart of remote work preferences
+# Horizontal bar chart of remote work preferences
 
 ```
 
