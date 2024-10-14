@@ -1,0 +1,232 @@
+---
+title: "Statistics in R with the `tidyverse`"
+author: "Dr. Chester Ismay"
+subtitle: "Day 2 Exercises"
+format: html
+---
+
+```{r}
+#| include: false
+options(width = 120)
+```
+
+
+# Day 2: Linear Regression in R
+
+## Session 1: Simple Linear Regression Analysis
+
+### 1. Load Necessary Libraries
+
+*We did this during the course in walkthroughs, but if you haven't done it yet:*
+
+```{r}
+# Load the required libraries
+library(dplyr)
+library(ggplot2)
+library(moderndive)
+library(readr)
+```
+
+- These packages provide tools for data wrangling, visualization, and modeling.  
+
+---
+
+### 2. Prepare Dataset
+
+```{r}
+# Load in the data_dev_survey CSV file as a data frame again
+# selecting the columns of interest keeping only complete rows of information
+data_dev_survey <- read_csv("data_dev_survey.csv") |> 
+  select(response_id, converted_comp_yearly, work_exp, 
+         years_code, ai_trust) |> 
+  # This code sets the levels of the ai_trust column to be more intuitive
+  # Note this will change the baseline level for the factor!
+  mutate(ai_trust = factor(ai_trust, levels = c("Highly distrust", 
+                                                "Somewhat distrust",
+                                                "Neither trust nor distrust",
+                                                "Somewhat trust",
+                                                "Highly trust"))) |> 
+  na.omit()
+```
+
+- We're still exploring the `data_dev_survey` data from Day 1 here.
+
+---
+
+### 3. Exploring Dataset Structure
+
+```{r}
+# Use glimpse to remind yourself of the structure of the data
+
+```
+
+---
+
+### 4. Summary Statistics
+
+```{r}
+# Summarize mean and median values for converted_comp_yearly and work_exp
+
+```
+
+---
+
+### 5. Using `tidy_summary()` Function
+
+```{r}
+# Use tidy_summary to get a clean summary of the two columns
+
+```
+
+---
+
+### 6. Correlation Between Salary and Work Experience
+
+```{r}
+# Compute the correlation between converted_comp_yearly and work_exp
+
+```
+
+---
+
+### 7. Scatterplot of Salary and Work Experience
+
+```{r}
+# Plot the relationship between work experience and yearly compensation
+
+```
+
+---
+
+### 8. Regression Line
+
+```{r}
+# The same scatterplot with a regression line added
+
+```
+
+---
+
+### 9. Fit a Regression Model
+
+```{r}
+# Fit a linear regression model with compensation as the outcome
+
+
+# Get the regression coefficients
+
+```
+
+---
+
+## Session 2: Multiple Linear Regression Analysis (Part 1)
+
+### 10: Fitting a Simple Linear Regression with a Categorical Regressor
+
+```{r}
+# Fit a simple linear regression model with ai_trust as a predictor on salary
+
+
+# Get regression coefficients
+
+```
+
+---
+
+### 11: Visualizing Data with Categorical Variable
+
+```{r}
+# Scatterplot with ai_trust as color for grouping on work_exp predicting
+# converted_comp_yearly
+
+```
+
+---
+
+### 12: Summarizing the Target and Regressors (One numerical and one categorical)
+
+```{r}
+# Summarize the target and regressors
+
+```
+
+---
+
+### 13: Fitting a Multiple Regression Model with Interaction Terms
+
+```{r}
+# Fit a multiple regression model with interaction terms between
+# work experience and trust in AI 
+
+
+# Get regression coefficients
+
+
+```
+
+---
+
+### 14: Adding Interaction Terms to the Regression Plot
+
+```{r}
+# Scatterplot with regression lines by trust in AI (interaction terms)
+
+```
+
+---
+
+## Session 3: Multiple Linear Regression Analysis (Part 2)
+
+### 15. Fitting a Multiple Regression Model Without Interactions
+
+```{r}
+# Fit a multiple regression model without interaction terms
+
+
+# Get regression coefficients
+
+```
+
+---
+
+### 16. Visualizing the Parallel Slopes Model
+
+```{r}
+# Scatterplot with regression lines by trust in AI (parallel slopes)
+
+```
+
+---
+
+### 17. Summarize the Numerical Regressors and Target Variable
+
+```{r}
+# Use tidy_summary to get a clean summary of the data for a multiple regression
+# with work experience and years coding as regressors and yearly compensation as
+# the outcome
+
+```
+
+---
+
+### 18. Fitting a Multiple Regression Model with Two Numerical Predictors
+
+```{r}
+# Fit a multiple regression model
+
+
+# Get regression coefficients
+
+```
+
+---
+
+### 19. Visualizing the Relationship between Variables (with SLR)
+
+```{r}
+# Create scatterplots with regression lines for both variables with 
+# converted_comp_yearly as the response variable in simple linear regression
+
+
+```
+

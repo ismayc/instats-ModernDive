@@ -137,22 +137,6 @@ Here, we fit a linear model to predict `body_mass_g` using `flipper_length_mm` a
 
 ---
 
-### 10. Visualizing Residuals
-
-```{r}
-# Visualize residuals from the linear model
-regression_points <- get_regression_points(flipper_model)
-
-ggplot(regression_points, aes(x = flipper_length_mm, y = residual)) +
-  geom_point() +
-  labs(x = "Flipper Length (mm)", y = "Residuals",
-       title = "Residuals of Flipper Length vs. Body Mass")
-```
-
-This plot shows the residuals from the linear regression model to assess model fit.
-
----
-
 ### Session 1 Review Questions
 
 **(1.1)** What is the purpose of the `na.omit()` function in the code below?
@@ -287,7 +271,7 @@ B. It adds a linear regression line to the scatterplot without displaying the co
 
 ## Session 2: Multiple Linear Regression Analysis (Part 1)
 
-### 11: Fitting a Simple Linear Regression with a Categorical Regressor
+### 10: Fitting a Simple Linear Regression with a Categorical Regressor
 
 ```{r}
 # Fit a simple linear regression model with species as a predictor
@@ -302,7 +286,7 @@ We fit a simple linear regression model to predict `body_mass_g` using `species`
 
 ---
 
-### 12: Visualizing Data with Categorical Variables
+### 11: Visualizing Data with Categorical Variables
 
 ```{r}
 # Scatterplot with species as color for grouping
@@ -317,7 +301,7 @@ We create a scatterplot to visualize the relationship between `flipper_length_mm
 
 ---
 
-### 13: Summarizing the Target and Regressors (One numerical and one categorical)
+### 12: Summarizing the Target and Regressors (One numerical and one categorical)
 
 ```{r}
 # Summarize the target and regressors
@@ -331,7 +315,7 @@ We use `tidy_summary()` to summarize the target variable `body_mass_g` and the r
 
 ---
 
-### 14: Fitting a Multiple Regression Model with Interaction Terms
+### 13: Fitting a Multiple Regression Model with Interaction Terms
 
 ```{r}
 # Fit a multiple regression model with interaction
@@ -349,7 +333,7 @@ In the fitted model, `species` is represented as dummy variables. For example, t
 
 ---
 
-### 15: Adding Interaction Terms to the Regression Plot
+### 14: Adding Interaction Terms to the Regression Plot
 
 ```{r}
 # Scatterplot with regression lines by species
@@ -363,26 +347,6 @@ ggplot(penguins_data, aes(x = flipper_length_mm, y = body_mass_g, color = specie
 We extend the scatterplot by adding regression lines for each species, showing how the relationship between `flipper_length_mm` and `body_mass_g` differs across species. Each line represents a separate slope for each species, which reflects the interaction between flipper length and species in the model.
 
 ---
-
-<!--
----
-### 16: Visualizing Residuals for the Interaction Model
-
-```{r}
-# Get residuals from the interaction model
-residuals_interaction <- get_regression_points(multi_model_interaction)
-
-# Plot residuals
-ggplot(residuals_interaction, aes(x = flipper_length_mm, y = residual, color = species)) +
-  geom_point() +
-  labs(x = "Flipper Length (mm)", y = "Residuals",
-       title = "Residuals of Flipper Length vs. Body Mass by Species")
-```
-
-**Explanation:**  
-We visualize the residuals from the interaction model, colored by species. This plot allows us to assess the model fit for each species and see whether the residuals are randomly distributed, indicating a good fit.
-
--->
 
 ### Session 2 Review Questions
 
@@ -508,7 +472,7 @@ In regression models, dummy variables are created for categorical variables like
 
 ## Session 3: Multiple Linear Regression Analysis (Part 2)
 
-### 16. Fitting a Multiple Regression Model Without Interactions
+### 15. Fitting a Multiple Regression Model Without Interactions
 
 ```{r}
 # Fit a multiple regression model without interaction terms
@@ -526,7 +490,7 @@ coef(multi_model_no_interaction)
 
 ---
 
-### 17. Visualizing the Parallel Slopes Model
+### 16. Visualizing the Parallel Slopes Model
 
 ```{r}
 # Scatterplot with regression lines by species (different intercepts but same slopes)
@@ -543,7 +507,7 @@ ggplot(penguins_data, aes(x = flipper_length_mm, y = body_mass_g, color = specie
 
 ---
 
-### 18. Summarize the Regressor and Target Variables
+### 17. Summarize the Numerical Regressors and Target Variable
 
 ```{r}
 # Use tidy_summary to get a clean summary of the data for a multiple regression
@@ -558,7 +522,7 @@ This provides a tidy summary, giving key statistics such as the mean, median, an
 
 ---
 
-### 19. Fitting a Multiple Regression Model with Two Numerical Predictors
+### 18. Fitting a Multiple Regression Model with Two Numerical Predictors
 
 ```{r}
 # Fit a multiple regression model
@@ -573,7 +537,7 @@ In this multiple regression model, we predict `body_mass_g` using both `flipper_
 
 ---
 
-### 20. Visualizing the Relationship between Variables (with SLR)
+### 19. Visualizing the Relationship between Variables (with SLR)
 
 ```{r}
 # Create scatterplot with regression lines for both variables
