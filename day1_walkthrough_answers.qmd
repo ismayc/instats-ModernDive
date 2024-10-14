@@ -54,7 +54,9 @@ The `c()` function creates a `vector` in R, which is a sequence of elements. Her
 # To load a package, use the library() function.
 library(moderndive)
 library(dplyr)
-
+```
+```{r}
+#| eval: false
 # TIP: Check help with `?` operator or `help()` function.
 ?library
 help(library)

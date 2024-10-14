@@ -10,7 +10,9 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    
+    env:
+      GITHUB_PAT: ${{ secrets.GITHUB_PAT }}
+      EMAIL: ${{ secrets.EMAIL }}
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
