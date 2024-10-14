@@ -1,6 +1,7 @@
 ---
 title: "Statistics in R with the `tidyverse`"
 author: "Dr. Chester Ismay"
+subtitle: "Day 2 Walkthrough"
 format: html
 ---
 
@@ -14,21 +15,29 @@ options(width = 120)
 
 ## Session 1: Simple Linear Regression Analysis
 
-### 1. Load Necessary Libraries and Prepare Dataset
+### 1. Load Necessary Libraries
 
 ```{r}
 # Load the required libraries
 library(dplyr)
 library(ggplot2)
 library(moderndive)
+```
+
+- These packages provide tools for data wrangling, visualization, and modeling.  
+
+---
+
+### 2. Prepare Dataset
+
+```{r}
 library(palmerpenguins)
 
-# Load the Palmer Penguins dataset to Environment pane
+# Only use complete rows of data
 penguins_data <- penguins |> 
   na.omit()
 ```
 
-- These packages provide tools for data wrangling, visualization, and modeling.  
 - We'll be exploring the `penguins` data frame from the `palmerpenguins` package as well. It contains size measurements for three penguin species observed on three islands in the Palmer Archipelago, Antarctica. More information is [here](https://allisonhorst.github.io/palmerpenguins/articles/intro.html).  
 - We remove rows with missing values.
 
