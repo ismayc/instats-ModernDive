@@ -117,10 +117,30 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="exploring-the-rstudio-interface" class="level3">
 <h3 class="anchored" data-anchor-id="exploring-the-rstudio-interface">2. Exploring the RStudio Interface</h3>
 <ul>
-<li>In RStudio, you will see three panes: Console, Environment, and Files.</li>
-<li>The Console is where you type and run your R code.</li>
-<li>The Environment pane shows all objects (like datasets) currently in memory.</li>
-<li>The Files pane helps you navigate files in your project.</li>
+<li><strong>In RStudio, you will see three panes: Console, Environment, and Files.</strong>
+<ul>
+<li><strong>Console</strong>: This is where you write and run your code.</li>
+<li><strong>Environment</strong>: Keeps track of all the objects, like data frames or variables, that you create.</li>
+<li><strong>Files</strong>: Helps you navigate through your project files and folders, similar to how you browse files on your computer.</li>
+</ul></li>
+<li><strong>The Console is where you type and run your R code.</strong>
+<ul>
+<li>You can type a command and press <strong>Enter</strong> to see the result immediately.</li>
+<li>If you need to run multiple lines of code, you can write them in the <strong>Source Editor</strong> (another pane you’ll see later) and send them to the Console.</li>
+<li>The Console also shows any error messages or outputs when your code runs.</li>
+</ul></li>
+<li><strong>The Environment pane shows all objects (like datasets) currently in memory.</strong>
+<ul>
+<li>As you create variables or load datasets, they’ll appear here, making it easy to keep track of what’s currently active in your session.</li>
+<li>You can click on any object to inspect it or open it for a detailed view.</li>
+<li>If your workspace gets cluttered, you can clear it by using the <strong>broom icon</strong> to remove objects no longer needed.</li>
+</ul></li>
+<li><strong>The Files pane helps you navigate files in your project.</strong>
+<ul>
+<li>Here, you can open scripts, view data files, and manage folders related to your project.</li>
+<li>You can upload files into RStudio, set your working directory, or view the file contents directly.</li>
+<li>Right-click on files to see options like opening, renaming, or deleting files as part of your project management.</li>
+</ul></li>
 </ul>
 <hr>
 </section>
@@ -134,7 +154,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="co"># or together using the c() function:</span></span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages(c("moderndive", "dplyr"))</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>The <code>c()</code> function creates a <code>vector</code> in R, which is a sequence of elements. Here, it combines the package names into a single vector for installation.</p>
+<p>The <code>install.packages()</code> function downloads and installs packages from CRAN (the Comprehensive R Archive Network), allowing you to access additional tools and functions in R. For example, here we’re installing the <strong><code>moderndive</code></strong> and <strong><code>dplyr</code></strong> packages.</p>
+<p>The <code>c()</code> function is used to create a <strong>vector</strong> in R, which is essentially a collection or sequence of elements. In this case, it’s combining the package names into a single vector, so you can install multiple packages with one command instead of typing <code>install.packages()</code> multiple times. This helps make your code cleaner and more efficient.</p>
 <hr>
 </section>
 <section id="loading-packages" class="level3">
@@ -149,6 +170,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>?library</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">help</span>(library)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<p>Once you’ve installed a package using <code>install.packages()</code>, you need to <strong>load</strong> it into your current R session to access its functions and features. The <code>library()</code> function does just that—it activates the package so you can use its tools. In this example, we’re loading both the <strong><code>moderndive</code></strong> and <strong><code>dplyr</code></strong> packages.</p>
+<p>Loading a package is essential because installing a package only happens once, but you need to load it every time you start a new R session in RStudio and want to use that package.</p>
+<p>If you ever need more information about how a function or package works, you can use the <strong><code>?</code> operator</strong> or the <strong><code>help()</code> function</strong>.</p>
+<ul>
+<li><code>?library</code> opens the help documentation for the <code>library()</code> function, giving you details on what it does, how to use it, and its arguments.</li>
+<li><code>help(library)</code> does the same thing, providing a full description of the function or topic you need assistance with.</li>
+</ul>
+<p>This is a great way to explore R’s built-in help system and get immediate answers or examples while coding.</p>
 <hr>
 </section>
 <section id="viewing-a-dataset" class="level3">
@@ -170,19 +199,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="exploring-dataset-structure-and-data-types" class="level3">
 <h3 class="anchored" data-anchor-id="exploring-dataset-structure-and-data-types">6. Exploring Dataset Structure and Data Types</h3>
-<p>Each column in a dataset has a data type, such as:</p>
+<p>Each column in a dataset is assigned a <strong>data type</strong>, which describes the kind of information that the column holds. Understanding the data types is important because it determines how R interprets and handles the data. Here are some common data types you’ll encounter in R:</p>
 <ul>
-<li><code>chr</code> for character (text)<br>
-</li>
-<li><code>dbl</code> for numeric (decimal values)<br>
-</li>
-<li><code>lgl</code> for logical (TRUE/FALSE)<br>
-</li>
-<li><code>int</code> for integer (non-decimal values)<br>
-</li>
-<li><code>fct</code> for factor (categorical)</li>
+<li><strong><code>chr</code> (character)</strong>: Used for text data, such as names or descriptions.</li>
+<li><strong><code>dbl</code> (double)</strong>: Represents numeric data with decimal values (floating-point numbers).</li>
+<li><strong><code>lgl</code> (logical)</strong>: Holds TRUE or FALSE values, often used for conditions or binary data.</li>
+<li><strong><code>int</code> (integer)</strong>: Stores whole numbers (without decimal points).</li>
+<li><strong><code>fct</code> (factor)</strong>: Represents categorical data, where values belong to predefined categories or groups (e.g., “Male” and “Female” for gender).</li>
 </ul>
-<p><code>glimpse()</code> from the <code>dplyr</code> package gives a preview of the data types and the first few entries in each column.</p>
+<p>To quickly check the structure of your dataset and see the data types of each column, you can use the <strong><code>glimpse()</code></strong> function from the <strong><code>dplyr</code></strong> package. This function provides a compact preview of the dataset, showing the name of each column, its data type, and the first few entries.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># To see an overview of the dataset’s structure:</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(un_member_states_2024)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -230,10 +255,12 @@ $ fertility_rate_2022                &lt;dbl&gt; 4.3, 1.4, 2.7, NA, 5.0, 1.6, 1.
 $ hdi_2022                           &lt;dbl&gt; 0.462, 0.789, 0.745, 0.884, 0.591, 0.826, 0.849, 0.786, 0.946, 0.926, 0.760…</code></pre>
 </div>
 </div>
+<p>In this example, <code>glimpse(un_member_states_2024)</code> gives you a summary of the <strong><code>un_member_states_2024</code></strong> dataset, allowing you to quickly inspect the data types and a snapshot of the content in each column. It’s a handy tool for understanding your data before diving into further analysis!</p>
 <hr>
 </section>
 <section id="accessing-a-single-column" class="level3">
 <h3 class="anchored" data-anchor-id="accessing-a-single-column">7. Accessing a Single Column</h3>
+<p>To access a specific column in a dataset, R provides a simple and efficient way to do so using the <strong><code>$</code> operator</strong>. This allows you to extract a single column from a data frame by specifying the column name.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># To access a specific column, use the `$` operator:</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>un_member_states_2024<span class="sc">$</span>country</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -305,7 +332,12 @@ $ hdi_2022                           &lt;dbl&gt; 0.462, 0.789, 0.745, 0.884, 0.5
 [193] "Zimbabwe"                       </code></pre>
 </div>
 </div>
-<p>This returns the <code>country</code> column, showing the names of all UN member states.</p>
+<p>In this example, <code>un_member_states_2024$country</code> extracts the <strong><code>country</code></strong> column from the <strong><code>un_member_states_2024</code></strong> dataset. This column contains the names of all the UN member states.</p>
+<ul>
+<li>The <code>$</code> operator acts like a shortcut, letting you directly pull out and work with one column without needing to extract the entire dataset.</li>
+<li>This is useful when you need to perform operations or analyses on just one column of data, such as calculating summary statistics or visualizing that particular variable.</li>
+</ul>
+<p>When you run this line of code, R will return a list of all the countries in the dataset, making it easier to focus on that specific part of your data.</p>
 <hr>
 </section>
 <section id="checking-the-first-few-rows" class="level3">
@@ -337,6 +369,7 @@ $ hdi_2022                           &lt;dbl&gt; 0.462, 0.789, 0.745, 0.884, 0.5
 </section>
 <section id="basic-operations-in-r" class="level3">
 <h3 class="anchored" data-anchor-id="basic-operations-in-r">9. Basic Operations in R</h3>
+<p>In R, you can use it just like a calculator to perform basic arithmetic operations or create sequences of numbers. Let’s look at two examples:</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># You can do basic math in R, like addition:</span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="dv">2</span> <span class="sc">+</span> <span class="dv">2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -349,23 +382,48 @@ $ hdi_2022                           &lt;dbl&gt; 0.462, 0.789, 0.745, 0.884, 0.5
 <pre><code>[1] 1 3 5 7 9</code></pre>
 </div>
 </div>
-<p>R will output the results directly in the Console if not assigned to a name.</p>
+<ul>
+<li><p>In the first line, <strong><code>2 + 2</code></strong> simply adds two numbers together, and R will output the result (which is 4) directly in the Console.</p></li>
+<li><p>The second line, <strong><code>seq(from = 1, to = 10, by = 2)</code></strong>, generates a <strong>sequence of numbers</strong>. This command creates a sequence that starts at 1, ends at 10, and increases by 2 with each step. The output will be: <code>1, 3, 5, 7, 9</code>.</p></li>
+</ul>
+<p><strong>Note:</strong> R will automatically display the results in the <strong>Console</strong> unless you assign the output to a variable or name. If you want to store the result for later use, you can assign it using the assignment operator (<code>&lt;-</code>), like this:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Assign the result of a sequence to a variable:</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>my_sequence <span class="ot">&lt;-</span> <span class="fu">seq</span>(<span class="at">from =</span> <span class="dv">1</span>, <span class="at">to =</span> <span class="dv">10</span>, <span class="at">by =</span> <span class="dv">2</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Now, the sequence is saved as <code>my_sequence</code>, and you can use it later in your analysis!</p>
 <hr>
 </section>
 <section id="using-functions-in-r" class="level3">
 <h3 class="anchored" data-anchor-id="using-functions-in-r">10. Using Functions in R</h3>
+<p>In R, functions often have <strong>arguments</strong> that specify how they should behave. You can pass these arguments in two ways: by naming them explicitly or by using their <strong>position</strong> in the function. Let’s look at how this works with the <code>seq()</code> function, which creates sequences of numbers.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Using named arguments in functions:</span></span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">seq</span>(<span class="at">from =</span> <span class="dv">5</span>, <span class="at">to =</span> <span class="dv">100</span>, <span class="at">by =</span> <span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Using named arguments in functions:</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="fu">seq</span>(<span class="at">from =</span> <span class="dv">5</span>, <span class="at">to =</span> <span class="dv">100</span>, <span class="at">by =</span> <span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> [1]   5  10  15  20  25  30  35  40  45  50  55  60  65  70  75  80  85  90  95 100</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Or using positional arguments:</span></span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="fu">seq</span>(<span class="dv">5</span>, <span class="dv">100</span>, <span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Or using positional arguments:</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="fu">seq</span>(<span class="dv">5</span>, <span class="dv">100</span>, <span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code> [1]   5  10  15  20  25  30  35  40  45  50  55  60  65  70  75  80  85  90  95 100</code></pre>
 </div>
 </div>
+<ul>
+<li>In the first line, we’re using <strong>named arguments</strong> (<code>from</code>, <code>to</code>, <code>by</code>) to clearly specify where the sequence starts, where it ends, and the step size between numbers. This makes it easy to understand what each value represents.
+<ul>
+<li><strong><code>from = 5</code></strong> means the sequence starts at 5.</li>
+<li><strong><code>to = 100</code></strong> means it ends at 100.</li>
+<li><strong><code>by = 5</code></strong> specifies the step size of 5 between each number.</li>
+</ul></li>
+<li>In the second line, we’re using <strong>positional arguments</strong>. R assumes the order of the arguments based on their position:
+<ul>
+<li>The first value <code>5</code> is the starting point (<code>from</code>).</li>
+<li>The second value <code>100</code> is the ending point (<code>to</code>).</li>
+<li>The third value <code>5</code> is the step size (<code>by</code>).</li>
+</ul></li>
+</ul>
+<p>Both versions of the function produce the same result: <code>5, 10, 15, ..., 100</code>. Using named arguments makes your code more readable, especially in longer functions, while positional arguments can make your code shorter and quicker to write when the order of the arguments is clear.</p>
 <hr>
 </section>
 <section id="session-1-review-questions" class="level3">
@@ -440,97 +498,140 @@ C. It gives a quick overview of the structure of a dataset, showing the data typ
 <section id="installing-and-loading-necessary-packages" class="level3">
 <h3 class="anchored" data-anchor-id="installing-and-loading-necessary-packages">11. Installing and Loading Necessary Packages</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load required packages for data visualization</span></span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(moderndive) <span class="co"># Not necessary if already loaded</span></span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="co"># TIP: You can install packages if not already installed</span></span>
-<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages(c("ggplot2", "moderndive"))</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load required packages for data visualization</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(moderndive) <span class="co"># Not necessary if already loaded</span></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a><span class="co"># TIP: You can install packages if not already installed</span></span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages(c("ggplot2", "moderndive"))</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>This session requires the <code>ggplot2</code> and <code>dplyr</code> packages for creating visualizations using the <code>un_member_states_2024</code> data.</p>
+<p>This session requires the <code>ggplot2</code> and <code>moderndive</code> packages for creating visualizations using the <code>un_member_states_2024</code> data. We’ll introduce a couple other packages as needed throughout.</p>
 <hr>
 </section>
 <section id="visualizing-population-distribution-histogram" class="level3">
 <h3 class="anchored" data-anchor-id="visualizing-population-distribution-histogram">12. Visualizing Population Distribution: Histogram</h3>
+<p>Histograms are a great way to visualize the distribution of a numeric variable—in this case, the population of UN member states. In R, you can create a histogram using the <code>ggplot2</code> package, which provides a flexible framework for building visualizations.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a histogram of population distribution</span></span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(un_member_states_2024, <span class="fu">aes</span>(<span class="at">x =</span> population_2024)) <span class="sc">+</span></span>
-<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">fill =</span> <span class="st">"steelblue"</span>, <span class="at">color =</span> <span class="st">"white"</span>) <span class="sc">+</span></span>
-<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Add labels to better understand plot</span></span>
-<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Population Distribution of UN Member States"</span>, </span>
-<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Population"</span>, </span>
-<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Frequency"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a histogram of population distribution</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(un_member_states_2024, <span class="fu">aes</span>(<span class="at">x =</span> population_2024)) <span class="sc">+</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>(<span class="at">fill =</span> <span class="st">"steelblue"</span>, <span class="at">color =</span> <span class="st">"white"</span>) <span class="sc">+</span></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Add labels to better understand plot</span></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Population Distribution of UN Member States"</span>, </span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Population"</span>, </span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Frequency"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
-</div>
-<div class="cell-output-display">
-<p><img src="day1_walkthrough_answers_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid" width="672"></p>
-</div>
-</div>
-<p>This histogram helps visualize how the population is distributed across UN member states. The <code>binwidth</code> argument controls the width of the population bins.</p>
-<hr>
-</section>
-<section id="visualizing-life-expectancy-side-by-side-boxplot" class="level3">
-<h3 class="anchored" data-anchor-id="visualizing-life-expectancy-side-by-side-boxplot">13. Visualizing Life Expectancy: Side-by-side Boxplot</h3>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a boxplot to see GDP per capita spread by continent</span></span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(un_member_states_2024, <span class="fu">aes</span>(<span class="at">x =</span> continent, <span class="at">y =</span> life_expectancy_2022)) <span class="sc">+</span></span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
-<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Life Expectancy in 2022 of UN Member States by Continent"</span>, </span>
-<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Life Expectancy"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: Removed 4 rows containing non-finite outside the scale range (`stat_boxplot()`).</code></pre>
 </div>
 <div class="cell-output-display">
 <p><img src="day1_walkthrough_answers_files/figure-html/unnamed-chunk-13-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<p>The boxplot provides insights into the spread and presence of any outliers in the life expectancy of UN member states grouped by continent.</p>
+<ul>
+<li><p><strong><code>ggplot(un_member_states_2024, aes(x = population_2024))</code></strong>: This initializes the plot using the <strong><code>ggplot()</code></strong> function. It specifies the <strong>dataset</strong> (<code>un_member_states_2024</code>) and the <strong>aesthetic mapping</strong> (<code>aes()</code>) to indicate that the population column should be plotted on the x-axis.</p></li>
+<li><p><strong><code>geom_histogram()</code></strong>: This function adds a <strong>histogram</strong> layer to the plot. In this case, we use:</p>
+<ul>
+<li><strong><code>fill = "steelblue"</code></strong> to color the bars inside the histogram.</li>
+<li><strong><code>color = "white"</code></strong> to outline the bars with a white border, making the bars visually distinct.</li>
+</ul></li>
+<li><p><strong><code>labs()</code></strong>: This function adds labels to the plot to make it more informative:</p>
+<ul>
+<li><strong><code>title = "Population Distribution of UN Member States"</code></strong>: The title of the plot.</li>
+<li><strong><code>x = "Population"</code></strong>: The label for the x-axis (which represents population).</li>
+<li><strong><code>y = "Frequency"</code></strong>: The label for the y-axis (which represents how frequently populations of a certain size appear).</li>
+</ul></li>
+</ul>
+<p>This histogram allows you to <strong>visualize how the population is distributed</strong> across the UN member states. You can see the frequency of different population ranges, which gives you a sense of where most countries fall in terms of population size.</p>
+<p><strong>Note:</strong> You can adjust the <strong><code>binwidth</code></strong> argument in <code>geom_histogram()</code> to control the width of the bars (or “bins”) used in the histogram. Smaller bins give you more detail, while larger bins smooth out the distribution for a broader overview.</p>
+<p>For example:</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">geom_histogram</span>(<span class="at">binwidth =</span> <span class="dv">5000000</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>This would change the bin width to 5 million, grouping countries with similar population sizes together.</p>
 <hr>
 </section>
-<section id="comparing-number-of-countries-by-continent-barplot" class="level3">
-<h3 class="anchored" data-anchor-id="comparing-number-of-countries-by-continent-barplot">14. Comparing Number of Countries by Continent: Barplot</h3>
+<section id="visualizing-life-expectancy-side-by-side-boxplot" class="level3">
+<h3 class="anchored" data-anchor-id="visualizing-life-expectancy-side-by-side-boxplot">13. Visualizing Life Expectancy: Side-by-side Boxplot</h3>
+<p>A <strong>boxplot</strong> is a great way to visualize the spread of data and detect any outliers in a dataset. It provides a clear summary of how the values are distributed, such as life expectancy in this example, and helps to compare across different groups—like continents.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a barplot to compare the number of countries by continent</span></span>
-<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(un_member_states_2024, <span class="fu">aes</span>(<span class="at">x =</span> continent)) <span class="sc">+</span></span>
-<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>() <span class="sc">+</span></span>
-<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Number of Countries by Continent"</span>, </span>
-<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Continent"</span>, <span class="at">y =</span> <span class="st">"Number of Countries"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a boxplot to see GDP per capita spread by continent</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(un_member_states_2024, <span class="fu">aes</span>(<span class="at">x =</span> continent, <span class="at">y =</span> life_expectancy_2022)) <span class="sc">+</span></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Life Expectancy in 2022 of UN Member States by Continent"</span>, </span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Life Expectancy"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 4 rows containing non-finite outside the scale range (`stat_boxplot()`).</code></pre>
+</div>
 <div class="cell-output-display">
 <p><img src="day1_walkthrough_answers_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<p>The barplot helps compare number of countries across different continents.</p>
+<ul>
+<li><p><strong><code>ggplot(un_member_states_2024, aes(x = continent, y = life_expectancy_2022))</code></strong>: This initializes the plot using the <strong><code>ggplot()</code></strong> function, setting the <strong>dataset</strong> (<code>un_member_states_2024</code>) and defining the <strong>aesthetics</strong>:</p>
+<ul>
+<li>The <strong>x-axis</strong> represents <strong><code>continent</code></strong>, which shows the different continents.</li>
+<li>The <strong>y-axis</strong> represents <strong><code>life_expectancy_2022</code></strong>, showing the life expectancy values for each UN member state in 2022.</li>
+</ul></li>
+<li><p><strong><code>geom_boxplot()</code></strong>: This function adds the <strong>boxplot</strong> to the graph. Each continent will have its own boxplot, summarizing the spread of life expectancy within that group. The box shows the <strong>interquartile range (IQR)</strong> (middle 50% of the data), the line inside represents the <strong>median</strong>, and the “whiskers” show the range of the data. <strong>Outliers</strong> are represented as points outside the whiskers.</p></li>
+<li><p><strong><code>labs()</code></strong>: This function adds labels to make the plot more informative:</p>
+<ul>
+<li><strong><code>title = "Life Expectancy in 2022 of UN Member States by Continent"</code></strong>: The title helps clarify what the plot is showing.</li>
+<li><strong><code>y = "Life Expectancy"</code></strong>: The y-axis label indicates that we’re looking at life expectancy values.</li>
+</ul></li>
+</ul>
+<p>The <strong>boxplot</strong> allows you to <strong>compare the distribution of life expectancy</strong> across different continents and see any <strong>outliers</strong>—countries whose life expectancy significantly differs from others on the same continent.</p>
+<ul>
+<li><strong>Key insights from a boxplot</strong>:
+<ul>
+<li>The <strong>spread</strong> of each box shows how life expectancy varies within each continent.</li>
+<li>The <strong>median</strong> line helps you quickly see the central tendency for each continent.</li>
+<li><strong>Outliers</strong> are points that fall outside the whiskers, signaling countries with unusual life expectancy values.</li>
+</ul></li>
+</ul>
+<p>This plot provides a quick visual summary of how life expectancy varies by continent, highlighting any significant differences or unusual cases.</p>
 <hr>
 </section>
-<section id="scatterplot-gdp-per-capita-vs.-life-expectancy" class="level3">
-<h3 class="anchored" data-anchor-id="scatterplot-gdp-per-capita-vs.-life-expectancy">15. Scatterplot: GDP per Capita vs.&nbsp;Life Expectancy</h3>
+<section id="comparing-number-of-countries-by-continent-barplot" class="level3">
+<h3 class="anchored" data-anchor-id="comparing-number-of-countries-by-continent-barplot">14. Comparing Number of Countries by Continent: Barplot</h3>
+<p>A <strong>barplot</strong> is a simple yet powerful tool for comparing the number of items across different categories—in this case, the number of countries on each continent. This plot visually shows how continents differ in terms of the number of countries they contain.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a scatterplot to show the relationship between GDP per capita and life expectancy</span></span>
-<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(un_member_states_2024, <span class="fu">aes</span>(<span class="at">x =</span> gdp_per_capita, <span class="at">y =</span> life_expectancy_2022)) <span class="sc">+</span></span>
-<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">color =</span> <span class="st">"darkred"</span>) <span class="sc">+</span></span>
-<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"GDP per Capita vs. Life Expectancy"</span>, </span>
-<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"GDP per Capita (USD)"</span>, <span class="at">y =</span> <span class="st">"Life Expectancy (Years)"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>Warning: Removed 5 rows containing missing values or values outside the scale range (`geom_point()`).</code></pre>
-</div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a barplot to compare the number of countries by continent</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(un_member_states_2024, <span class="fu">aes</span>(<span class="at">x =</span> continent)) <span class="sc">+</span></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>() <span class="sc">+</span></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Number of Countries by Continent"</span>, </span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Continent"</span>, <span class="at">y =</span> <span class="st">"Number of Countries"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="day1_walkthrough_answers_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<p>This scatterplot allows us to visualize the relationship between a country’s GDP per capita and its life expectancy.</p>
-<p>Check out <a href="https://moderndive.com/v2/viz.html#overplotting">Subsection 2.3.2 of ModernDive V2</a> for overplotting discussion.</p>
+<ul>
+<li><p><strong><code>ggplot(un_member_states_2024, aes(x = continent))</code></strong>: This initializes the plot using <strong><code>ggplot()</code></strong>, setting the dataset as <strong><code>un_member_states_2024</code></strong>. The <strong>aesthetic mapping</strong> (<code>aes()</code>) specifies that the <strong>x-axis</strong> will represent the different continents.</p></li>
+<li><p><strong><code>geom_bar()</code></strong>: This function creates the <strong>barplot</strong>, automatically counting the number of countries for each continent. Each bar represents a continent, and the height of the bar shows how many countries belong to that continent.</p></li>
+<li><p><strong><code>labs()</code></strong>: This function adds informative labels to the plot:</p>
+<ul>
+<li><strong><code>title = "Number of Countries by Continent"</code></strong>: The title helps clarify the purpose of the plot.</li>
+<li><strong><code>x = "Continent"</code></strong>: The label for the x-axis, indicating the different continents.</li>
+<li><strong><code>y = "Number of Countries"</code></strong>: The label for the y-axis, showing the count of countries for each continent.</li>
+</ul></li>
+</ul>
+<p>The <strong>barplot</strong> provides a clear visual comparison of the <strong>number of countries on each continent</strong>. You can quickly see which continent has the most or fewest countries and compare them side by side.</p>
+<ul>
+<li><strong>Key insights from a barplot</strong>:
+<ul>
+<li><strong>Bar height</strong>: The taller the bar, the more countries that continent has.</li>
+<li><strong>Comparison</strong>: It’s easy to compare the number of countries across continents at a glance.</li>
+<li><strong>Proportional differences</strong>: You can quickly spot which continents have significantly more or fewer countries than others.</li>
+</ul></li>
+</ul>
+<p>This barplot effectively shows how the number of countries varies across continents, making it easy to visually compare the different regions of the world.</p>
 <hr>
 </section>
-<section id="faceted-scatterplot-gdp-per-capita-vs.-life-expectancy-by-continent" class="level3">
-<h3 class="anchored" data-anchor-id="faceted-scatterplot-gdp-per-capita-vs.-life-expectancy-by-continent">16. Faceted Scatterplot: GDP per Capita vs.&nbsp;Life Expectancy by Continent</h3>
+<section id="scatterplot-gdp-per-capita-vs.-life-expectancy" class="level3">
+<h3 class="anchored" data-anchor-id="scatterplot-gdp-per-capita-vs.-life-expectancy">15. Scatterplot: GDP per Capita vs.&nbsp;Life Expectancy</h3>
+<p>A <strong>scatterplot</strong> is an excellent way to visualize the relationship between two numerical variables. In this case, we are examining the relationship between a country’s <strong>GDP per capita</strong> and its <strong>life expectancy</strong>. The scatterplot helps us see if there’s any pattern or correlation between these two factors across UN member states.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Faceted scatterplot to see relationship by continent</span></span>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a scatterplot to show the relationship between GDP per capita and life expectancy</span></span>
 <span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(un_member_states_2024, <span class="fu">aes</span>(<span class="at">x =</span> gdp_per_capita, <span class="at">y =</span> life_expectancy_2022)) <span class="sc">+</span></span>
-<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">color =</span> <span class="st">"blue"</span>) <span class="sc">+</span></span>
-<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>continent) <span class="sc">+</span></span>
-<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"GDP per Capita vs. Life Expectancy by Continent"</span>, </span>
-<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"GDP per Capita (USD)"</span>, <span class="at">y =</span> <span class="st">"Life Expectancy (Years)"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">color =</span> <span class="st">"darkred"</span>) <span class="sc">+</span></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"GDP per Capita vs. Life Expectancy"</span>, </span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"GDP per Capita (USD)"</span>, <span class="at">y =</span> <span class="st">"Life Expectancy (Years)"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning: Removed 5 rows containing missing values or values outside the scale range (`geom_point()`).</code></pre>
 </div>
@@ -538,81 +639,200 @@ C. It gives a quick overview of the structure of a dataset, showing the data typ
 <p><img src="day1_walkthrough_answers_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<p>Faceting allows us to explore the relationship between GDP per capita and life expectancy, broken down by continent.</p>
+<ul>
+<li><p><strong><code>ggplot(un_member_states_2024, aes(x = gdp_per_capita, y = life_expectancy_2022))</code></strong>: This initializes the plot with <strong><code>ggplot()</code></strong>, using <strong><code>un_member_states_2024</code></strong> as the dataset. The <strong>aesthetic mapping</strong> (<code>aes()</code>) tells R to plot <strong>GDP per capita</strong> on the <strong>x-axis</strong> and <strong>life expectancy</strong> on the <strong>y-axis</strong>, showing how these two variables relate.</p></li>
+<li><p><strong><code>geom_point(color = "darkred")</code></strong>: This function adds <strong>points</strong> to the plot, with each point representing a country. We use <strong>dark red</strong> as the point color to make the data stand out and easy to interpret.</p></li>
+<li><p><strong><code>labs()</code></strong>: This function adds helpful labels to the plot:</p>
+<ul>
+<li><strong><code>title = "GDP per Capita vs. Life Expectancy"</code></strong>: The title explains what the plot is showing.</li>
+<li><strong><code>x = "GDP per Capita (USD)"</code></strong>: The x-axis label specifies that we’re looking at GDP per capita in US dollars.</li>
+<li><strong><code>y = "Life Expectancy (Years)"</code></strong>: The y-axis label shows that life expectancy is measured in years.</li>
+</ul></li>
+</ul>
+<p>The <strong>scatterplot</strong> helps visualize the <strong>relationship between a country’s GDP per capita and life expectancy</strong>. Each point on the graph represents a country, showing how its wealth (GDP per capita) relates to the average life expectancy of its population.</p>
+<ul>
+<li><strong>Key insights from a scatterplot</strong>:
+<ul>
+<li><strong>Positive or negative trends</strong>: You can observe whether there’s a <strong>correlation</strong> between GDP per capita and life expectancy—whether countries with higher GDP tend to have higher life expectancy, or if there’s no clear pattern.</li>
+<li><strong>Clustering</strong>: Look for groups of points that cluster together, which might suggest countries with similar characteristics.</li>
+<li><strong>Outliers</strong>: Notice any points that stand far away from the rest, indicating outlier countries where the relationship between GDP and life expectancy doesn’t follow the overall trend.</li>
+</ul></li>
+</ul>
+<p>This scatterplot allows us to explore the <strong>relationship</strong> between economic prosperity and life expectancy across countries, giving us a visual clue about how these two variables might be connected.</p>
+<p>Check out <a href="https://moderndive.com/v2/viz.html#overplotting">Subsection 2.3.2 of ModernDive V2</a> for overplotting discussion.</p>
 <hr>
 </section>
-<section id="pie-chart-vs-bar-chart-region-distribution" class="level3">
-<h3 class="anchored" data-anchor-id="pie-chart-vs-bar-chart-region-distribution">17. Pie Chart vs Bar Chart: Region Distribution</h3>
+<section id="faceted-scatterplot-gdp-per-capita-vs.-life-expectancy-by-continent" class="level3">
+<h3 class="anchored" data-anchor-id="faceted-scatterplot-gdp-per-capita-vs.-life-expectancy-by-continent">16. Faceted Scatterplot: GDP per Capita vs.&nbsp;Life Expectancy by Continent</h3>
+<p><strong>Faceting</strong> is a powerful feature in <code>ggplot2</code> that allows you to break down a plot by different categories—in this case, by continent. It creates multiple smaller scatterplots, each representing the relationship between GDP per capita and life expectancy for a specific continent. This helps you explore how the relationship might differ across regions of the world.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a pie chart for region distribution</span></span>
-<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(un_member_states_2024, <span class="fu">aes</span>(<span class="at">x =</span> <span class="st">""</span>, <span class="at">fill =</span> region)) <span class="sc">+</span></span>
-<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>() <span class="sc">+</span></span>
-<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Region Distribution of UN Member States"</span>) <span class="sc">+</span></span>
-<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_polar</span>(<span class="at">theta =</span> <span class="st">"y"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Faceted scatterplot to see relationship by continent</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(un_member_states_2024, <span class="fu">aes</span>(<span class="at">x =</span> gdp_per_capita, <span class="at">y =</span> life_expectancy_2022)) <span class="sc">+</span></span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">color =</span> <span class="st">"blue"</span>) <span class="sc">+</span></span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>continent) <span class="sc">+</span></span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"GDP per Capita vs. Life Expectancy by Continent"</span>, </span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"GDP per Capita (USD)"</span>, <span class="at">y =</span> <span class="st">"Life Expectancy (Years)"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Removed 5 rows containing missing values or values outside the scale range (`geom_point()`).</code></pre>
+</div>
 <div class="cell-output-display">
 <p><img src="day1_walkthrough_answers_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<p>The pie chart visualizes how the 193 UN member states are distributed across different continents.</p>
-<p>Much better as a flipped bar chart</p>
+<ul>
+<li><p><strong><code>ggplot(un_member_states_2024, aes(x = gdp_per_capita, y = life_expectancy_2022))</code></strong>: This initializes the plot using the <strong><code>un_member_states_2024</code></strong> dataset. The aesthetic mapping (<code>aes()</code>) tells R to plot <strong>GDP per capita</strong> on the x-axis and <strong>life expectancy</strong> on the y-axis, showing how these two variables are related for each country.</p></li>
+<li><p><strong><code>geom_point(color = "blue")</code></strong>: This adds the <strong>points</strong> to the scatterplot, with each point representing a country. The points are colored <strong>blue</strong> to distinguish them visually.</p></li>
+<li><p><strong><code>facet_wrap(~continent)</code></strong>: The <strong><code>facet_wrap()</code></strong> function divides the plot into smaller subplots, one for each <strong>continent</strong>. This helps you compare the relationship between GDP per capita and life expectancy across different continents. Each subplot shows the countries from that specific continent, making it easier to see regional patterns.</p></li>
+<li><p><strong><code>labs()</code></strong>: This function adds labels to the plot:</p>
+<ul>
+<li><strong><code>title = "GDP per Capita vs. Life Expectancy by Continent"</code></strong>: The title explains that we are comparing GDP per capita and life expectancy for each continent.</li>
+<li><strong><code>x = "GDP per Capita (USD)"</code></strong>: The x-axis label specifies that GDP per capita is measured in US dollars.</li>
+<li><strong><code>y = "Life Expectancy (Years)"</code></strong>: The y-axis label indicates that life expectancy is measured in years.</li>
+</ul></li>
+</ul>
+<p>The <strong>faceted scatterplot</strong> allows you to explore the <strong>relationship between GDP per capita and life expectancy</strong>, broken down by <strong>continent</strong>. This helps you see whether the relationship holds across different regions or if there are unique patterns specific to certain continents.</p>
+<ul>
+<li><strong>Key insights from a faceted scatterplot</strong>:
+<ul>
+<li><strong>Comparing regions</strong>: You can easily see how the relationship between GDP per capita and life expectancy differs between continents. For example, some continents may show a stronger correlation, while others may not.</li>
+<li><strong>Regional trends</strong>: Faceting allows you to spot trends that are specific to each region. You might notice that countries in certain continents cluster differently.</li>
+<li><strong>Outliers</strong>: Within each facet, you can spot outlier countries that deviate from the regional trend, helping you identify exceptional cases.</li>
+</ul></li>
+</ul>
+<p>This faceted scatterplot provides a detailed look at how the relationship between <strong>GDP per capita and life expectancy</strong> plays out across different continents, giving you a more nuanced understanding of global data patterns.</p>
+<hr>
+</section>
+<section id="pie-chart-vs-bar-chart-region-distribution" class="level3">
+<h3 class="anchored" data-anchor-id="pie-chart-vs-bar-chart-region-distribution">17. Pie Chart vs Bar Chart: Region Distribution</h3>
+<p>Here’s an expanded explanation for a new R user, comparing the two approaches:</p>
+<p>The <strong>pie chart</strong> and <strong>flipped bar chart</strong> both aim to show the distribution of UN member states across different regions, but a <strong>bar chart</strong> often provides clearer comparisons between categories due to the ease of interpreting bar lengths over pie slices.</p>
+<section id="pie-chart" class="level4">
+<h4 class="anchored" data-anchor-id="pie-chart">Pie Chart:</h4>
+<p>A pie chart displays proportions, breaking the data into slices that represent the different regions.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># As a bar chart instead</span></span>
-<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(un_member_states_2024, <span class="fu">aes</span>(<span class="at">x =</span> region)) <span class="sc">+</span></span>
-<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>() <span class="sc">+</span></span>
-<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Region Distribution of UN Member States"</span>) <span class="sc">+</span></span>
-<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a pie chart for region distribution</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(un_member_states_2024, <span class="fu">aes</span>(<span class="at">x =</span> <span class="st">""</span>, <span class="at">fill =</span> region)) <span class="sc">+</span></span>
+<span id="cb31-3"><a href="#cb31-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>() <span class="sc">+</span></span>
+<span id="cb31-4"><a href="#cb31-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Region Distribution of UN Member States"</span>) <span class="sc">+</span></span>
+<span id="cb31-5"><a href="#cb31-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_polar</span>(<span class="at">theta =</span> <span class="st">"y"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="day1_walkthrough_answers_files/figure-html/unnamed-chunk-18-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
+<ul>
+<li><p><strong><code>ggplot(un_member_states_2024, aes(x = "", fill = region))</code></strong>: This initializes the plot with <code>ggplot()</code>, mapping the <strong>region</strong> variable to the <strong>fill</strong> aesthetic, which assigns a different color to each region. The <strong>x = ““</strong> ensures the chart is a single stacked bar, which we will later turn into a pie.</p></li>
+<li><p><strong><code>geom_bar()</code></strong>: This creates a <strong>bar plot</strong> where each bar section represents the count of UN member states in each region.</p></li>
+<li><p><strong><code>coord_polar(theta = "y")</code></strong>: This converts the bar chart into a <strong>pie chart</strong> by transforming the stacked bar into circular form, making the height of each bar section correspond to the size of a slice in the pie chart.</p></li>
+<li><p><strong><code>labs()</code></strong>: Adds a title to explain that the chart shows the <strong>“Region Distribution of UN Member States”</strong>.</p></li>
+</ul>
+<p>The <strong>pie chart</strong> visualizes the distribution of UN member states by region, but <strong>pie charts can sometimes make it difficult to compare slices</strong> precisely, especially if the differences between regions are small.</p>
+</section>
+<section id="flipped-bar-chart-alternative" class="level4">
+<h4 class="anchored" data-anchor-id="flipped-bar-chart-alternative">Flipped Bar Chart (Alternative):</h4>
+<p>A flipped bar chart shows the same information but in a way that is often easier to compare visually.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># As a bar chart instead</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(un_member_states_2024, <span class="fu">aes</span>(<span class="at">x =</span> region)) <span class="sc">+</span></span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>() <span class="sc">+</span></span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Region Distribution of UN Member States"</span>) <span class="sc">+</span></span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="day1_walkthrough_answers_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<ul>
+<li><p><strong><code>ggplot(un_member_states_2024, aes(x = region))</code></strong>: This initializes the plot, mapping the <strong>region</strong> variable to the <strong>x-axis</strong>, which automatically groups the data by region and counts the number of UN member states in each.</p></li>
+<li><p><strong><code>geom_bar()</code></strong>: Creates a <strong>bar plot</strong>, where the height of each bar represents the number of countries in each region.</p></li>
+<li><p><strong><code>coord_flip()</code></strong>: <strong>Flips</strong> the chart so that the regions are displayed along the y-axis, and the length of the bars is on the x-axis. This makes it easier to compare the regions, as we can now read the bar lengths more easily.</p></li>
+<li><p><strong><code>labs()</code></strong>: Adds a title to explain that the chart shows the <strong>“Region Distribution of UN Member States”</strong>.</p></li>
+</ul>
+<p>The <strong>flipped bar chart</strong> provides a much clearer way to compare the <strong>number of countries</strong> across regions because the lengths of the bars are easier to distinguish than the slices of a pie chart. This makes it a preferred option for visualizing categorical data with multiple regions.</p>
 <hr>
+<p><em>Key Takeaway:</em> - <strong>Pie Chart</strong>: Useful for showing proportions but can be harder to interpret when categories are close in size. - <strong>Flipped Bar Chart</strong>: Easier to read and compare across categories, especially when there are several regions or when the differences between regions are small.</p>
+<p>In most cases, a <strong>flipped bar chart</strong> is the better choice for comparing categorical data like the number of countries by region.</p>
+<hr>
+</section>
 </section>
 <section id="line-graph-time-series-data" class="level3">
 <h3 class="anchored" data-anchor-id="line-graph-time-series-data">18. Line Graph: Time Series Data</h3>
 <p>There isn’t a good example of time series data in <code>un_member_states_2024</code> since it is missing data with a time component. But here is an example of how you could do from the <code>fivethirtyeight</code> package:</p>
+<section id="initial-line-graph" class="level4">
+<h4 class="anchored" data-anchor-id="initial-line-graph">Initial Line Graph</h4>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co">#install.packages("fivethirtyeight")</span></span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(fivethirtyeight)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co">#install.packages("fivethirtyeight")</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(fivethirtyeight)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Some larger datasets need to be installed separately, like senators and house_district_forecast. To install
 these, we recommend you install the fivethirtyeightdata package by running:
 install.packages('fivethirtyeightdata', repos = 'https://fivethirtyeightdata.github.io/drat/', type =
 'source')</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a line graph showing the number of births over 2014</span></span>
-<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(US_births_2000_2014, <span class="fu">aes</span>(<span class="at">x =</span> date, <span class="at">y =</span> births)) <span class="sc">+</span></span>
-<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">color =</span> <span class="st">"blue"</span>) <span class="sc">+</span></span>
-<span id="cb33-4"><a href="#cb33-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Daily U.S. Births"</span>, </span>
-<span id="cb33-5"><a href="#cb33-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Date"</span>, <span class="at">y =</span> <span class="st">"Number of Births"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<p><img src="day1_walkthrough_answers_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid" width="672"></p>
-</div>
-</div>
-<p>This line graph is hard to see due to the sheer volume of points. As a lead in to the next session, let’s focus on just 2014 data and then visualize that:</p>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Include package for more easily working with dates</span></span>
-<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages("lubridate")</span></span>
-<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lubridate)</span>
-<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Filter the data for 2014</span></span>
-<span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a>US_births_2014 <span class="ot">&lt;-</span> US_births_2000_2014 <span class="sc">|&gt;</span></span>
-<span id="cb34-7"><a href="#cb34-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">year</span>(date) <span class="sc">==</span> <span class="dv">2014</span>)</span>
-<span id="cb34-8"><a href="#cb34-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb34-9"><a href="#cb34-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a line graph showing the number of births in 2014</span></span>
-<span id="cb34-10"><a href="#cb34-10" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(US_births_2014, <span class="fu">aes</span>(<span class="at">x =</span> date, <span class="at">y =</span> births)) <span class="sc">+</span></span>
-<span id="cb34-11"><a href="#cb34-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">color =</span> <span class="st">"blue"</span>) <span class="sc">+</span></span>
-<span id="cb34-12"><a href="#cb34-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Daily U.S. Births in 2014"</span>, </span>
-<span id="cb34-13"><a href="#cb34-13" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Date"</span>, <span class="at">y =</span> <span class="st">"Number of Births"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a line graph showing the number of births over 2014</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(US_births_2000_2014, <span class="fu">aes</span>(<span class="at">x =</span> date, <span class="at">y =</span> births)) <span class="sc">+</span></span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">color =</span> <span class="st">"blue"</span>) <span class="sc">+</span></span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Daily U.S. Births"</span>, </span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Date"</span>, <span class="at">y =</span> <span class="st">"Number of Births"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="day1_walkthrough_answers_files/figure-html/unnamed-chunk-20-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
+<ul>
+<li><p><strong><code>ggplot(US_births_2000_2014, aes(x = date, y = births))</code></strong>: This initializes the plot using the <strong><code>US_births_2000_2014</code></strong> dataset, where <strong><code>date</code></strong> is mapped to the x-axis and <strong><code>births</code></strong> to the y-axis, plotting the number of births over time from 2000 to 2014.</p></li>
+<li><p><strong><code>geom_line(color = "blue")</code></strong>: This function adds a <strong>line plot</strong>, using blue to represent the number of daily births over the years.</p></li>
+<li><p><strong><code>labs()</code></strong>: This adds a title and axis labels to clarify the plot:</p>
+<ul>
+<li><strong>Title</strong>: “Daily U.S. Births” explains what’s being plotted.</li>
+<li><strong>x = “Date”</strong> labels the x-axis as the dates from 2000 to 2014.</li>
+<li><strong>y = “Number of Births”</strong> labels the y-axis with the number of births each day.</li>
+</ul></li>
+</ul>
+<p>However, the sheer volume of data makes this graph difficult to read. The line is too dense because it includes 14 years of daily data, creating a cluttered visual. To make the graph more interpretable, we can <strong>filter the data</strong> to focus on just one year—2014.</p>
+</section>
+<section id="refining-the-graph-focusing-on-2014" class="level4">
+<h4 class="anchored" data-anchor-id="refining-the-graph-focusing-on-2014">Refining the Graph (Focusing on 2014)</h4>
+<p>To improve readability and gain clearer insights, we’ll <strong>filter the dataset</strong> to focus only on the year 2014, reducing the number of data points and creating a cleaner visualization.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Include package for more easily working with dates</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages("lubridate")</span></span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lubridate)</span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb36-5"><a href="#cb36-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Filter the data for 2014</span></span>
+<span id="cb36-7"><a href="#cb36-7" aria-hidden="true" tabindex="-1"></a>US_births_2014 <span class="ot">&lt;-</span> US_births_2000_2014 <span class="sc">|&gt;</span></span>
+<span id="cb36-8"><a href="#cb36-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="fu">year</span>(date) <span class="sc">==</span> <span class="dv">2014</span>)</span>
+<span id="cb36-9"><a href="#cb36-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb36-10"><a href="#cb36-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a line graph showing the number of births in 2014</span></span>
+<span id="cb36-11"><a href="#cb36-11" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(US_births_2014, <span class="fu">aes</span>(<span class="at">x =</span> date, <span class="at">y =</span> births)) <span class="sc">+</span></span>
+<span id="cb36-12"><a href="#cb36-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">color =</span> <span class="st">"blue"</span>) <span class="sc">+</span></span>
+<span id="cb36-13"><a href="#cb36-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Daily U.S. Births in 2014"</span>, </span>
+<span id="cb36-14"><a href="#cb36-14" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Date"</span>, <span class="at">y =</span> <span class="st">"Number of Births"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="day1_walkthrough_answers_files/figure-html/unnamed-chunk-21-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<ul>
+<li><p><strong><code>library(lubridate)</code></strong>: The <strong><code>lubridate</code></strong> package simplifies working with dates in R. It provides easy-to-use functions like <code>year()</code> to extract the year from a date, making it perfect for filtering the data by year.</p></li>
+<li><p><strong><code>US_births_2014 &lt;- US_births_2000_2014 |&gt; filter(year(date) == 2014)</code></strong>: This line uses the <strong>pipe operator (<code>|&gt;</code>)</strong> and the <strong><code>filter()</code></strong> function to extract only the data from 2014. The <strong><code>year(date)</code></strong> function (from <code>lubridate</code>) helps to filter the dataset by selecting only rows where the year is 2014.</p></li>
+<li><p><strong>Creating the refined plot</strong>:</p>
+<ul>
+<li>The process for building the plot remains the same as before, but now we’re working with only <strong>2014 data</strong>, significantly reducing the number of points on the line.</li>
+</ul></li>
+<li><p><strong><code>geom_line(color = "blue")</code></strong>: Again, we use <strong>blue</strong> to plot the number of births on each day of 2014, which now results in a much more readable line graph.</p></li>
+<li><p><strong><code>labs()</code></strong>: This adds labels to clarify the refined plot:</p>
+<ul>
+<li><strong>Title</strong>: “Daily U.S. Births in 2014” reflects the new focus on just one year.</li>
+<li><strong>x = “Date”</strong> labels the x-axis with the dates of 2014.</li>
+<li><strong>y = “Number of Births”</strong> labels the y-axis with the daily number of births.</li>
+</ul></li>
+</ul>
+<p><em>Key Insights:</em> - <strong>Initial Graph</strong>: The original line graph included data from 2000 to 2014, but it was too dense to be useful, with too many points crammed into the plot. - <strong>Refined Graph</strong>: By focusing on just <strong>2014</strong>, the refined line graph provides a clear and readable view of how births varied day-by-day throughout the year. This makes it easier to spot trends or unusual patterns in the data, like seasonal changes or spikes on certain dates.</p>
+</section>
 </section>
 <section id="session-2-review-questions" class="level3">
 <h3 class="anchored" data-anchor-id="session-2-review-questions">Session 2 Review Questions</h3>
 <p><strong>(2.1)</strong> In the following code for creating a scatterplot of Fertility Rate (<code>fertility_rate_2022</code>) vs.&nbsp;Human Development Index (<code>hdi_2022</code>), which entries should be in quotes?</p>
-<div class="sourceCode" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(un_member_states_2024, <span class="fu">aes</span>(<span class="at">x =</span> fertility_rate_2022, <span class="at">y =</span> hdi_2022)) <span class="sc">+</span> </span>
-<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(un_member_states_2024, <span class="fu">aes</span>(<span class="at">x =</span> fertility_rate_2022, <span class="at">y =</span> hdi_2022)) <span class="sc">+</span> </span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>A. <code>un_member_states_2024</code>, <code>fertility_rate_2022</code>, and <code>hdi_2022</code> should all be in quotes.<br>
 B. Only <code>un_member_states_2024</code> should be in quotes, as it refers to the dataset.<br>
 C. Only <code>fertility_rate_2022</code> and <code>hdi_2022</code> should be in quotes, as they are variable names.<br>
@@ -676,15 +896,15 @@ A. To split the scatterplot into multiple graphs by region.</p>
 Facet wrapping divides the scatterplot into separate panels for each region, allowing for a clearer comparison of relationships across groups.</p>
 <p>One way to produce this facetting:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(un_member_states_2024, <span class="fu">aes</span>(<span class="at">x =</span> capital_population, <span class="at">y =</span> obesity_rate_2024)) <span class="sc">+</span></span>
-<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color =</span> region)) <span class="sc">+</span></span>
-<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>continent) <span class="sc">+</span></span>
-<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">hjust =</span> <span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(un_member_states_2024, <span class="fu">aes</span>(<span class="at">x =</span> capital_population, <span class="at">y =</span> obesity_rate_2024)) <span class="sc">+</span></span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">color =</span> region)) <span class="sc">+</span></span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>continent) <span class="sc">+</span></span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">hjust =</span> <span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Warning: Removed 42 rows containing missing values or values outside the scale range (`geom_point()`).</code></pre>
 </div>
 <div class="cell-output-display">
-<p><img src="day1_walkthrough_answers_files/figure-html/unnamed-chunk-21-1.png" class="img-fluid" width="672"></p>
+<p><img src="day1_walkthrough_answers_files/figure-html/unnamed-chunk-22-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
 <hr>
@@ -697,13 +917,13 @@ Facet wrapping divides the scatterplot into separate panels for each region, all
 <p>The <code>filter()</code> function allows us to pick out specific rows that meet certain conditions. For example, let’s filter out countries in Africa with a GDP per capita above a certain threshold.</p>
 <p>The <strong>pipe operator</strong> <code>|&gt;</code> allows us to chain multiple functions together for a clean and readable data transformation process. It makes it easier to pass the result of one function to the next.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Filter countries in Africa with GDP per capita greater than $5,000</span></span>
-<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>african_high_gdp <span class="ot">&lt;-</span> un_member_states_2024 <span class="sc">|&gt;</span> </span>
-<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(continent <span class="sc">==</span> <span class="st">"Africa"</span>, gdp_per_capita <span class="sc">&gt;</span> <span class="dv">5000</span>)</span>
-<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a><span class="co"># TIP: Can also use the `&amp;` instead of `,` for AND conditions</span></span>
-<span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a>un_member_states_2024 <span class="sc">|&gt;</span> </span>
-<span id="cb38-7"><a href="#cb38-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(continent <span class="sc">==</span> <span class="st">"Africa"</span> <span class="sc">&amp;</span> gdp_per_capita <span class="sc">&gt;</span> <span class="dv">5000</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Filter countries in Africa with GDP per capita greater than $5,000</span></span>
+<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>african_high_gdp <span class="ot">&lt;-</span> un_member_states_2024 <span class="sc">|&gt;</span> </span>
+<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(continent <span class="sc">==</span> <span class="st">"Africa"</span>, gdp_per_capita <span class="sc">&gt;</span> <span class="dv">5000</span>)</span>
+<span id="cb40-4"><a href="#cb40-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb40-5"><a href="#cb40-5" aria-hidden="true" tabindex="-1"></a><span class="co"># TIP: Can also use the `&amp;` instead of `,` for AND conditions</span></span>
+<span id="cb40-6"><a href="#cb40-6" aria-hidden="true" tabindex="-1"></a>un_member_states_2024 <span class="sc">|&gt;</span> </span>
+<span id="cb40-7"><a href="#cb40-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(continent <span class="sc">==</span> <span class="st">"Africa"</span> <span class="sc">&amp;</span> gdp_per_capita <span class="sc">&gt;</span> <span class="dv">5000</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 8 × 39
   country           iso   official_state_name    continent region capital_city capital_population capital_perc_of_coun…¹
@@ -724,9 +944,9 @@ Facet wrapping divides the scatterplot into separate panels for each region, all
 #   combined_total &lt;int&gt;, driving_side &lt;chr&gt;, obesity_rate_2024 &lt;dbl&gt;, obesity_rate_2016 &lt;dbl&gt;,
 #   has_nuclear_weapons_2024 &lt;lgl&gt;, population_2024 &lt;dbl&gt;, area_in_square_km &lt;dbl&gt;, area_in_square_miles &lt;dbl&gt;, …</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb40"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1" aria-hidden="true" tabindex="-1"></a><span class="co"># This is not the same as using `|` which is an OR condition</span></span>
-<span id="cb40-2"><a href="#cb40-2" aria-hidden="true" tabindex="-1"></a>un_member_states_2024 <span class="sc">|&gt;</span> </span>
-<span id="cb40-3"><a href="#cb40-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(continent <span class="sc">==</span> <span class="st">"Africa"</span> <span class="sc">|</span> gdp_per_capita <span class="sc">&gt;</span> <span class="dv">5000</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="co"># This is not the same as using `|` which is an OR condition</span></span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>un_member_states_2024 <span class="sc">|&gt;</span> </span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(continent <span class="sc">==</span> <span class="st">"Africa"</span> <span class="sc">|</span> gdp_per_capita <span class="sc">&gt;</span> <span class="dv">5000</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 158 × 39
    country             iso   official_state_name continent region capital_city capital_population capital_perc_of_coun…¹
@@ -750,29 +970,24 @@ Facet wrapping divides the scatterplot into separate panels for each region, all
 #   combined_total &lt;int&gt;, driving_side &lt;chr&gt;, obesity_rate_2024 &lt;dbl&gt;, obesity_rate_2016 &lt;dbl&gt;, …</code></pre>
 </div>
 </div>
-</section>
-<section id="explanation" class="level3">
-<h3 class="anchored" data-anchor-id="explanation">Explanation:</h3>
-<ul>
-<li><strong><code>continent == "Africa"</code></strong>: Selects only rows where the continent is Africa.</li>
-<li><strong><code>gdp_per_capita &gt; 5000</code></strong>: Filters for countries with a GDP per capita above $5,000.</li>
-</ul>
+<p><em>Explanation:</em><br>
+- <strong><code>continent == "Africa"</code></strong>: Selects only rows where the continent is Africa. - <strong><code>gdp_per_capita &gt; 5000</code></strong>: Filters for countries with a GDP per capita above $5,000.</p>
 <hr>
 </section>
 <section id="summarizing-data-with-summarize" class="level3">
 <h3 class="anchored" data-anchor-id="summarizing-data-with-summarize">20. Summarizing Data with <code>summarize()</code></h3>
 <p>The <code>summarize()</code> function computes summary statistics for one or more variables. This reduces the data frame to a summary based on the functions applied.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Summarize average life expectancy and population</span></span>
-<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>summary_stats <span class="ot">&lt;-</span> un_member_states_2024 <span class="sc">|&gt;</span> </span>
-<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
-<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">avg_life_expectancy =</span> <span class="fu">mean</span>(life_expectancy_2022, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">med_population =</span> <span class="fu">median</span>(population_2024, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb42-7"><a href="#cb42-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb42-8"><a href="#cb42-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Can also display as a markdown table</span></span>
-<span id="cb42-9"><a href="#cb42-9" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(knitr)</span>
-<span id="cb42-10"><a href="#cb42-10" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(summary_stats)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Summarize average life expectancy and population</span></span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>summary_stats <span class="ot">&lt;-</span> un_member_states_2024 <span class="sc">|&gt;</span> </span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
+<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">avg_life_expectancy =</span> <span class="fu">mean</span>(life_expectancy_2022, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">med_population =</span> <span class="fu">median</span>(population_2024, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb44-6"><a href="#cb44-6" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb44-7"><a href="#cb44-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-8"><a href="#cb44-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Can also display as a markdown table</span></span>
+<span id="cb44-9"><a href="#cb44-9" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(knitr)</span>
+<span id="cb44-10"><a href="#cb44-10" aria-hidden="true" tabindex="-1"></a><span class="fu">kable</span>(summary_stats)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <table class="table table-sm table-striped small">
 <thead>
@@ -790,27 +1005,22 @@ Facet wrapping divides the scatterplot into separate panels for each region, all
 </table>
 </div>
 </div>
-</section>
-<section id="explanation-1" class="level3">
-<h3 class="anchored" data-anchor-id="explanation-1">Explanation:</h3>
-<ul>
-<li><strong><code>mean(life_expectancy_2022, na.rm = TRUE)</code></strong>: Calculates the average life expectancy while ignoring missing values.</li>
-<li><strong><code>median(population_2024, na.rm = TRUE)</code></strong>: Computes the median population across all member states.</li>
-</ul>
+<p><em>Explanation:</em><br>
+- <strong><code>mean(life_expectancy_2022, na.rm = TRUE)</code></strong>: Calculates the average life expectancy while ignoring missing values. - <strong><code>median(population_2024, na.rm = TRUE)</code></strong>: Computes the median population across all member states.</p>
 <hr>
 </section>
 <section id="grouping-data-with-group_by" class="level3">
 <h3 class="anchored" data-anchor-id="grouping-data-with-group_by">21. Grouping Data with <code>group_by()</code></h3>
 <p>The <code>group_by()</code> function is used to split the data frame into groups. You can then apply functions like <code>summarize()</code> to calculate statistics for each group separately.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb43"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Group by continent and summarize the average life expectancy for each group</span></span>
-<span id="cb43-2"><a href="#cb43-2" aria-hidden="true" tabindex="-1"></a>life_expectancy_by_continent <span class="ot">&lt;-</span> un_member_states_2024 <span class="sc">|&gt;</span> </span>
-<span id="cb43-3"><a href="#cb43-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(continent) <span class="sc">|&gt;</span> </span>
-<span id="cb43-4"><a href="#cb43-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
-<span id="cb43-5"><a href="#cb43-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">avg_life_expectancy =</span> <span class="fu">mean</span>(life_expectancy_2022, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb43-6"><a href="#cb43-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">sd_life_expectancy =</span> <span class="fu">sd</span>(life_expectancy_2022, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb43-7"><a href="#cb43-7" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb43-8"><a href="#cb43-8" aria-hidden="true" tabindex="-1"></a>life_expectancy_by_continent</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Group by continent and summarize the average life expectancy for each group</span></span>
+<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>life_expectancy_by_continent <span class="ot">&lt;-</span> un_member_states_2024 <span class="sc">|&gt;</span> </span>
+<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(continent) <span class="sc">|&gt;</span> </span>
+<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
+<span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">avg_life_expectancy =</span> <span class="fu">mean</span>(life_expectancy_2022, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb45-6"><a href="#cb45-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">sd_life_expectancy =</span> <span class="fu">sd</span>(life_expectancy_2022, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb45-7"><a href="#cb45-7" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb45-8"><a href="#cb45-8" aria-hidden="true" tabindex="-1"></a>life_expectancy_by_continent</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 6 × 3
   continent     avg_life_expectancy sd_life_expectancy
@@ -823,46 +1033,36 @@ Facet wrapping divides the scatterplot into separate panels for each region, all
 6 South America                75.2               3.42</code></pre>
 </div>
 </div>
-</section>
-<section id="explanation-2" class="level3">
-<h3 class="anchored" data-anchor-id="explanation-2">Explanation:</h3>
-<ul>
-<li><strong><code>group_by(continent)</code></strong>: Groups the data by continent.</li>
-<li><strong><code>summarize()</code></strong>: Calculates the average life expectancy for each continent.</li>
-</ul>
+<p><em>Explanation:</em><br>
+- <strong><code>group_by(continent)</code></strong>: Groups the data by continent. - <strong><code>summarize()</code></strong>: Calculates the average life expectancy for each continent.</p>
 <hr>
 </section>
 <section id="creating-new-variables-with-mutate" class="level3">
 <h3 class="anchored" data-anchor-id="creating-new-variables-with-mutate">22. Creating New Variables with <code>mutate()</code></h3>
 <p>The <code>mutate()</code> function is used to add new variables or transform existing ones. This is useful for creating new columns based on existing data.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a new variable that categorizes countries by GDP per capita</span></span>
-<span id="cb45-2"><a href="#cb45-2" aria-hidden="true" tabindex="-1"></a>un_member_states_2024 <span class="ot">&lt;-</span> un_member_states_2024 <span class="sc">|&gt;</span> </span>
-<span id="cb45-3"><a href="#cb45-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb45-4"><a href="#cb45-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">gdp_category =</span> <span class="fu">case_when</span>(</span>
-<span id="cb45-5"><a href="#cb45-5" aria-hidden="true" tabindex="-1"></a>      gdp_per_capita <span class="sc">&gt;</span> <span class="dv">30000</span> <span class="sc">~</span> <span class="st">"High"</span>,</span>
-<span id="cb45-6"><a href="#cb45-6" aria-hidden="true" tabindex="-1"></a>      gdp_per_capita <span class="sc">&gt;</span> <span class="dv">10000</span> <span class="sc">~</span> <span class="st">"Medium"</span>,</span>
-<span id="cb45-7"><a href="#cb45-7" aria-hidden="true" tabindex="-1"></a>      <span class="cn">TRUE</span> <span class="sc">~</span> <span class="st">"Low"</span></span>
-<span id="cb45-8"><a href="#cb45-8" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb45-9"><a href="#cb45-9" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a new variable that categorizes countries by GDP per capita</span></span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>un_member_states_2024 <span class="ot">&lt;-</span> un_member_states_2024 <span class="sc">|&gt;</span> </span>
+<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb47-4"><a href="#cb47-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">gdp_category =</span> <span class="fu">case_when</span>(</span>
+<span id="cb47-5"><a href="#cb47-5" aria-hidden="true" tabindex="-1"></a>      gdp_per_capita <span class="sc">&gt;</span> <span class="dv">30000</span> <span class="sc">~</span> <span class="st">"High"</span>,</span>
+<span id="cb47-6"><a href="#cb47-6" aria-hidden="true" tabindex="-1"></a>      gdp_per_capita <span class="sc">&gt;</span> <span class="dv">10000</span> <span class="sc">~</span> <span class="st">"Medium"</span>,</span>
+<span id="cb47-7"><a href="#cb47-7" aria-hidden="true" tabindex="-1"></a>      <span class="cn">TRUE</span> <span class="sc">~</span> <span class="st">"Low"</span></span>
+<span id="cb47-8"><a href="#cb47-8" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb47-9"><a href="#cb47-9" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-</section>
-<section id="explanation-3" class="level3">
-<h3 class="anchored" data-anchor-id="explanation-3">Explanation:</h3>
-<ul>
-<li><strong><code>mutate()</code></strong>: Adds a new column called <code>gdp_category</code>.</li>
-<li><strong><code>case_when()</code></strong>: Categorizes countries based on their GDP per capita into “High”, “Medium”, or “Low” categories.</li>
-</ul>
+<p><em>Explanation:</em><br>
+- <strong><code>mutate()</code></strong>: Adds a new column called <code>gdp_category</code>. - <strong><code>case_when()</code></strong>: Categorizes countries based on their GDP per capita into “High”, “Medium”, or “Low” categories.</p>
 <hr>
 </section>
 <section id="arranging-rows-with-arrange" class="level3">
 <h3 class="anchored" data-anchor-id="arranging-rows-with-arrange">23. Arranging Rows with <code>arrange()</code></h3>
 <p>The <code>arrange()</code> function sorts the rows of a data frame. By default, it sorts in ascending order, but you can sort in descending order using the <code>desc()</code> function.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Arrange countries by population in descending order</span></span>
-<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>top_populated_countries <span class="ot">&lt;-</span> un_member_states_2024 <span class="sc">|&gt;</span> </span>
-<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(population_2024))</span>
-<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a>top_populated_countries</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Arrange countries by population in descending order</span></span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>top_populated_countries <span class="ot">&lt;-</span> un_member_states_2024 <span class="sc">|&gt;</span> </span>
+<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(population_2024))</span>
+<span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a>top_populated_countries</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 193 × 40
    country       iso   official_state_name       continent region capital_city capital_population capital_perc_of_coun…¹
@@ -886,22 +1086,18 @@ Facet wrapping divides the scatterplot into separate panels for each region, all
 #   combined_total &lt;int&gt;, driving_side &lt;chr&gt;, obesity_rate_2024 &lt;dbl&gt;, obesity_rate_2016 &lt;dbl&gt;, …</code></pre>
 </div>
 </div>
-</section>
-<section id="explanation-4" class="level3">
-<h3 class="anchored" data-anchor-id="explanation-4">Explanation:</h3>
-<ul>
-<li><strong><code>arrange(desc(population_2024))</code></strong>: Sorts the countries from highest to lowest population.</li>
-</ul>
+<p><em>Explanation:</em><br>
+- <strong><code>arrange(desc(population_2024))</code></strong>: Sorts the countries from highest to lowest population.</p>
 <hr>
 </section>
 <section id="selecting-specific-columns-with-select" class="level3">
 <h3 class="anchored" data-anchor-id="selecting-specific-columns-with-select">24. Selecting Specific Columns with <code>select()</code></h3>
 <p>The <code>select()</code> function allows you to choose specific columns from a data frame. This is useful when you only need to work with a subset of variables.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Select country name, continent, and population</span></span>
-<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>selected_data <span class="ot">&lt;-</span> un_member_states_2024 <span class="sc">|&gt;</span> </span>
-<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(country, continent, population_2024)</span>
-<span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a>selected_data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Select country name, continent, and population</span></span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>selected_data <span class="ot">&lt;-</span> un_member_states_2024 <span class="sc">|&gt;</span> </span>
+<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(country, continent, population_2024)</span>
+<span id="cb50-4"><a href="#cb50-4" aria-hidden="true" tabindex="-1"></a>selected_data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 193 × 3
    country             continent     population_2024
@@ -919,39 +1115,36 @@ Facet wrapping divides the scatterplot into separate panels for each region, all
 # ℹ 183 more rows</code></pre>
 </div>
 </div>
-</section>
-<section id="explanation-5" class="level3">
-<h3 class="anchored" data-anchor-id="explanation-5">Explanation:</h3>
-<ul>
-<li><strong><code>select()</code></strong>: Chooses the <code>country</code>, <code>continent</code>, and <code>population_2024</code> columns from the data frame.</li>
-</ul>
+<p><em>Explanation:</em><br>
+- <strong><code>select()</code></strong>: Chooses the <code>country</code>, <code>continent</code>, and <code>population_2024</code> columns from the data frame.</p>
 <hr>
 </section>
 <section id="putting-a-whole-line-together" class="level3">
 <h3 class="anchored" data-anchor-id="putting-a-whole-line-together">25. Putting a Whole <code>|&gt;</code>line Together</h3>
+<p>Here’s an expanded explanation for a new R user, guiding them through the entire <strong>pipeline</strong> process step-by-step, which filters, groups, summarizes, mutates, arranges, and selects columns from the <strong><code>un_member_states_2024</code></strong> dataset:</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a pipeline that filters, groups, summarizes, mutates, arranges, </span></span>
-<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a><span class="co"># and selects columns for countries in Asia and Europe</span></span>
-<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a>un_member_states_2024 <span class="sc">|&gt;</span></span>
-<span id="cb50-4"><a href="#cb50-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(continent <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"Asia"</span>, <span class="st">"Europe"</span>)) <span class="sc">|&gt;</span></span>
-<span id="cb50-5"><a href="#cb50-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(continent) <span class="sc">|&gt;</span></span>
-<span id="cb50-6"><a href="#cb50-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
-<span id="cb50-7"><a href="#cb50-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">avg_gdp_per_capita =</span> <span class="fu">mean</span>(gdp_per_capita, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
-<span id="cb50-8"><a href="#cb50-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">avg_life_expectancy =</span> <span class="fu">mean</span>(life_expectancy_2022, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
-<span id="cb50-9"><a href="#cb50-9" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
-<span id="cb50-10"><a href="#cb50-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">|&gt;</span> <span class="co"># Ungroup before creating new variables</span></span>
-<span id="cb50-11"><a href="#cb50-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb50-12"><a href="#cb50-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">gdp_category =</span> <span class="fu">case_when</span>(</span>
-<span id="cb50-13"><a href="#cb50-13" aria-hidden="true" tabindex="-1"></a>      avg_gdp_per_capita <span class="sc">&gt;</span> <span class="dv">30000</span> <span class="sc">~</span> <span class="st">"High"</span>,</span>
-<span id="cb50-14"><a href="#cb50-14" aria-hidden="true" tabindex="-1"></a>      avg_gdp_per_capita <span class="sc">&gt;</span> <span class="dv">10000</span> <span class="sc">~</span> <span class="st">"Medium"</span>,</span>
-<span id="cb50-15"><a href="#cb50-15" aria-hidden="true" tabindex="-1"></a>      <span class="cn">TRUE</span> <span class="sc">~</span> <span class="st">"Low"</span></span>
-<span id="cb50-16"><a href="#cb50-16" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb50-17"><a href="#cb50-17" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
-<span id="cb50-18"><a href="#cb50-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(avg_life_expectancy)) <span class="sc">|&gt;</span></span>
-<span id="cb50-19"><a href="#cb50-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(continent, </span>
-<span id="cb50-20"><a href="#cb50-20" aria-hidden="true" tabindex="-1"></a>         <span class="st">`</span><span class="at">Average GDP per capita</span><span class="st">`</span> <span class="ot">=</span> avg_gdp_per_capita, </span>
-<span id="cb50-21"><a href="#cb50-21" aria-hidden="true" tabindex="-1"></a>         <span class="st">`</span><span class="at">Average Life Expectancy</span><span class="st">`</span> <span class="ot">=</span> avg_life_expectancy, </span>
-<span id="cb50-22"><a href="#cb50-22" aria-hidden="true" tabindex="-1"></a>         gdp_category)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a pipeline that filters, groups, summarizes, mutates, arranges, </span></span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a><span class="co"># and selects columns for countries in Asia and Europe</span></span>
+<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a>un_member_states_2024 <span class="sc">|&gt;</span></span>
+<span id="cb52-4"><a href="#cb52-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(continent <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"Asia"</span>, <span class="st">"Europe"</span>)) <span class="sc">|&gt;</span></span>
+<span id="cb52-5"><a href="#cb52-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(continent) <span class="sc">|&gt;</span></span>
+<span id="cb52-6"><a href="#cb52-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
+<span id="cb52-7"><a href="#cb52-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">avg_gdp_per_capita =</span> <span class="fu">mean</span>(gdp_per_capita, <span class="at">na.rm =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb52-8"><a href="#cb52-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">avg_life_expectancy =</span> <span class="fu">mean</span>(life_expectancy_2022, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb52-9"><a href="#cb52-9" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb52-10"><a href="#cb52-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">|&gt;</span> <span class="co"># Ungroup before creating new variables</span></span>
+<span id="cb52-11"><a href="#cb52-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb52-12"><a href="#cb52-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">gdp_category =</span> <span class="fu">case_when</span>(</span>
+<span id="cb52-13"><a href="#cb52-13" aria-hidden="true" tabindex="-1"></a>      avg_gdp_per_capita <span class="sc">&gt;</span> <span class="dv">30000</span> <span class="sc">~</span> <span class="st">"High"</span>,</span>
+<span id="cb52-14"><a href="#cb52-14" aria-hidden="true" tabindex="-1"></a>      avg_gdp_per_capita <span class="sc">&gt;</span> <span class="dv">10000</span> <span class="sc">~</span> <span class="st">"Medium"</span>,</span>
+<span id="cb52-15"><a href="#cb52-15" aria-hidden="true" tabindex="-1"></a>      <span class="cn">TRUE</span> <span class="sc">~</span> <span class="st">"Low"</span></span>
+<span id="cb52-16"><a href="#cb52-16" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb52-17"><a href="#cb52-17" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">|&gt;</span></span>
+<span id="cb52-18"><a href="#cb52-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(avg_life_expectancy)) <span class="sc">|&gt;</span></span>
+<span id="cb52-19"><a href="#cb52-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(continent, </span>
+<span id="cb52-20"><a href="#cb52-20" aria-hidden="true" tabindex="-1"></a>         <span class="st">`</span><span class="at">Average GDP per capita</span><span class="st">`</span> <span class="ot">=</span> avg_gdp_per_capita, </span>
+<span id="cb52-21"><a href="#cb52-21" aria-hidden="true" tabindex="-1"></a>         <span class="st">`</span><span class="at">Average Life Expectancy</span><span class="st">`</span> <span class="ot">=</span> avg_life_expectancy, </span>
+<span id="cb52-22"><a href="#cb52-22" aria-hidden="true" tabindex="-1"></a>         gdp_category)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 2 × 4
   continent `Average GDP per capita` `Average Life Expectancy` gdp_category
@@ -960,67 +1153,207 @@ Facet wrapping divides the scatterplot into separate panels for each region, all
 2 Asia                        15272.                      74.9 Medium      </code></pre>
 </div>
 </div>
+<p><em>Explanation:</em><br>
+1. <strong><code>filter(continent %in% c("Asia", "Europe"))</code></strong>: - <strong>Filter</strong> the dataset to include only countries located in <strong>Asia</strong> and <strong>Europe</strong>. The <code>%in%</code> operator is used to match the <code>continent</code> variable with either “Asia” or “Europe,” keeping only those rows in the dataset. - This step reduces the dataset to only the countries from these two continents.</p>
+<ol start="2" type="1">
+<li><strong><code>group_by(continent)</code></strong>:
+<ul>
+<li>After filtering, we <strong>group</strong> the data by <strong>continent</strong>. This ensures that all subsequent calculations are performed separately for each continent (Asia and Europe).</li>
+<li>Grouping is a crucial step for computing statistics like averages by continent.</li>
+</ul></li>
+<li><strong><code>summarize()</code></strong>:
+<ul>
+<li>We then <strong>summarize</strong> the grouped data to calculate the following statistics:
+<ul>
+<li><strong><code>avg_gdp_per_capita = mean(gdp_per_capita, na.rm = TRUE)</code></strong>: Calculates the <strong>average GDP per capita</strong> for each continent, excluding missing values (<code>na.rm = TRUE</code>).</li>
+<li><strong><code>avg_life_expectancy = mean(life_expectancy_2022, na.rm = TRUE)</code></strong>: Computes the <strong>average life expectancy</strong> in 2022 for each continent, again excluding missing values.</li>
+</ul></li>
+<li>This results in a summary dataset containing the average GDP per capita and life expectancy for Asia and Europe.</li>
+</ul></li>
+<li><strong><code>ungroup()</code></strong>:
+<ul>
+<li>After summarizing, we <strong>ungroup</strong> the data. Ungrouping ensures that any further operations (like creating new variables) are applied to the entire dataset, rather than within groups.</li>
+</ul></li>
+<li><strong><code>mutate()</code></strong>:
+<ul>
+<li>We create a new variable, <strong><code>gdp_category</code></strong>, using the <strong><code>case_when()</code></strong> function. This function helps categorize the average GDP per capita into three categories:
+<ul>
+<li><strong>“High”</strong> if the average GDP per capita is greater than $30,000.</li>
+<li><strong>“Medium”</strong> if it’s between $10,000 and $30,000.</li>
+<li><strong>“Low”</strong> for all other values (below $10,000).</li>
+</ul></li>
+<li>This adds a new column to the dataset, categorizing each continent based on its economic standing.</li>
+</ul></li>
+<li><strong><code>arrange(desc(avg_life_expectancy))</code></strong>:
+<ul>
+<li>We <strong>arrange</strong> the dataset in <strong>descending</strong> order of <strong>average life expectancy</strong>. This means that the continent with the highest average life expectancy will appear at the top.</li>
+<li>Sorting the data in this way helps prioritize the continents based on health outcomes.</li>
+</ul></li>
+<li><strong><code>select()</code></strong>:
+<ul>
+<li>Finally, we <strong>select</strong> only the columns we want to display:
+<ul>
+<li><strong><code>continent</code></strong>: The name of the continent.</li>
+<li><strong><code>Average GDP per capita</code></strong>: The average GDP per capita (renamed for readability).</li>
+<li><strong><code>Average Life Expectancy</code></strong>: The average life expectancy (renamed for readability).</li>
+<li><strong><code>gdp_category</code></strong>: The economic category (High, Medium, or Low) based on the average GDP per capita.</li>
+</ul></li>
+<li>Renaming the columns with backticks (<code>``</code>) makes the column names more descriptive.</li>
+</ul></li>
+</ol>
+<p><em>Key Insights:</em><br>
+- <strong>Pipeline Structure</strong>: This <strong>pipeline</strong> combines several steps—filtering, grouping, summarizing, mutating, arranging, and selecting—into one fluid operation. The pipe operator (<code>|&gt;</code>) allows for a clear, readable flow of operations.</p>
+<ul>
+<li><p><strong>Grouped Summarization</strong>: The <code>group_by()</code> and <code>summarize()</code> steps are used to calculate summary statistics like the average GDP per capita and life expectancy for each continent.</p></li>
+<li><p><strong>Categorization</strong>: The <code>mutate()</code> step uses <code>case_when()</code> to classify continents into economic categories based on GDP, showing how to transform and add new variables based on existing data.</p></li>
+<li><p><strong>Arranging and Selecting</strong>: The data is sorted by life expectancy and only the relevant columns are retained, making the final output clean and easy to interpret.</p></li>
+</ul>
+<hr>
 </section>
 <section id="creating-data-for-geom_col-use" class="level3">
 <h3 class="anchored" data-anchor-id="creating-data-for-geom_col-use">26. Creating data for <code>geom_col()</code> use</h3>
+<ol type="1">
+<li><strong>Create a Summary Data Frame (<code>region_data</code>)</strong>:
+<ul>
+<li>We first need to <strong>group</strong> the dataset by region, <strong>count</strong> the number of countries in each region, and then <strong>arrange</strong> them in descending order to make the plot more readable.</li>
+</ul></li>
+</ol>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a data frame for geom_col() use to count number of countries per region</span></span>
-<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a>region_data <span class="ot">&lt;-</span> un_member_states_2024 <span class="sc">|&gt;</span> </span>
-<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(region) <span class="sc">|&gt;</span> </span>
-<span id="cb52-4"><a href="#cb52-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">num_countries =</span> <span class="fu">n</span>()) <span class="sc">|&gt;</span> </span>
-<span id="cb52-5"><a href="#cb52-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(num_countries))</span>
-<span id="cb52-6"><a href="#cb52-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb52-7"><a href="#cb52-7" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(region_data, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">reorder</span>(region, num_countries), <span class="at">y =</span> num_countries)) <span class="sc">+</span></span>
-<span id="cb52-8"><a href="#cb52-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">fill =</span> <span class="st">"skyblue"</span>) <span class="sc">+</span></span>
-<span id="cb52-9"><a href="#cb52-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
-<span id="cb52-10"><a href="#cb52-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Number of Countries by Region"</span>, </span>
-<span id="cb52-11"><a href="#cb52-11" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Region"</span>, <span class="at">y =</span> <span class="st">"Number of Countries"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a>region_data <span class="ot">&lt;-</span> un_member_states_2024 <span class="sc">|&gt;</span> </span>
+<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(region) <span class="sc">|&gt;</span> </span>
+<span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">num_countries =</span> <span class="fu">n</span>()) <span class="sc">|&gt;</span> </span>
+<span id="cb54-4"><a href="#cb54-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(num_countries))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li><p><strong><code>group_by(region)</code></strong>: This groups the dataset by the <code>region</code> variable, so each region is treated as a separate group.</p></li>
+<li><p><strong><code>summarize(num_countries = n())</code></strong>: This calculates the <strong>number of countries</strong> (<code>n()</code>) in each region. The result is a data frame with two columns: the region name and the number of countries in that region.</p></li>
+<li><p><strong><code>arrange(desc(num_countries))</code></strong>: This arranges the regions in <strong>descending</strong> order of the number of countries. The region with the most countries will appear first in the dataset, making the bar chart easier to interpret.</p></li>
+</ul>
+<p>At this stage, you have a data frame (<code>region_data</code>) with two columns: <code>region</code> and <code>num_countries</code>, sorted by the number of countries per region.</p>
+<ol start="2" type="1">
+<li>Create the Bar Chart Using <code>geom_col()</code></li>
+</ol>
+<p>Now that the data is prepared, let’s create a <strong>bar chart</strong> using <code>ggplot2</code> to visualize the number of countries per region. We’ll use <code>geom_col()</code> to create the bars and <code>coord_flip()</code> to flip the axes for better readability.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb55"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(region_data, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">reorder</span>(region, num_countries), <span class="at">y =</span> num_countries)) <span class="sc">+</span></span>
+<span id="cb55-2"><a href="#cb55-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">fill =</span> <span class="st">"skyblue"</span>) <span class="sc">+</span></span>
+<span id="cb55-3"><a href="#cb55-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>() <span class="sc">+</span></span>
+<span id="cb55-4"><a href="#cb55-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Number of Countries by Region"</span>, </span>
+<span id="cb55-5"><a href="#cb55-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Region"</span>, <span class="at">y =</span> <span class="st">"Number of Countries"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="day1_walkthrough_answers_files/figure-html/unnamed-chunk-23-1.png" class="img-fluid" width="672"></p>
+<p><img src="day1_walkthrough_answers_files/figure-html/unnamed-chunk-25-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
+<ul>
+<li><strong><code>ggplot(region_data, aes(x = reorder(region, num_countries), y = num_countries))</code></strong>:
+<ul>
+<li>This initializes the plot, using <strong><code>region_data</code></strong> as the data frame.</li>
+<li><strong><code>aes()</code></strong> (aesthetic mapping) specifies that <code>region</code> will be mapped to the <strong>x-axis</strong> and <code>num_countries</code> to the <strong>y-axis</strong>.</li>
+<li><strong><code>reorder(region, num_countries)</code></strong> ensures that the regions are ordered by the number of countries, so the chart appears in descending order.</li>
+</ul></li>
+<li><strong><code>geom_col(fill = "skyblue")</code></strong>:
+<ul>
+<li><strong><code>geom_col()</code></strong> creates the bars for the bar chart, with the <strong>height</strong> of each bar representing the number of countries in that region.</li>
+<li>We use <strong><code>fill = "skyblue"</code></strong> to color the bars in a light blue shade, making them visually appealing.</li>
+</ul></li>
+<li><strong><code>coord_flip()</code></strong>:
+<ul>
+<li>This <strong>flips</strong> the axes so that the bars run horizontally instead of vertically. This makes the chart easier to read, especially when you have long category names (like region names).</li>
+</ul></li>
+<li><strong><code>labs()</code></strong>:
+<ul>
+<li><strong>Title</strong>: “Number of Countries by Region” clearly describes what the chart is showing.</li>
+<li><strong>x = “Region”</strong> labels the x-axis (which now appears on the y-axis after the flip) as the regions.</li>
+<li><strong>y = “Number of Countries”</strong> labels the y-axis (now the horizontal axis) with the count of countries for each region.</li>
+</ul></li>
+</ul>
+<hr>
 </section>
 <section id="converting-wide-data-into-tidy-data" class="level3">
 <h3 class="anchored" data-anchor-id="converting-wide-data-into-tidy-data">27. Converting wide data into tidy data</h3>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert wide data into tidy data</span></span>
-<span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tibble)</span>
-<span id="cb53-3"><a href="#cb53-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyr)</span>
-<span id="cb53-4"><a href="#cb53-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb53-5"><a href="#cb53-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Collected from https://data.worldbank.org/?locations=BR-NG-ID</span></span>
-<span id="cb53-6"><a href="#cb53-6" aria-hidden="true" tabindex="-1"></a>wide_unemp <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
-<span id="cb53-7"><a href="#cb53-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">country =</span> <span class="fu">c</span>(<span class="st">"Brazil"</span>, <span class="st">"Nigeria"</span>, <span class="st">"Indonesia"</span>),</span>
-<span id="cb53-8"><a href="#cb53-8" aria-hidden="true" tabindex="-1"></a>  <span class="st">`</span><span class="at">2021</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="fl">13.2</span>, <span class="fl">5.4</span>, <span class="fl">3.8</span>),</span>
-<span id="cb53-9"><a href="#cb53-9" aria-hidden="true" tabindex="-1"></a>  <span class="st">`</span><span class="at">2022</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="fl">9.2</span>, <span class="fl">3.8</span>, <span class="fl">3.5</span>),</span>
-<span id="cb53-10"><a href="#cb53-10" aria-hidden="true" tabindex="-1"></a>  <span class="st">`</span><span class="at">2023</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">8</span>, <span class="fl">3.1</span>, <span class="fl">3.4</span>)</span>
-<span id="cb53-11"><a href="#cb53-11" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb53-12"><a href="#cb53-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb53-13"><a href="#cb53-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Use pivot_longer to convert data</span></span>
-<span id="cb53-14"><a href="#cb53-14" aria-hidden="true" tabindex="-1"></a>tidy_unemp <span class="ot">&lt;-</span> wide_unemp <span class="sc">|&gt;</span> </span>
-<span id="cb53-15"><a href="#cb53-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="sc">-</span>country, </span>
-<span id="cb53-16"><a href="#cb53-16" aria-hidden="true" tabindex="-1"></a>               <span class="at">names_to =</span> <span class="st">"year"</span>, </span>
-<span id="cb53-17"><a href="#cb53-17" aria-hidden="true" tabindex="-1"></a>               <span class="at">values_to =</span> <span class="st">"unemployment_perc"</span>) <span class="sc">|&gt;</span> </span>
-<span id="cb53-18"><a href="#cb53-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">year =</span> <span class="fu">as.integer</span>(year))</span>
-<span id="cb53-19"><a href="#cb53-19" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb53-20"><a href="#cb53-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot data as a linegraph</span></span>
-<span id="cb53-21"><a href="#cb53-21" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(tidy_unemp, <span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> unemployment_perc, <span class="at">color =</span> country)) <span class="sc">+</span></span>
-<span id="cb53-22"><a href="#cb53-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
-<span id="cb53-23"><a href="#cb53-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
-<span id="cb53-24"><a href="#cb53-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Unemployment Rate Over Time"</span>, </span>
-<span id="cb53-25"><a href="#cb53-25" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Year"</span>, <span class="at">y =</span> <span class="st">"Unemployment Rate (%)"</span>) <span class="sc">+</span></span>
-<span id="cb53-26"><a href="#cb53-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">2021</span>, <span class="dv">2022</span>, <span class="dv">2023</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb56"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb56-1"><a href="#cb56-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert wide data into tidy data</span></span>
+<span id="cb56-2"><a href="#cb56-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tibble)</span>
+<span id="cb56-3"><a href="#cb56-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyr)</span>
+<span id="cb56-4"><a href="#cb56-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb56-5"><a href="#cb56-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Collected from https://data.worldbank.org/?locations=BR-NG-ID</span></span>
+<span id="cb56-6"><a href="#cb56-6" aria-hidden="true" tabindex="-1"></a>wide_unemp <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb56-7"><a href="#cb56-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">country =</span> <span class="fu">c</span>(<span class="st">"Brazil"</span>, <span class="st">"Nigeria"</span>, <span class="st">"Indonesia"</span>),</span>
+<span id="cb56-8"><a href="#cb56-8" aria-hidden="true" tabindex="-1"></a>  <span class="st">`</span><span class="at">2021</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="fl">13.2</span>, <span class="fl">5.4</span>, <span class="fl">3.8</span>),</span>
+<span id="cb56-9"><a href="#cb56-9" aria-hidden="true" tabindex="-1"></a>  <span class="st">`</span><span class="at">2022</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="fl">9.2</span>, <span class="fl">3.8</span>, <span class="fl">3.5</span>),</span>
+<span id="cb56-10"><a href="#cb56-10" aria-hidden="true" tabindex="-1"></a>  <span class="st">`</span><span class="at">2023</span><span class="st">`</span> <span class="ot">=</span> <span class="fu">c</span>(<span class="dv">8</span>, <span class="fl">3.1</span>, <span class="fl">3.4</span>)</span>
+<span id="cb56-11"><a href="#cb56-11" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb56-12"><a href="#cb56-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb56-13"><a href="#cb56-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Use pivot_longer to convert data</span></span>
+<span id="cb56-14"><a href="#cb56-14" aria-hidden="true" tabindex="-1"></a>tidy_unemp <span class="ot">&lt;-</span> wide_unemp <span class="sc">|&gt;</span> </span>
+<span id="cb56-15"><a href="#cb56-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="sc">-</span>country, </span>
+<span id="cb56-16"><a href="#cb56-16" aria-hidden="true" tabindex="-1"></a>               <span class="at">names_to =</span> <span class="st">"year"</span>, </span>
+<span id="cb56-17"><a href="#cb56-17" aria-hidden="true" tabindex="-1"></a>               <span class="at">values_to =</span> <span class="st">"unemployment_perc"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb56-18"><a href="#cb56-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">year =</span> <span class="fu">as.integer</span>(year))</span>
+<span id="cb56-19"><a href="#cb56-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb56-20"><a href="#cb56-20" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot data as a linegraph</span></span>
+<span id="cb56-21"><a href="#cb56-21" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(tidy_unemp, <span class="fu">aes</span>(<span class="at">x =</span> year, <span class="at">y =</span> unemployment_perc, <span class="at">color =</span> country)) <span class="sc">+</span></span>
+<span id="cb56-22"><a href="#cb56-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb56-23"><a href="#cb56-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span></span>
+<span id="cb56-24"><a href="#cb56-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Unemployment Rate Over Time"</span>, </span>
+<span id="cb56-25"><a href="#cb56-25" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Year"</span>, <span class="at">y =</span> <span class="st">"Unemployment Rate (%)"</span>) <span class="sc">+</span></span>
+<span id="cb56-26"><a href="#cb56-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="fu">c</span>(<span class="dv">2021</span>, <span class="dv">2022</span>, <span class="dv">2023</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<p><img src="day1_walkthrough_answers_files/figure-html/unnamed-chunk-24-1.png" class="img-fluid" width="672"></p>
+<p><img src="day1_walkthrough_answers_files/figure-html/unnamed-chunk-26-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
+<p>Here’s an expanded explanation for a new R user, guiding them through the process of converting wide data into tidy data using <code>pivot_longer()</code>, followed by creating a line graph to visualize unemployment rates over time:</p>
+<p><em>Explanation:</em> 1. <strong>Convert Wide Data to Tidy Data (<code>pivot_longer</code>)</strong>: - The initial dataset, <code>wide_unemp</code>, is in <strong>wide format</strong>, where each column (except <code>country</code>) represents a year and the unemployment rate for that year. We use <code>pivot_longer()</code> to <strong>convert this wide format into a tidy format</strong> so that each row represents a single observation (country-year combination).</p>
+<ul>
+<li><strong><code>pivot_longer(cols = -country, names_to = "year", values_to = "unemployment_perc")</code></strong>:
+<ul>
+<li>This function <strong>“pivots”</strong> the data from wide format to <strong>long format</strong>.</li>
+<li><strong><code>cols = -country</code></strong> tells R to pivot all columns except for the <code>country</code> column (since <code>country</code> should remain as a fixed identifier).</li>
+<li><strong><code>names_to = "year"</code></strong>: The column names (representing years) will be stored in a new variable called <strong><code>year</code></strong>.</li>
+<li><strong><code>values_to = "unemployment_perc"</code></strong>: The values from each year’s column will be stored in a new column called <strong><code>unemployment_perc</code></strong> (representing the unemployment percentage).</li>
+</ul></li>
+<li><strong><code>mutate(year = as.integer(year))</code></strong>: This converts the newly created <code>year</code> column from a character type (since it came from column names) into an integer type, which is necessary for plotting it as a numerical axis in the line graph.</li>
+</ul>
+<p>At this stage, the data has been transformed from wide format to tidy format, with each row representing a <strong>country-year-unemployment rate</strong> combination, making it suitable for analysis and visualization.</p>
+<hr>
+<ol start="2" type="1">
+<li><strong>Create the Line Graph:</strong></li>
+</ol>
+<p>Now that the data is tidy, we can create a <strong>line graph</strong> to visualize how the unemployment rate has changed over time for each country.</p>
+<ul>
+<li><p><strong><code>ggplot(tidy_unemp, aes(x = year, y = unemployment_perc, color = country))</code></strong>:</p>
+<ul>
+<li>This initializes the plot using the <strong><code>tidy_unemp</code></strong> dataset. The aesthetic mapping (<code>aes()</code>) specifies that:
+<ul>
+<li><strong><code>year</code></strong> goes on the <strong>x-axis</strong>.</li>
+<li><strong><code>unemployment_perc</code></strong> goes on the <strong>y-axis</strong> (representing the unemployment rate as a percentage).</li>
+<li><strong><code>color = country</code></strong>: Each country will be plotted in a different color, allowing us to compare trends across multiple countries.</li>
+</ul></li>
+</ul></li>
+<li><p><strong><code>geom_point()</code></strong>: Adds points to the plot for each <strong>country-year</strong> combination, marking the unemployment rate at each year.</p></li>
+<li><p><strong><code>geom_line()</code></strong>: Draws <strong>lines</strong> connecting the points for each country, showing the trend over time. The combination of points and lines provides both specific data points and a visual connection between them, making trends easier to see.</p></li>
+<li><p><strong><code>labs()</code></strong>: This function adds labels to the plot:</p>
+<ul>
+<li><strong>Title</strong>: “Unemployment Rate Over Time” clearly explains what the plot is showing.</li>
+<li><strong>x = “Year”</strong>: Labels the x-axis as the year.</li>
+<li><strong>y = “Unemployment Rate (%)”</strong>: Labels the y-axis with the unemployment rate as a percentage.</li>
+</ul></li>
+<li><p><strong><code>scale_x_continuous(breaks = c(2021, 2022, 2023))</code></strong>:</p>
+<ul>
+<li>This ensures that only <strong>2021, 2022, and 2023</strong> are shown as tick marks on the x-axis, making the graph more focused on recent years.</li>
+</ul></li>
+</ul>
+<hr>
 </section>
 <section id="importing-data-from-a-csv-file" class="level3">
 <h3 class="anchored" data-anchor-id="importing-data-from-a-csv-file">28. Importing data from a CSV file</h3>
+<p>In R, we often need to <strong>import data</strong> from external files to start working with it. One common way to do this is by using the <code>read_csv()</code> function from the <strong><code>readr</code></strong> package to load <strong>CSV (Comma-Separated Values)</strong> files into R.</p>
+<p>Let’s break down how this works with the following code to load a dataset called <code>data_dev_survey.csv</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb54"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb54-1"><a href="#cb54-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readr)</span>
-<span id="cb54-2"><a href="#cb54-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb54-3"><a href="#cb54-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Load data from data_dev_survey.csv in same file path as this .qmd file</span></span>
-<span id="cb54-4"><a href="#cb54-4" aria-hidden="true" tabindex="-1"></a>data_dev_survey <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data_dev_survey.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb57"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb57-1"><a href="#cb57-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readr)</span>
+<span id="cb57-2"><a href="#cb57-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb57-3"><a href="#cb57-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Load data from data_dev_survey.csv in the same file path as this .qmd file</span></span>
+<span id="cb57-4"><a href="#cb57-4" aria-hidden="true" tabindex="-1"></a>data_dev_survey <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data_dev_survey.csv"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>Rows: 1183 Columns: 24
 ── Column specification ────────────────────────────────────────────────────────────────────────────────────────────────
@@ -1033,6 +1366,15 @@ date  (1): survey_completion_date
 ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
 </div>
 </div>
+<ul>
+<li><p><strong><code>library(readr)</code></strong>: This line loads the <code>readr</code> package, giving us access to the <strong><code>read_csv()</code></strong> function, which is designed to efficiently load CSV files into R.</p></li>
+<li><p><strong><code>read_csv("data_dev_survey.csv")</code></strong>: Here, we are using <code>read_csv()</code> to load the <code>data_dev_survey.csv</code> file.</p>
+<ul>
+<li>The argument <code>"data_dev_survey.csv"</code> tells R the file name. It assumes the file is in the same directory as the current Quarto document (the <code>.qmd</code> file). If the file is in a different directory, you would need to specify the full path, like <code>"path/to/data_dev_survey.csv"</code>.</li>
+<li>This function reads the CSV file and imports it as a <strong>data frame</strong> (a table-like structure in R) that you can now work with.</li>
+</ul></li>
+<li><p><strong><code>data_dev_survey &lt;-</code></strong>: We assign the output of <code>read_csv()</code> to a new variable called <code>data_dev_survey</code>. This stores the dataset in memory, so you can easily access it for analysis.</p></li>
+</ul>
 <hr>
 </section>
 <section id="session-3-review-questions" class="level3">
