@@ -1,0 +1,955 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.340">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Dr.&nbsp;Chester Ismay">
+
+<title>Statistics in R with the tidyverse</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="day2_walkthrough_answers_files/libs/clipboard/clipboard.min.js"></script>
+<script src="day2_walkthrough_answers_files/libs/quarto-html/quarto.js"></script>
+<script src="day2_walkthrough_answers_files/libs/quarto-html/popper.min.js"></script>
+<script src="day2_walkthrough_answers_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="day2_walkthrough_answers_files/libs/quarto-html/anchor.min.js"></script>
+<link href="day2_walkthrough_answers_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="day2_walkthrough_answers_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="day2_walkthrough_answers_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="day2_walkthrough_answers_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="day2_walkthrough_answers_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+
+
+</head>
+
+<body class="fullcontent">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Statistics in R with the <code>tidyverse</code></h1>
+<p class="subtitle lead">Day 2 Walkthrough</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Dr.&nbsp;Chester Ismay </p>
+          </div>
+  </div>
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="day-2-linear-regression-in-r" class="level1">
+<h1>Day 2: Linear Regression in R</h1>
+<section id="session-1-simple-linear-regression-analysis" class="level2">
+<h2 class="anchored" data-anchor-id="session-1-simple-linear-regression-analysis">Session 1: Simple Linear Regression Analysis</h2>
+<section id="load-necessary-libraries" class="level3">
+<h3 class="anchored" data-anchor-id="load-necessary-libraries">1. Load Necessary Libraries</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the required libraries</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'dplyr'</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following objects are masked from 'package:stats':
+
+    filter, lag</code></pre>
+</div>
+<div class="cell-output cell-output-stderr">
+<pre><code>The following objects are masked from 'package:base':
+
+    intersect, setdiff, setequal, union</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(moderndive)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li>These packages provide tools for data wrangling, visualization, and modeling.</li>
+</ul>
+<hr>
+</section>
+<section id="prepare-dataset" class="level3">
+<h3 class="anchored" data-anchor-id="prepare-dataset">2. Prepare Dataset</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(palmerpenguins)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Only use complete rows of data</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>penguins_data <span class="ot">&lt;-</span> penguins <span class="sc">|&gt;</span> </span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">na.omit</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li>We’ll be exploring the <code>penguins</code> data frame from the <code>palmerpenguins</code> package as well. It contains size measurements for three penguin species observed on three islands in the Palmer Archipelago, Antarctica. More information is <a href="https://allisonhorst.github.io/palmerpenguins/articles/intro.html">here</a>.<br>
+</li>
+<li>We remove rows with missing values.</li>
+</ul>
+<hr>
+</section>
+<section id="exploring-dataset-structure" class="level3">
+<h3 class="anchored" data-anchor-id="exploring-dataset-structure">3. Exploring Dataset Structure</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Use glimpse to explore the structure of the dataset</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(penguins_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 333
+Columns: 8
+$ species           &lt;fct&gt; Adelie, Adelie, Adelie, Adelie, Adelie, Adelie, Adelie, Adelie, Adelie, Adelie, Adelie, Adel…
+$ island            &lt;fct&gt; Torgersen, Torgersen, Torgersen, Torgersen, Torgersen, Torgersen, Torgersen, Torgersen, Torg…
+$ bill_length_mm    &lt;dbl&gt; 39.1, 39.5, 40.3, 36.7, 39.3, 38.9, 39.2, 41.1, 38.6, 34.6, 36.6, 38.7, 42.5, 34.4, 46.0, 37…
+$ bill_depth_mm     &lt;dbl&gt; 18.7, 17.4, 18.0, 19.3, 20.6, 17.8, 19.6, 17.6, 21.2, 21.1, 17.8, 19.0, 20.7, 18.4, 21.5, 18…
+$ flipper_length_mm &lt;int&gt; 181, 186, 195, 193, 190, 181, 195, 182, 191, 198, 185, 195, 197, 184, 194, 174, 180, 189, 18…
+$ body_mass_g       &lt;int&gt; 3750, 3800, 3250, 3450, 3650, 3625, 4675, 3200, 3800, 4400, 3700, 3450, 4500, 3325, 4200, 34…
+$ sex               &lt;fct&gt; male, female, female, female, male, female, male, female, male, male, female, female, male, …
+$ year              &lt;int&gt; 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 20…</code></pre>
+</div>
+</div>
+<p>The <code>glimpse()</code> function gives an overview of the data, showing the columns and data types.</p>
+<hr>
+</section>
+<section id="summary-statistics" class="level3">
+<h3 class="anchored" data-anchor-id="summary-statistics">4. Summary Statistics</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Summarize mean and median values for flipper length and body mass</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>penguins_data <span class="sc">|&gt;</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">mean_flipper_length =</span> <span class="fu">mean</span>(flipper_length_mm),</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">mean_body_mass =</span> <span class="fu">mean</span>(body_mass_g),</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>            <span class="at">median_flipper_length =</span> <span class="fu">median</span>(flipper_length_mm),</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>            <span class="at">median_body_mass =</span> <span class="fu">median</span>(body_mass_g))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 4
+  mean_flipper_length mean_body_mass median_flipper_length median_body_mass
+                &lt;dbl&gt;          &lt;dbl&gt;                 &lt;int&gt;            &lt;int&gt;
+1                201.          4207.                   197             4050</code></pre>
+</div>
+</div>
+<p>Here, we calculate the mean and median for both <code>flipper_length_mm</code> and <code>body_mass_g</code>.</p>
+<hr>
+</section>
+<section id="using-tidy_summary-function" class="level3">
+<h3 class="anchored" data-anchor-id="using-tidy_summary-function">5. Using <code>tidy_summary()</code> Function</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Use tidy_summary to get a clean summary of the data</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>penguins_data <span class="sc">|&gt;</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(flipper_length_mm, body_mass_g) <span class="sc">|&gt;</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tidy_summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 2 × 11
+  column                n group type      min    Q1  mean median    Q3   max    sd
+  &lt;chr&gt;             &lt;int&gt; &lt;chr&gt; &lt;chr&gt;   &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt;  &lt;int&gt; &lt;dbl&gt; &lt;int&gt; &lt;dbl&gt;
+1 flipper_length_mm   333 &lt;NA&gt;  numeric   172   190  201.    197   213   231  14.0
+2 body_mass_g         333 &lt;NA&gt;  numeric  2700  3550 4207.   4050  4775  6300 805. </code></pre>
+</div>
+</div>
+<p>The <code>tidy_summary()</code> function from <code>moderndive</code> provides a tidy summary of <code>flipper_length_mm</code> and <code>body_mass_g</code>, showing key statistics like mean, median, and standard deviation in a clean format.</p>
+<hr>
+</section>
+<section id="correlation-between-flipper-length-and-body-mass" class="level3">
+<h3 class="anchored" data-anchor-id="correlation-between-flipper-length-and-body-mass">6. Correlation Between Flipper Length and Body Mass</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Compute the correlation between flipper length and body mass</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>penguins_data <span class="sc">|&gt;</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">get_correlation</span>(<span class="at">formula =</span> flipper_length_mm <span class="sc">~</span> body_mass_g)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 1
+    cor
+  &lt;dbl&gt;
+1 0.873</code></pre>
+</div>
+</div>
+<p>This command calculates the correlation between <code>flipper_length_mm</code> and <code>body_mass_g</code>.</p>
+<hr>
+</section>
+<section id="scatterplot-of-flipper-length-and-body-mass" class="level3">
+<h3 class="anchored" data-anchor-id="scatterplot-of-flipper-length-and-body-mass">7. Scatterplot of Flipper Length and Body Mass</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot the relationship between flipper length and body mass</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(penguins_data, <span class="fu">aes</span>(<span class="at">x =</span> flipper_length_mm, <span class="at">y =</span> body_mass_g)) <span class="sc">+</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Flipper Length (mm)"</span>, <span class="at">y =</span> <span class="st">"Body Mass (g)"</span>,</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">"Scatterplot of Flipper Length and Body Mass"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="day2_walkthrough_answers_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>This scatterplot shows the relationship between flipper length and body mass.</p>
+<hr>
+</section>
+<section id="regression-line" class="level3">
+<h3 class="anchored" data-anchor-id="regression-line">8. Regression Line</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># The same scatterplot with a regression line added</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(penguins_data, <span class="fu">aes</span>(<span class="at">x =</span> flipper_length_mm, <span class="at">y =</span> body_mass_g)) <span class="sc">+</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">se =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Flipper Length (mm)"</span>, <span class="at">y =</span> <span class="st">"Body Mass (g)"</span>,</span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">"Flipper Length vs. Body Mass with Regression Line"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using formula = 'y ~ x'</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="day2_walkthrough_answers_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>This scatterplot includes a linear regression line to show the trend in the data.</p>
+<hr>
+</section>
+<section id="fit-a-regression-model" class="level3">
+<h3 class="anchored" data-anchor-id="fit-a-regression-model">9. Fit a Regression Model</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit a linear regression model</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>flipper_model <span class="ot">&lt;-</span> <span class="fu">lm</span>(body_mass_g <span class="sc">~</span> flipper_length_mm, <span class="at">data =</span> penguins_data)</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Get the regression coefficients</span></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(flipper_model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      (Intercept) flipper_length_mm 
+      -5872.09268          50.15327 </code></pre>
+</div>
+</div>
+<p>Here, we fit a linear model to predict <code>body_mass_g</code> using <code>flipper_length_mm</code> and extract the coefficients of the model.</p>
+<hr>
+</section>
+<section id="session-1-review-questions" class="level3">
+<h3 class="anchored" data-anchor-id="session-1-review-questions">Session 1 Review Questions</h3>
+<p><strong>(1.1)</strong> What is the purpose of the <code>na.omit()</code> function in the code below?</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>penguins_data <span class="ot">&lt;-</span> penguins <span class="sc">|&gt;</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(species, island, flipper_length_mm, body_mass_g) <span class="sc">|&gt;</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">na.omit</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>A. It replaces missing values with the median.<br>
+B. It removes any rows that contain missing values.<br>
+C. It converts missing values to zeros.<br>
+D. It fills missing values with the previous non-missing value.</p>
+<hr>
+<p><strong>(1.2)</strong> What does the <code>tidy_summary()</code> function do when applied to numeric columns in the <code>penguins_data</code> data frame?</p>
+<p>A. It generates summary statistics for each column in the data frame.<br>
+B. It prints the first 6 rows of the data frame.<br>
+C. It provides a compact overview of the data, including column names and data types.<br>
+D. It creates a scatterplot of the variables in the data frame.</p>
+<hr>
+<p><strong>(1.3)</strong> Which of the following correctly calculates the mean body mass in the <code>penguins_data</code> data frame?</p>
+<p>A. <code>summarize |&gt; penguins_data(mean_flipper = mean(body_mass_g))</code><br>
+B. <code>summarize(mean(body_mass_g))</code><br>
+C. <code>summarize(penguins_data, mean = body_mass_g)</code> D. <code>penguins_data |&gt; summarize(mean_body_mass = mean(body_mass_g))</code></p>
+<hr>
+<p><strong>(1.4)</strong> What does the <code>get_correlation()</code> function do when applied in the code below?</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>penguins_data <span class="sc">|&gt;</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">get_correlation</span>(<span class="at">formula =</span> flipper_length_mm <span class="sc">~</span> body_mass_g)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>A. It fits a linear regression model.<br>
+B. It gives a measure of the linear relationship between flipper length and body mass. C. It plots a scatterplot of flipper length and body mass.<br>
+D. It generates summary statistics for flipper length and body mass.</p>
+<hr>
+<p><strong>(1.5)</strong> In the following code, what is the purpose of <code>geom_smooth(method = "lm", se = FALSE)</code>?</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(penguins_data, <span class="fu">aes</span>(<span class="at">x =</span> flipper_length_mm, <span class="at">y =</span> body_mass_g)) <span class="sc">+</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">se =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Flipper Length (mm)"</span>, <span class="at">y =</span> <span class="st">"Body Mass (g)"</span>,</span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">"Flipper Length vs. Body Mass with Regression Line"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>A. It adds a smoothed curve based on a polynomial fit to the scatterplot.<br>
+B. It adds a linear regression line to the scatterplot without displaying the confidence interval.<br>
+C. It adjusts the transparency of the points in the scatterplot.<br>
+D. It calculates and displays residuals on the plot.</p>
+<hr>
+</section>
+<section id="session-1-review-question-answers" class="level3">
+<h3 class="anchored" data-anchor-id="session-1-review-question-answers">Session 1 Review Question Answers</h3>
+<p><strong>(1.1)</strong> What is the purpose of the <code>na.omit()</code> function in the code below?</p>
+<p><strong>Correct Answer:</strong><br>
+B. It removes any rows that contain missing values.</p>
+<p><strong>Explanation:</strong><br>
+The <code>na.omit()</code> function is used to filter out rows that have missing values, ensuring the analysis is performed on complete cases only.</p>
+<hr>
+<p><strong>(1.2)</strong> What does the <code>tidy_summary()</code> function do when applied to numeric columns in the <code>penguins_data</code> data frame?</p>
+<p><strong>Correct Answer:</strong><br>
+A. It generates summary statistics for each column in the data frame.</p>
+<p><strong>Explanation:</strong><br>
+<code>tidy_summary()</code> in the <code>moderndive</code> package produces summary statistics for each selected numeric column in the data frame provided.</p>
+<hr>
+<p><strong>(1.3)</strong> Which of the following correctly calculates the mean body mass in the <code>penguins_data</code> data frame?</p>
+<p><strong>Correct Answer:</strong><br>
+D. <code>penguins_data |&gt; summarize(mean_body_mass = mean(body_mass_g)</code></p>
+<p><strong>Explanation:</strong><br>
+The correct syntax includes both column names and calculated statistics for each variable using the <code>summarize()</code> function.</p>
+<hr>
+<p><strong>(1.4)</strong> What does the <code>get_correlation()</code> function do when applied in the code below?</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>penguins_data <span class="sc">|&gt;</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">get_correlation</span>(<span class="at">formula =</span> flipper_length_mm <span class="sc">~</span> body_mass_g)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><strong>Correct Answer:</strong><br>
+B. It gives a measure of the linear relationship between flipper length and body mass.</p>
+<p><strong>Explanation:</strong><br>
+The <code>get_correlation()</code> function computes the correlation coefficient between the two specified variables, indicating the strength and direction of their linear relationship.</p>
+<hr>
+<p><strong>(1.5)</strong> In the following code, what is the purpose of <code>geom_smooth(method = "lm", se = FALSE)</code>?</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(penguins_data, <span class="fu">aes</span>(<span class="at">x =</span> flipper_length_mm, <span class="at">y =</span> body_mass_g)) <span class="sc">+</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">se =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Flipper Length (mm)"</span>, <span class="at">y =</span> <span class="st">"Body Mass (g)"</span>,</span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">"Flipper Length vs. Body Mass with Regression Line"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p><strong>Correct Answer:</strong><br>
+B. It adds a linear regression line to the scatterplot without displaying the confidence interval.</p>
+<p><strong>Explanation:</strong><br>
+<code>geom_smooth(method = "lm")</code> fits a linear model to the data, and <code>se = FALSE</code> suppresses the shaded confidence interval around the regression line.</p>
+<hr>
+</section>
+</section>
+<section id="session-2-multiple-linear-regression-analysis-part-1" class="level2">
+<h2 class="anchored" data-anchor-id="session-2-multiple-linear-regression-analysis-part-1">Session 2: Multiple Linear Regression Analysis (Part 1)</h2>
+<section id="fitting-a-simple-linear-regression-with-a-categorical-regressor" class="level3">
+<h3 class="anchored" data-anchor-id="fitting-a-simple-linear-regression-with-a-categorical-regressor">10: Fitting a Simple Linear Regression with a Categorical Regressor</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit a simple linear regression model with species as a predictor</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>species_model <span class="ot">&lt;-</span> <span class="fu">lm</span>(body_mass_g <span class="sc">~</span> species, <span class="at">data =</span> penguins_data)</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Get regression coefficients</span></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(species_model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>     (Intercept) speciesChinstrap    speciesGentoo 
+      3706.16438         26.92385       1386.27259 </code></pre>
+</div>
+</div>
+<p><strong>Explanation:</strong> We fit a simple linear regression model to predict <code>body_mass_g</code> using <code>species</code> as a categorical predictor. The coefficients represent the differences in body mass between the species with a baseline set as the first species alphabetically (<code>Adélie</code>).</p>
+<hr>
+</section>
+<section id="visualizing-data-with-categorical-variables" class="level3">
+<h3 class="anchored" data-anchor-id="visualizing-data-with-categorical-variables">11: Visualizing Data with Categorical Variables</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Scatterplot with species as color for grouping</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(penguins_data, </span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> flipper_length_mm, <span class="at">y =</span> body_mass_g, <span class="at">color =</span> species)) <span class="sc">+</span></span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Flipper Length (mm)"</span>, <span class="at">y =</span> <span class="st">"Body Mass (g)"</span>, <span class="at">color =</span> <span class="st">"Species"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="day2_walkthrough_answers_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p><strong>Explanation:</strong><br>
+We create a scatterplot to visualize the relationship between <code>flipper_length_mm</code> and <code>body_mass_g</code>, using <code>species</code> as a color grouping. This allows us to see how the relationship varies across penguin species.</p>
+<hr>
+</section>
+<section id="summarizing-the-target-and-regressors-one-numerical-and-one-categorical" class="level3">
+<h3 class="anchored" data-anchor-id="summarizing-the-target-and-regressors-one-numerical-and-one-categorical">12: Summarizing the Target and Regressors (One numerical and one categorical)</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Summarize the target and regressors</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>penguins_data <span class="sc">|&gt;</span></span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(body_mass_g, flipper_length_mm, species) <span class="sc">|&gt;</span></span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tidy_summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 5 × 11
+  column                n group     type      min    Q1  mean median    Q3   max    sd
+  &lt;chr&gt;             &lt;int&gt; &lt;chr&gt;     &lt;chr&gt;   &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;  &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;
+1 body_mass_g         333 &lt;NA&gt;      numeric  2700  3550 4207.   4050  4775  6300 805. 
+2 flipper_length_mm   333 &lt;NA&gt;      numeric   172   190  201.    197   213   231  14.0
+3 species             146 Adelie    factor     NA    NA   NA      NA    NA    NA  NA  
+4 species              68 Chinstrap factor     NA    NA   NA      NA    NA    NA  NA  
+5 species             119 Gentoo    factor     NA    NA   NA      NA    NA    NA  NA  </code></pre>
+</div>
+</div>
+<p><strong>Explanation:</strong><br>
+We use <code>tidy_summary()</code> to summarize the target variable <code>body_mass_g</code> and the regressors <code>flipper_length_mm</code> and <code>species</code>. This provides a concise overview of the data, including key statistics for each variable. Note that <code>species</code> only lists the three levels of the group since the remaining columns correspond to numeric variables only.</p>
+<hr>
+</section>
+<section id="fitting-a-multiple-regression-model-with-interaction-terms" class="level3">
+<h3 class="anchored" data-anchor-id="fitting-a-multiple-regression-model-with-interaction-terms">13: Fitting a Multiple Regression Model with Interaction Terms</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit a multiple regression model with interaction</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>multi_model_interaction <span class="ot">&lt;-</span> <span class="fu">lm</span>(body_mass_g <span class="sc">~</span> flipper_length_mm <span class="sc">*</span> species, </span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a>                              <span class="at">data =</span> penguins_data)</span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Get regression coefficients</span></span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(multi_model_interaction)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                       (Intercept)                  flipper_length_mm                   speciesChinstrap 
+                       -2508.08774                           32.68891                         -529.10803 
+                     speciesGentoo flipper_length_mm:speciesChinstrap    flipper_length_mm:speciesGentoo 
+                       -4166.11653                            1.88448                           21.47651 </code></pre>
+</div>
+</div>
+<p><strong>Explanation:</strong><br>
+We fit a multiple regression model that includes both <code>flipper_length_mm</code> and <code>species</code> as predictors of <code>body_mass_g</code>. The <code>*</code> symbol indicates that we are fitting both main effects and interaction terms. The regression coefficients reflect the impact of both the flipper length and the species on body mass as well as the interaction between flipper length and species.</p>
+<p>In the fitted model, <code>species</code> is represented as dummy variables. For example, the coefficient for <code>speciesChinstrap</code> shows how being a Chinstrap penguin affects body mass relative to the baseline species (Adélie). Similarly, the interaction terms (e.g., <code>flipper_length_mm:speciesGentoo</code>) tell us how the relationship between flipper length and body mass changes for each species compared to the baseline.</p>
+<hr>
+</section>
+<section id="adding-interaction-terms-to-the-regression-plot" class="level3">
+<h3 class="anchored" data-anchor-id="adding-interaction-terms-to-the-regression-plot">14: Adding Interaction Terms to the Regression Plot</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Scatterplot with regression lines by species</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(penguins_data, <span class="fu">aes</span>(<span class="at">x =</span> flipper_length_mm, <span class="at">y =</span> body_mass_g, <span class="at">color =</span> species)) <span class="sc">+</span></span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">se =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Flipper Length (mm)"</span>, <span class="at">y =</span> <span class="st">"Body Mass (g)"</span>, <span class="at">color =</span> <span class="st">"Species"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using formula = 'y ~ x'</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="day2_walkthrough_answers_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p><strong>Explanation:</strong><br>
+We extend the scatterplot by adding regression lines for each species, showing how the relationship between <code>flipper_length_mm</code> and <code>body_mass_g</code> differs across species. Each line represents a separate slope for each species, which reflects the interaction between flipper length and species in the model.</p>
+<hr>
+</section>
+<section id="session-2-review-questions" class="level3">
+<h3 class="anchored" data-anchor-id="session-2-review-questions">Session 2 Review Questions</h3>
+<p>Here is the split format of the questions and answers in the same format as Session3RQs:</p>
+<hr>
+<p><strong>(2.1)</strong> What is the default baseline island in the simple linear regression model for predicting <code>body_mass_g</code> using <code>island</code> as a categorical variable?</p>
+<p>A. Torgersen<br>
+B. Biscoe<br>
+C. Dream<br>
+D. The island with the highest body mass</p>
+<hr>
+<p><strong>(2.2)</strong> In the following regression model with interaction terms, what does the coefficient for <code>flipper_length_mm:speciesGentoo</code> represent?</p>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>multi_model_interaction <span class="ot">&lt;-</span> <span class="fu">lm</span>(body_mass_g <span class="sc">~</span> flipper_length_mm <span class="sc">*</span> species, <span class="at">data =</span> penguins_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<p>A. The slope of the regression line for Gentoo penguins<br>
+B. The average body mass of Gentoo penguins<br>
+C. The change in the relationship between flipper length and body mass for Gentoo penguins compared to the baseline<br>
+D. The difference in intercept for Gentoo penguins compared to the baseline</p>
+<hr>
+<p><strong>(2.3)</strong> What is the purpose of adding interaction terms to a multiple regression model?</p>
+<p>A. To make the model more complex without any real benefit<br>
+B. To estimate the relationship between each explanatory variable and the response variable independently<br>
+C. To account for how the relationship between one explanatory variable and the response depends on another explanatory variable<br>
+D. To automatically improve the model’s R-squared value</p>
+<hr>
+<p><strong>(2.4)</strong> What does the following plot indicate about the relationship between flipper length and body mass for different islands?</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(penguins_data, <span class="fu">aes</span>(<span class="at">x =</span> flipper_length_mm, <span class="at">y =</span> body_mass_g, <span class="at">color =</span> island)) <span class="sc">+</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">se =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Flipper Length (mm)"</span>, <span class="at">y =</span> <span class="st">"Body Mass (g)"</span>, <span class="at">color =</span> <span class="st">"Island"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using formula = 'y ~ x'</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="day2_walkthrough_answers_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>A. The relationship between flipper length and body mass is the same for all islands B. The relationship between flipper length and body mass differs across species, with each island having a different slope<br>
+C. The islands do not influence the relationship between flipper length and body mass<br>
+D. Only the intercept differs for each island, but the slope is the same</p>
+<hr>
+<p><strong>(2.5)</strong> In the multiple regression model with interaction terms, how are dummy variables used for categorical predictors?</p>
+<p>A. Dummy variables are used to represent the different categories of a categorical variable B. Dummy variables are used to represent each numerical variable<br>
+C. Dummy variables are used to replace the intercept in the regression model<br>
+D. Dummy variables are not necessary for categorical variables</p>
+<hr>
+</section>
+<section id="session-2-review-question-answers" class="level3">
+<h3 class="anchored" data-anchor-id="session-2-review-question-answers">Session 2 Review Question Answers</h3>
+<p><strong>(2.1)</strong> What is the default baseline island in the simple linear regression model for predicting <code>body_mass_g</code> using <code>island</code> as a categorical variable?</p>
+<p><strong>Correct Answer:</strong><br>
+B. Biscoe</p>
+<p><strong>Explanation:</strong><br>
+In a regression model with categorical variables, the baseline group is typically the first level alphabetically. Since <code>Biscoe</code> comes first, it is the baseline for comparison.</p>
+<hr>
+<p><strong>(2.2)</strong> In the following regression model with interaction terms, what does the coefficient for <code>flipper_length_mm:speciesGentoo</code> represent?</p>
+<p><strong>Correct Answer:</strong><br>
+D. The change in the relationship between flipper length and body mass for Gentoo penguins compared to the baseline</p>
+<p><strong>Explanation:</strong><br>
+The interaction term <code>flipper_length_mm:speciesGentoo</code> represents how the effect of <code>flipper_length_mm</code> on <code>body_mass_g</code> changes for Gentoo penguins compared to the baseline species, Adélie.</p>
+<hr>
+<p><strong>(2.3)</strong> What is the purpose of adding interaction terms to a multiple regression model?</p>
+<p><strong>Correct Answer:</strong><br>
+C. To account for how the relationship between one explanatory variable and the response depends on another explanatory variable</p>
+<p><strong>Explanation:</strong><br>
+Interaction terms allow us to model how the effect of one predictor (e.g., flipper length) on the outcome (body mass) changes depending on the level of another predictor (e.g., species).</p>
+<hr>
+<p><strong>(2.4)</strong> What does the following plot indicate about the relationship between flipper length and body mass for different islands?</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(penguins_data, <span class="fu">aes</span>(<span class="at">x =</span> flipper_length_mm, <span class="at">y =</span> body_mass_g, <span class="at">color =</span> island)) <span class="sc">+</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">se =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Flipper Length (mm)"</span>, <span class="at">y =</span> <span class="st">"Body Mass (g)"</span>, <span class="at">color =</span> <span class="st">"Island"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using formula = 'y ~ x'</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="day2_walkthrough_answers_files/figure-html/unnamed-chunk-17-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p><strong>Correct Answer:</strong><br>
+B. The relationship between flipper length and body mass differs across species, with each species having a different slope</p>
+<p><strong>Explanation:</strong><br>
+The plot shows separate regression lines for each species, indicating that the relationship between <code>flipper_length_mm</code> and <code>body_mass_g</code> varies by species, with each species having a unique slope.</p>
+<hr>
+<p><strong>(2.5)</strong> In the multiple regression model with interaction terms, how are dummy variables used for categorical predictors?</p>
+<p><strong>Correct Answer:</strong><br>
+A. Dummy variables are used to represent the different categories of a categorical variable</p>
+<p><strong>Explanation:</strong><br>
+In regression models, dummy variables are created for categorical variables like <code>species</code> to represent the different levels (e.g., Adélie, Chinstrap, Gentoo) in the model. These dummy variables allow the model to estimate how each category affects the outcome relative to the baseline category.</p>
+<hr>
+</section>
+</section>
+<section id="session-3-multiple-linear-regression-analysis-part-2" class="level2">
+<h2 class="anchored" data-anchor-id="session-3-multiple-linear-regression-analysis-part-2">Session 3: Multiple Linear Regression Analysis (Part 2)</h2>
+<section id="fitting-a-multiple-regression-model-without-interactions" class="level3">
+<h3 class="anchored" data-anchor-id="fitting-a-multiple-regression-model-without-interactions">15. Fitting a Multiple Regression Model Without Interactions</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit a multiple regression model without interaction terms</span></span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a>multi_model_no_interaction <span class="ot">&lt;-</span> <span class="fu">lm</span>(body_mass_g <span class="sc">~</span> flipper_length_mm <span class="sc">+</span> species, </span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>                              <span class="at">data =</span> penguins_data)</span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Get regression coefficients</span></span>
+<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(multi_model_no_interaction)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      (Intercept) flipper_length_mm  speciesChinstrap     speciesGentoo 
+      -4013.17889          40.60617        -205.37548         284.52360 </code></pre>
+</div>
+</div>
+<p><strong>Explanation:</strong> - We fit a multiple regression model predicting <code>body_mass_g</code> (body mass) using both <code>flipper_length_mm</code> (flipper length) and <code>species</code> as explanatory variables. - In this model, the effect of each explanatory variable on body mass is assumed to be independent, meaning the slopes are the same across different levels of the other variable (i.e., no interaction). - The coefficients indicate the effect of each predictor on body mass, with each variable having its own impact on the response.</p>
+<hr>
+</section>
+<section id="visualizing-the-parallel-slopes-model" class="level3">
+<h3 class="anchored" data-anchor-id="visualizing-the-parallel-slopes-model">16. Visualizing the Parallel Slopes Model</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Scatterplot with regression lines by species (different intercepts but same slopes)</span></span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(penguins_data, <span class="fu">aes</span>(<span class="at">x =</span> flipper_length_mm, <span class="at">y =</span> body_mass_g, <span class="at">color =</span> species)) <span class="sc">+</span></span>
+<span id="cb41-3"><a href="#cb41-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb41-4"><a href="#cb41-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_parallel_slopes</span>(<span class="at">se =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb41-5"><a href="#cb41-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Flipper Length (mm)"</span>, <span class="at">y =</span> <span class="st">"Body Mass (g)"</span>, <span class="at">color =</span> <span class="st">"Species"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="day2_walkthrough_answers_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p><strong>Explanation:</strong> - We visualize the fitted multiple regression model without interactions using parallel slope lines. - The function <code>geom_parallel_slopes()</code> is used to create regression lines with the same slope for each species. - This helps to visualize the idea of parallel slopes, where each regression line has the same slope but different intercepts depending on the other explanatory variable (flipper length).</p>
+<hr>
+</section>
+<section id="summarize-the-numerical-regressors-and-target-variable" class="level3">
+<h3 class="anchored" data-anchor-id="summarize-the-numerical-regressors-and-target-variable">17. Summarize the Numerical Regressors and Target Variable</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Use tidy_summary to get a clean summary of the data for a multiple regression</span></span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a><span class="co"># with flipper length and bill length and regressors and body mass as the</span></span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a><span class="co"># outcome</span></span>
+<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a>penguins_data <span class="sc">|&gt;</span></span>
+<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(body_mass_g, flipper_length_mm, bill_length_mm) <span class="sc">|&gt;</span></span>
+<span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tidy_summary</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 11
+  column                n group type       min     Q1   mean median     Q3    max     sd
+  &lt;chr&gt;             &lt;int&gt; &lt;chr&gt; &lt;chr&gt;    &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;  &lt;dbl&gt;
+1 body_mass_g         333 &lt;NA&gt;  numeric 2700   3550   4207.  4050   4775   6300   805.  
+2 flipper_length_mm   333 &lt;NA&gt;  numeric  172    190    201.   197    213    231    14.0 
+3 bill_length_mm      333 &lt;NA&gt;  numeric   32.1   39.5   44.0   44.5   48.6   59.6   5.47</code></pre>
+</div>
+</div>
+<p>This provides a tidy summary, giving key statistics such as the mean, median, and standard deviation for the selected variables.</p>
+<hr>
+</section>
+<section id="fitting-a-multiple-regression-model-with-two-numerical-predictors" class="level3">
+<h3 class="anchored" data-anchor-id="fitting-a-multiple-regression-model-with-two-numerical-predictors">18. Fitting a Multiple Regression Model with Two Numerical Predictors</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit a multiple regression model</span></span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>multi_model <span class="ot">&lt;-</span> <span class="fu">lm</span>(body_mass_g <span class="sc">~</span> flipper_length_mm <span class="sc">+</span> bill_length_mm, </span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>                  <span class="at">data =</span> penguins_data)</span>
+<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb44-5"><a href="#cb44-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Get regression coefficients</span></span>
+<span id="cb44-6"><a href="#cb44-6" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(multi_model)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      (Intercept) flipper_length_mm    bill_length_mm 
+     -5836.298732         48.889692          4.958601 </code></pre>
+</div>
+</div>
+<p>In this multiple regression model, we predict <code>body_mass_g</code> using both <code>flipper_length_mm</code> and <code>bill_length_mm</code>. The coefficients show the effect of each variable on the response.</p>
+<hr>
+</section>
+<section id="visualizing-the-relationship-between-variables-with-slr" class="level3">
+<h3 class="anchored" data-anchor-id="visualizing-the-relationship-between-variables-with-slr">19. Visualizing the Relationship between Variables (with SLR)</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Create scatterplot with regression lines for both variables</span></span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(penguins_data, <span class="fu">aes</span>(<span class="at">x =</span> flipper_length_mm, <span class="at">y =</span> body_mass_g)) <span class="sc">+</span></span>
+<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">se =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb46-5"><a href="#cb46-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Flipper Length (mm)"</span>, <span class="at">y =</span> <span class="st">"Body Mass (g)"</span>,</span>
+<span id="cb46-6"><a href="#cb46-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">"Body Mass vs Flipper Length"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using formula = 'y ~ x'</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="day2_walkthrough_answers_files/figure-html/unnamed-chunk-22-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb48"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(penguins_data, <span class="fu">aes</span>(<span class="at">x =</span> bill_length_mm, <span class="at">y =</span> body_mass_g)) <span class="sc">+</span></span>
+<span id="cb48-2"><a href="#cb48-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
+<span id="cb48-3"><a href="#cb48-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">se =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb48-4"><a href="#cb48-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Bill Length (mm)"</span>, <span class="at">y =</span> <span class="st">"Body Mass (g)"</span>,</span>
+<span id="cb48-5"><a href="#cb48-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">title =</span> <span class="st">"Body Mass vs Bill Length"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using formula = 'y ~ x'</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="day2_walkthrough_answers_files/figure-html/unnamed-chunk-22-2.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>These scatterplots display the relationships individually between <code>flipper_length_mm</code> and <code>body_mass_g</code>, and between <code>bill_length_mm</code> and <code>body_mass_g</code>, with linear regression lines added.</p>
+<hr>
+</section>
+<section id="session-3-review-questions" class="level3">
+<h3 class="anchored" data-anchor-id="session-3-review-questions">Session 3 Review Questions</h3>
+<p><strong><code>(3.1)</code></strong> What is the main assumption in a multiple regression model without interaction terms?</p>
+<p>A. The relationship between the explanatory variables and the response is always quadratic.<br>
+B. The slope of the regression line is different for each level of the categorical variable.<br>
+C. The slope of the regression line is the same for all levels of the categorical variable.<br>
+D. The intercept of the regression line is the same for all levels of the categorical variable.</p>
+<hr>
+<p><strong><code>(3.2)</code></strong> In the model <code>lm(body_mass_g ~ flipper_length_mm + species, data = penguins_data)</code>, what does the coefficient for <code>speciesGentoo</code> represent?</p>
+<p>A. The effect of being a Gentoo penguin on body mass compared to the baseline species (Adélie).<br>
+B. The effect of flipper length on body mass for Gentoo penguins only.<br>
+C. The change in flipper length due to species.<br>
+D. The effect of body mass on flipper length for Gentoo penguins.</p>
+<hr>
+<p><strong><code>(3.3)</code></strong> What does the function <code>geom_parallel_slopes()</code> do in a regression plot?</p>
+<p>A. It fits regression lines with different slopes for each group.<br>
+B. It plots regression lines with the same slope but different intercepts for each group.<br>
+C. It creates a scatterplot without any regression lines.<br>
+D. It visualizes interaction effects between the variables.</p>
+<hr>
+<p><strong><code>(3.4)</code></strong> In the model <code>lm(body_mass_g ~ flipper_length_mm + bill_length_mm, data = penguins_data)</code>, what do the coefficients for <code>flipper_length_mm</code> and <code>bill_length_mm</code> represent?</p>
+<p>A. The total body mass of each penguin species.<br>
+B. The predicted body mass for penguins with average bill and flipper lengths. C. The interaction effect between flipper length and bill length.<br>
+D. The effect of bill length on body mass, controlling for flipper length, and vice versa.</p>
+<hr>
+<p><strong><code>(3.5)</code></strong> What does a regression model without interaction terms assume about the relationship between the explanatory variables and the response variable?</p>
+<p>A. The explanatory variables are not related to the response.<br>
+B. The relationship between the explanatory variables and the response is independent of one another.<br>
+C. The explanatory variables interact to affect the response.<br>
+D. The response variable depends only on the categorical variables.</p>
+<hr>
+</section>
+<section id="session-3-review-question-answers" class="level3">
+<h3 class="anchored" data-anchor-id="session-3-review-question-answers">Session 3 Review Question Answers</h3>
+<p><strong><code>(3.1)</code></strong> What is the main assumption in a multiple regression model without interaction terms?</p>
+<p><strong>Correct Answer:</strong><br>
+C. The slope of the regression line is the same for all levels of the categorical variable.</p>
+<p><strong>Explanation:</strong><br>
+In a multiple regression model without interactions, the slopes are assumed to be the same across all levels of the categorical variable. Only the intercepts are allowed to differ by group.</p>
+<hr>
+<p><strong><code>(3.2)</code></strong> In the model <code>lm(body_mass_g ~ flipper_length_mm + species, data = penguins_data)</code>, what does the coefficient for <code>speciesGentoo</code> represent?</p>
+<p><strong>Correct Answer:</strong><br>
+A. The effect of being a Gentoo penguin on body mass compared to the baseline species (Adélie).</p>
+<p><strong>Explanation:</strong><br>
+In regression models with categorical variables, the coefficient for a level like <code>speciesGentoo</code> represents the difference in the response variable (body mass) for Gentoo penguins compared to the baseline species (Adélie).</p>
+<hr>
+<p><strong><code>(3.3)</code></strong> What does the function <code>geom_parallel_slopes()</code> do in a regression plot?</p>
+<p><strong>Correct Answer:</strong><br>
+B. It plots regression lines with the same slope but different intercepts for each group.</p>
+<p><strong>Explanation:</strong><br>
+The <code>geom_parallel_slopes()</code> function is used to visualize regression models without interaction terms, where each group has the same slope but different intercepts.</p>
+<hr>
+<p><strong><code>(3.4)</code></strong> In the model <code>lm(body_mass_g ~ flipper_length_mm + bill_length_mm, data = penguins_data)</code>, what do the coefficients for <code>flipper_length_mm</code> and <code>bill_length_mm</code> represent?</p>
+<p><strong>Correct Answer:</strong><br>
+D. The effect of bill length on body mass, controlling for flipper length, and vice versa.</p>
+<p><strong>Explanation:</strong><br>
+In a multiple regression model, each coefficient represents the effect of that variable on the response, while controlling for the other variables in the model.</p>
+<hr>
+<p><strong><code>(3.5)</code></strong> What does a regression model without interaction terms assume about the relationship between the explanatory variables and the response variable?</p>
+<p><strong>Correct Answer:</strong><br>
+B. The relationship between the explanatory variables and the response is independent of one another.</p>
+<p><strong>Explanation:</strong><br>
+In a regression model without interaction terms, it is assumed that the explanatory variables affect the response independently, meaning that the effect of one variable is not influenced by the level of the other.</p>
+<hr>
+</section>
+</section>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
