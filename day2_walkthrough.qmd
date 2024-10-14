@@ -1,0 +1,404 @@
+---
+title: "Statistics in R with the `tidyverse`"
+author: "Dr. Chester Ismay"
+subtitle: "Day 2 Walkthrough"
+format: html
+---
+
+```{r}
+#| include: false
+options(width = 120)
+```
+
+
+# Day 2: Linear Regression in R
+
+## Session 1: Simple Linear Regression Analysis
+
+### 1. Load Necessary Libraries
+
+```{r}
+# Load the required libraries
+library(dplyr)
+library(ggplot2)
+library(moderndive)
+```
+
+- These packages provide tools for data wrangling, visualization, and modeling.  
+
+---
+
+### 2. Prepare Dataset
+
+```{r}
+library(palmerpenguins)
+
+# Only use complete rows of data
+
+```
+
+- We'll be exploring the `penguins` data frame from the `palmerpenguins` package as well. It contains size measurements for three penguin species observed on three islands in the Palmer Archipelago, Antarctica. More information is [here](https://allisonhorst.github.io/palmerpenguins/articles/intro.html).  
+- We remove rows with missing values.
+
+---
+
+### 3. Exploring Dataset Structure
+
+```{r}
+# Use glimpse to explore the structure of the dataset
+
+```
+
+
+---
+
+### 4. Summary Statistics
+
+```{r}
+# Summarize mean and median values for flipper length and body mass
+
+```
+
+
+---
+
+### 5. Using `tidy_summary()` Function
+
+```{r}
+# Use tidy_summary to get a clean summary of the data
+
+```
+
+
+---
+
+### 6. Correlation Between Flipper Length and Body Mass
+
+```{r}
+# Compute the correlation between flipper length and body mass
+
+```
+
+
+---
+
+### 7. Scatterplot of Flipper Length and Body Mass
+
+```{r}
+# Plot the relationship between flipper length and body mass
+
+```
+
+
+---
+
+### 8. Regression Line
+
+```{r}
+# The same scatterplot with a regression line added
+
+```
+
+
+---
+
+### 9. Fit a Regression Model
+
+```{r}
+# Fit a linear regression model
+
+
+# Get the regression coefficients
+
+```
+
+
+---
+
+### Session 1 Review Questions
+
+**(1.1)** What is the purpose of the `na.omit()` function in the code below?
+
+```r
+penguins_data <- penguins |>
+  select(species, island, flipper_length_mm, body_mass_g) |>
+  na.omit()
+```
+
+A. It replaces missing values with the median.  
+B. It removes any rows that contain missing values.  
+C. It converts missing values to zeros.  
+D. It fills missing values with the previous non-missing value.
+
+---
+
+**(1.2)** What does the `tidy_summary()` function do when applied to numeric columns in the `penguins_data` data frame?
+
+A. It generates summary statistics for each column in the data frame.  
+B. It prints the first 6 rows of the data frame.  
+C. It provides a compact overview of the data, including column names and data types.  
+D. It creates a scatterplot of the variables in the data frame.
+
+---
+
+**(1.3)** Which of the following correctly calculates the mean body mass in the `penguins_data` data frame?
+
+A. `summarize |> penguins_data(mean_flipper = mean(body_mass_g))`  
+B. `summarize(mean(body_mass_g))`  
+C. `summarize(penguins_data, mean = body_mass_g)`
+D. `penguins_data |> summarize(mean_body_mass = mean(body_mass_g))`  
+
+---
+
+**(1.4)** What does the `get_correlation()` function do when applied in the code below?
+
+```r
+penguins_data |>
+  get_correlation(formula = flipper_length_mm ~ body_mass_g)
+```
+
+A. It fits a linear regression model.  
+B. It gives a measure of the linear relationship between flipper length and body mass.
+C. It plots a scatterplot of flipper length and body mass.  
+D. It generates summary statistics for flipper length and body mass.
+
+---
+
+**(1.5)** In the following code, what is the purpose of `geom_smooth(method = "lm", se = FALSE)`?
+
+```r
+ggplot(penguins_data, aes(x = flipper_length_mm, y = body_mass_g)) +
+  geom_point(alpha = 0.5) +
+  geom_smooth(method = "lm", se = FALSE) +
+  labs(x = "Flipper Length (mm)", y = "Body Mass (g)",
+       title = "Flipper Length vs. Body Mass with Regression Line")
+```
+
+A. It adds a smoothed curve based on a polynomial fit to the scatterplot.  
+B. It adds a linear regression line to the scatterplot without displaying the confidence interval.  
+C. It adjusts the transparency of the points in the scatterplot.  
+D. It calculates and displays residuals on the plot.
+
+---
+
+## Session 2: Multiple Linear Regression Analysis (Part 1)
+
+### 10: Fitting a Simple Linear Regression with a Categorical Regressor
+
+```{r}
+# Fit a simple linear regression model with species as a predictor
+
+
+# Get regression coefficients
+
+```
+
+
+---
+
+### 11: Visualizing Data with Categorical Variables
+
+```{r}
+# Scatterplot with species as color for grouping
+
+```
+
+---
+
+### 12: Summarizing the Target and Regressors (One numerical and one categorical)
+
+```{r}
+# Summarize the target and regressors
+
+```
+
+---
+
+### 13: Fitting a Multiple Regression Model with Interaction Terms
+
+```{r}
+# Fit a multiple regression model with interaction
+
+
+# Get regression coefficients
+
+```
+
+
+---
+
+### 14: Adding Interaction Terms to the Regression Plot
+
+```{r}
+# Scatterplot with regression lines by species
+
+```
+
+
+---
+
+### Session 2 Review Questions
+
+Here is the split format of the questions and answers in the same format as Session3RQs:
+
+---
+
+**(2.1)** What is the default baseline island in the simple linear regression model for predicting `body_mass_g` using `island` as a categorical variable?
+
+A. Torgersen  
+B. Biscoe  
+C. Dream  
+D. The island with the highest body mass
+
+---
+
+**(2.2)** In the following regression model with interaction terms, what does the coefficient for `flipper_length_mm:speciesGentoo` represent?
+
+```r
+multi_model_interaction <- lm(body_mass_g ~ flipper_length_mm * species, data = penguins_data)
+```
+
+A. The slope of the regression line for Gentoo penguins  
+B. The average body mass of Gentoo penguins  
+C. The change in the relationship between flipper length and body mass for Gentoo penguins compared to the baseline  
+D. The difference in intercept for Gentoo penguins compared to the baseline  
+
+---
+
+**(2.3)** What is the purpose of adding interaction terms to a multiple regression model?
+
+A. To make the model more complex without any real benefit  
+B. To estimate the relationship between each explanatory variable and the response variable independently  
+C. To account for how the relationship between one explanatory variable and the response depends on another explanatory variable  
+D. To automatically improve the model's R-squared value
+
+---
+
+**(2.4)** What does the following plot indicate about the relationship between flipper length and body mass for different islands?
+
+```{r}
+ggplot(penguins_data, aes(x = flipper_length_mm, y = body_mass_g, color = island)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE) +
+  labs(x = "Flipper Length (mm)", y = "Body Mass (g)", color = "Island")
+```
+
+A. The relationship between flipper length and body mass is the same for all islands 
+B. The relationship between flipper length and body mass differs across species, with each island having a different slope  
+C. The islands do not influence the relationship between flipper length and body mass  
+D. Only the intercept differs for each island, but the slope is the same
+
+---
+
+**(2.5)** In the multiple regression model with interaction terms, how are dummy variables used for categorical predictors?
+
+A. Dummy variables are used to represent the different categories of a categorical variable 
+B. Dummy variables are used to represent each numerical variable  
+C. Dummy variables are used to replace the intercept in the regression model  
+D. Dummy variables are not necessary for categorical variables
+
+---
+
+## Session 3: Multiple Linear Regression Analysis (Part 2)
+
+### 15. Fitting a Multiple Regression Model Without Interactions
+
+```{r}
+# Fit a multiple regression model without interaction terms
+
+
+# Get regression coefficients
+
+```
+
+
+---
+
+### 16. Visualizing the Parallel Slopes Model
+
+```{r}
+# Scatterplot with regression lines by species (different intercepts but same slopes)
+
+```
+
+
+---
+
+### 17. Summarize the Numerical Regressors and Target Variable
+
+```{r}
+# Use tidy_summary to get a clean summary of the data for a multiple regression
+# with flipper length and bill length and regressors and body mass as the
+# outcome
+
+```
+
+
+---
+
+### 18. Fitting a Multiple Regression Model with Two Numerical Predictors
+
+```{r}
+# Fit a multiple regression model
+
+
+# Get regression coefficients
+
+```
+
+---
+
+### 19. Visualizing the Relationship between Variables (with SLR)
+
+```{r}
+# Create scatterplot with regression lines for both variables
+
+```
+
+---
+
+### Session 3 Review Questions
+
+**`(3.1)`** What is the main assumption in a multiple regression model without interaction terms?
+
+A. The relationship between the explanatory variables and the response is always quadratic.  
+B. The slope of the regression line is different for each level of the categorical variable.  
+C. The slope of the regression line is the same for all levels of the categorical variable.  
+D. The intercept of the regression line is the same for all levels of the categorical variable.
+
+---
+
+**`(3.2)`** In the model `lm(body_mass_g ~ flipper_length_mm + species, data = penguins_data)`, what does the coefficient for `speciesGentoo` represent?
+
+A. The effect of being a Gentoo penguin on body mass compared to the baseline species (Adélie).  
+B. The effect of flipper length on body mass for Gentoo penguins only.  
+C. The change in flipper length due to species.  
+D. The effect of body mass on flipper length for Gentoo penguins.
+
+---
+
+**`(3.3)`** What does the function `geom_parallel_slopes()` do in a regression plot?
+
+A. It fits regression lines with different slopes for each group.  
+B. It plots regression lines with the same slope but different intercepts for each group.  
+C. It creates a scatterplot without any regression lines.  
+D. It visualizes interaction effects between the variables.
+
+---
+
+**`(3.4)`** In the model `lm(body_mass_g ~ flipper_length_mm + bill_length_mm, data = penguins_data)`, what do the coefficients for `flipper_length_mm` and `bill_length_mm` represent?
+
+A. The total body mass of each penguin species.  
+B. The predicted body mass for penguins with average bill and flipper lengths.
+C. The interaction effect between flipper length and bill length.  
+D. The effect of bill length on body mass, controlling for flipper length, and vice versa. 
+
+---
+
+**`(3.5)`** What does a regression model without interaction terms assume about the relationship between the explanatory variables and the response variable?
+
+A. The explanatory variables are not related to the response.  
+B. The relationship between the explanatory variables and the response is independent of one another.  
+C. The explanatory variables interact to affect the response.  
+D. The response variable depends only on the categorical variables.
+
