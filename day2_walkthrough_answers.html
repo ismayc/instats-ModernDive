@@ -560,8 +560,12 @@ In regression models, dummy variables are created for categorical variables like
       -4013.17889          40.60617        -205.37548         284.52360 </code></pre>
 </div>
 </div>
-<p><strong>Explanation:</strong><br>
-- We fit a multiple regression model predicting <code>body_mass_g</code> (body mass) using both <code>flipper_length_mm</code> (flipper length) and <code>species</code> as explanatory variables. - In this model, the effect of each explanatory variable on body mass is assumed to be independent, meaning the slopes are the same across different levels of the other variable (i.e., no interaction). - The coefficients indicate the effect of each predictor on body mass, with each variable having its own impact on the response.</p>
+<p><strong>Explanation:</strong></p>
+<ul>
+<li>We fit a multiple regression model predicting <code>body_mass_g</code> (body mass) using both <code>flipper_length_mm</code> (flipper length) and <code>species</code> as explanatory variables.</li>
+<li>In this model, the effect of each explanatory variable on body mass is assumed to be independent, meaning the slopes are the same across different levels of the other variable (i.e., no interaction).</li>
+<li>The coefficients indicate the effect of each predictor on body mass, with each variable having its own impact on the response.</li>
+</ul>
 <hr>
 </section>
 <section id="visualizing-the-parallel-slopes-model" class="level3">
@@ -576,8 +580,12 @@ In regression models, dummy variables are created for categorical variables like
 <p><img src="day2_walkthrough_answers_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<p><strong>Explanation:</strong><br>
-- We visualize the fitted multiple regression model without interactions using parallel slope lines. - The function <code>geom_parallel_slopes()</code> is used to create regression lines with the same slope for each species. - This helps to visualize the idea of parallel slopes, where each regression line has the same slope but different intercepts depending on the other explanatory variable (flipper length).</p>
+<p><strong>Explanation:</strong></p>
+<ul>
+<li>We visualize the fitted multiple regression model without interactions using parallel slope lines.</li>
+<li>The function <code>geom_parallel_slopes()</code> is used to create regression lines with the same slope for each species.</li>
+<li>This helps to visualize the idea of parallel slopes, where each regression line has the same slope but different intercepts depending on the other explanatory variable (flipper length).</li>
+</ul>
 <hr>
 </section>
 <section id="summarize-the-numerical-regressors-and-target-variable" class="level3">
