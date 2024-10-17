@@ -1303,7 +1303,8 @@ Facet wrapping divides the scatterplot into separate panels for each region, all
 </div>
 </div>
 <p>Here’s an expanded explanation for a new R user, guiding them through the process of converting wide data into tidy data using <code>pivot_longer()</code>, followed by creating a line graph to visualize unemployment rates over time:</p>
-<p><em>Explanation:</em> 1. <strong>Convert Wide Data to Tidy Data (<code>pivot_longer</code>)</strong>: - The initial dataset, <code>wide_unemp</code>, is in <strong>wide format</strong>, where each column (except <code>country</code>) represents a year and the unemployment rate for that year. We use <code>pivot_longer()</code> to <strong>convert this wide format into a tidy format</strong> so that each row represents a single observation (country-year combination).</p>
+<p><em>Explanation:</em><br>
+1. <strong>Convert Wide Data to Tidy Data (<code>pivot_longer</code>)</strong>: - The initial dataset, <code>wide_unemp</code>, is in <strong>wide format</strong>, where each column (except <code>country</code>) represents a year and the unemployment rate for that year. We use <code>pivot_longer()</code> to <strong>convert this wide format into a tidy format</strong> so that each row represents a single observation (country-year combination).</p>
 <ul>
 <li><strong><code>pivot_longer(cols = -country, names_to = "year", values_to = "unemployment_perc")</code></strong>:
 <ul>
