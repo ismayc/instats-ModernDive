@@ -1036,7 +1036,7 @@ ggplot(tidy_unemp, aes(x = year, y = unemployment_perc, color = country)) +
 
 Here’s an expanded explanation for a new R user, guiding them through the process of converting wide data into tidy data using `pivot_longer()`, followed by creating a line graph to visualize unemployment rates over time:
 
-*Explanation:* 
+*Explanation:*  
 1. **Convert Wide Data to Tidy Data (`pivot_longer`)**:
    - The initial dataset, `wide_unemp`, is in **wide format**, where each column (except `country`) represents a year and the unemployment rate for that year. We use `pivot_longer()` to **convert this wide format into a tidy format** so that each row represents a single observation (country-year combination).
 
