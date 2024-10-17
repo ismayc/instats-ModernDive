@@ -394,7 +394,7 @@ ggplot(penguins_data, aes(x = flipper_length_mm, y = body_mass_g, color = island
   labs(x = "Flipper Length (mm)", y = "Body Mass (g)", color = "Island")
 ```
 
-A. The relationship between flipper length and body mass is the same for all islands 
+A. The relationship between flipper length and body mass is the same for all islands  
 B. The relationship between flipper length and body mass differs across species, with each island having a different slope  
 C. The islands do not influence the relationship between flipper length and body mass  
 D. Only the intercept differs for each island, but the slope is the same
