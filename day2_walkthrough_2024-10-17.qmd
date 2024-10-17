@@ -132,8 +132,8 @@ coef(flipper_model)
 
 ```r
 penguins_data <- penguins |>
-  select(species, island, flipper_length_mm, body_mass_g) |>
-  na.omit()
+select(species, island, flipper_length_mm, body_mass_g) |>
+na.omit()
 ```
 
 A. It replaces missing values with the median.  
@@ -165,7 +165,7 @@ D. `penguins_data |> summarize(mean_body_mass = mean(body_mass_g))`
 
 ```r
 penguins_data |>
-  get_correlation(formula = flipper_length_mm ~ body_mass_g)
+get_correlation(formula = flipper_length_mm ~ body_mass_g)
 ```
 
 A. It fits a linear regression model.  
@@ -179,10 +179,10 @@ D. It generates summary statistics for flipper length and body mass.
 
 ```r
 ggplot(penguins_data, aes(x = flipper_length_mm, y = body_mass_g)) +
-  geom_point(alpha = 0.5) +
-  geom_smooth(method = "lm", se = FALSE) +
-  labs(x = "Flipper Length (mm)", y = "Body Mass (g)",
-       title = "Flipper Length vs. Body Mass with Regression Line")
+geom_point(alpha = 0.5) +
+geom_smooth(method = "lm", se = FALSE) +
+labs(x = "Flipper Length (mm)", y = "Body Mass (g)",
+title = "Flipper Length vs. Body Mass with Regression Line")
 ```
 
 A. It adds a smoothed curve based on a polynomial fit to the scatterplot.  
@@ -236,8 +236,10 @@ penguins_data |>
 
 ```{r}
 # Fit a multiple regression model with interaction
-multiple_model_interaction <- lm(body_mass_g ~ flipper_length_mm + species + flipper_length_mm * species,
-                                 data = penguins_data)
+multiple_model_interaction <- lm(
+  body_mass_g ~ flipper_length_mm + species + flipper_length_mm * species,
+  data = penguins_data
+)
 
 # Same as
 multiple_model_interaction <- lm(body_mass_g ~ flipper_length_mm * species,
@@ -327,10 +329,11 @@ D. Dummy variables are not necessary for categorical variables
 
 ```{r}
 # Fit a multiple regression model without interaction terms
-
+multi_model_no_interaction <- lm(body_mass_g ~ flipper_length_mm + species,
+                                 data = penguins_data)
 
 # Get regression coefficients
-
+coef(multi_model_no_interaction)
 ```
 
 
@@ -340,7 +343,10 @@ D. Dummy variables are not necessary for categorical variables
 
 ```{r}
 # Scatterplot with regression lines by species (different intercepts but same slopes)
-
+ggplot(penguins_data,
+       aes(x = flipper_length_mm, y = body_mass_g, color = species)) +
+  geom_point() +
+  geom_parallel_slopes(se = FALSE)
 ```
 
 
@@ -352,7 +358,9 @@ D. Dummy variables are not necessary for categorical variables
 # Use tidy_summary to get a clean summary of the data for a multiple regression
 # with flipper length and bill length and regressors and body mass as the
 # outcome
-
+penguins_data |> 
+  select(body_mass_g, flipper_length_mm, bill_length_mm) |> 
+  tidy_summary()
 ```
 
 
@@ -362,10 +370,11 @@ D. Dummy variables are not necessary for categorical variables
 
 ```{r}
 # Fit a multiple regression model
-
+multi_model_num_predictors <- lm(body_mass_g ~ flipper_length_mm + bill_length_mm,
+                                 data = penguins_data)
 
 # Get regression coefficients
-
+coef(multi_model_num_predictors)
 ```
 
 ---
@@ -375,6 +384,23 @@ D. Dummy variables are not necessary for categorical variables
 ```{r}
 # Create scatterplot with regression lines for both variables
 
+# body_mass_g vs flipper_length_mm
+ggplot(penguins_data, aes(x = flipper_length_mm, y = body_mass_g)) +
+  geom_point(alpha = 0.5) +
+  geom_smooth(method = "lm", se = FALSE)
+
+# Get the correlation between body_mass_g and bill_length_mm
+penguins_data |> 
+  get_correlation(body_mass_g ~ bill_length_mm)
+
+# Just a teaser to multicollinearity
+penguins_data |> 
+  get_correlation(flipper_length_mm ~ bill_length_mm)
+
+# body_mass_g vs bill_length_mm
+ggplot(penguins_data, aes(x = bill_length_mm, y = body_mass_g)) +
+  geom_point(alpha = 0.5) +
+  geom_smooth(method = "lm", se = FALSE)
 ```
 
 ---
@@ -423,3 +449,4 @@ A. The explanatory variables are not related to the response.
 B. The relationship between the explanatory variables and the response is independent of one another.  
 C. The explanatory variables interact to affect the response.  
 D. The response variable depends only on the categorical variables.
+
