@@ -15,10 +15,10 @@ options(width = 120)
 
 ## Session 1: Simple Linear Regression Analysis
 
-### 1. Load Necessary Libraries
+### 1. Load Necessary Packages
 
 ```{r}
-# Load the required libraries
+# Load the required packages
 library(dplyr)
 library(ggplot2)
 library(moderndive)
@@ -34,7 +34,8 @@ library(moderndive)
 library(palmerpenguins)
 
 # Only use complete rows of data
-
+penguins_data <- penguins |> 
+  na.omit()
 ```
 
 - We'll be exploring the `penguins` data frame from the `palmerpenguins` package as well. It contains size measurements for three penguin species observed on three islands in the Palmer Archipelago, Antarctica. More information is [here](https://allisonhorst.github.io/palmerpenguins/articles/intro.html).  
@@ -46,7 +47,7 @@ library(palmerpenguins)
 
 ```{r}
 # Use glimpse to explore the structure of the dataset
-
+glimpse(penguins_data)
 ```
 
 
@@ -56,7 +57,11 @@ library(palmerpenguins)
 
 ```{r}
 # Summarize mean and median values for flipper length and body mass
-
+penguins_data |> 
+  summarize(mean_flipper_length = mean(flipper_length_mm),
+            mean_body_mass = mean(body_mass_g),
+            median_flipper_length = median(flipper_length_mm),
+            median_body_mass = median(body_mass_g))
 ```
 
 
@@ -66,7 +71,9 @@ library(palmerpenguins)
 
 ```{r}
 # Use tidy_summary to get a clean summary of the data
-
+penguins_data |> 
+  select(flipper_length_mm, body_mass_g) |> 
+  tidy_summary()
 ```
 
 
@@ -76,7 +83,8 @@ library(palmerpenguins)
 
 ```{r}
 # Compute the correlation between flipper length and body mass
-
+penguins_data |> 
+  get_correlation(formula = body_mass_g ~ flipper_length_mm)
 ```
 
 
@@ -86,7 +94,8 @@ library(palmerpenguins)
 
 ```{r}
 # Plot the relationship between flipper length and body mass
-
+ggplot(penguins_data, aes(x = flipper_length_mm, y = body_mass_g)) +
+  geom_point(alpha = 0.5, color = "turquoise")
 ```
 
 
@@ -96,7 +105,9 @@ library(palmerpenguins)
 
 ```{r}
 # The same scatterplot with a regression line added
-
+ggplot(penguins_data, aes(x = flipper_length_mm, y = body_mass_g)) +
+  geom_point(alpha = 0.5, color = "turquoise") +
+  geom_smooth(method = "lm", se = FALSE)
 ```
 
 
@@ -106,10 +117,10 @@ library(palmerpenguins)
 
 ```{r}
 # Fit a linear regression model
-
+flipper_model <- lm(body_mass_g ~ flipper_length_mm, data = penguins_data)
 
 # Get the regression coefficients
-
+coef(flipper_model)
 ```
 
 
@@ -186,11 +197,14 @@ D. It calculates and displays residuals on the plot.
 ### 10: Fitting a Simple Linear Regression with a Categorical Regressor
 
 ```{r}
-# Fit a simple linear regression model with species as a predictor
+# Get the distinct levels of species
+penguins_data |> distinct(species)
 
+# Fit a simple linear regression model with species as a predictor
+species_model <- lm(body_mass_g ~ species, data = penguins_data)
 
 # Get regression coefficients
-
+coef(species_model)
 ```
 
 
@@ -200,7 +214,9 @@ D. It calculates and displays residuals on the plot.
 
 ```{r}
 # Scatterplot with species as color for grouping
-
+ggplot(penguins_data,
+       aes(x = flipper_length_mm, y = body_mass_g, color = species)) +
+  geom_point()
 ```
 
 ---
@@ -209,7 +225,9 @@ D. It calculates and displays residuals on the plot.
 
 ```{r}
 # Summarize the target and regressors
-
+penguins_data |> 
+  select(body_mass_g, flipper_length_mm, species) |> 
+  tidy_summary()
 ```
 
 ---
@@ -218,10 +236,15 @@ D. It calculates and displays residuals on the plot.
 
 ```{r}
 # Fit a multiple regression model with interaction
+multiple_model_interaction <- lm(body_mass_g ~ flipper_length_mm + species + flipper_length_mm * species,
+                                 data = penguins_data)
 
+# Same as
+multiple_model_interaction <- lm(body_mass_g ~ flipper_length_mm * species,
+                                 data = penguins_data)
 
 # Get regression coefficients
-
+coef(multiple_model_interaction)
 ```
 
 
@@ -231,7 +254,9 @@ D. It calculates and displays residuals on the plot.
 
 ```{r}
 # Scatterplot with regression lines by species
-
+ggplot(penguins_data, aes(x = flipper_length_mm, y = body_mass_g, color = species)) +
+  geom_point() +
+  geom_smooth(method = "lm", se = FALSE)
 ```
 
 
@@ -239,9 +264,6 @@ D. It calculates and displays residuals on the plot.
 
 ### Session 2 Review Questions
 
-Here is the split format of the questions and answers in the same format as Session3RQs:
-
----
 
 **(2.1)** What is the default baseline island in the simple linear regression model for predicting `body_mass_g` using `island` as a categorical variable?
 
