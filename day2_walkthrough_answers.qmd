@@ -483,7 +483,7 @@ multi_model_no_interaction <- lm(body_mass_g ~ flipper_length_mm + species,
 coef(multi_model_no_interaction)
 ```
 
-**Explanation:**
+**Explanation:**  
 - We fit a multiple regression model predicting `body_mass_g` (body mass) using both `flipper_length_mm` (flipper length) and `species` as explanatory variables.
 - In this model, the effect of each explanatory variable on body mass is assumed to be independent, meaning the slopes are the same across different levels of the other variable (i.e., no interaction).
 - The coefficients indicate the effect of each predictor on body mass, with each variable having its own impact on the response.
@@ -500,7 +500,7 @@ ggplot(penguins_data, aes(x = flipper_length_mm, y = body_mass_g, color = specie
   labs(x = "Flipper Length (mm)", y = "Body Mass (g)", color = "Species")
 ```
 
-**Explanation:**
+**Explanation:**  
 - We visualize the fitted multiple regression model without interactions using parallel slope lines.
 - The function `geom_parallel_slopes()` is used to create regression lines with the same slope for each species.
 - This helps to visualize the idea of parallel slopes, where each regression line has the same slope but different intercepts depending on the other explanatory variable (flipper length).
