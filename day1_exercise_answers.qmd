@@ -168,7 +168,7 @@ library(moderndive) # Not necessary if already loaded
 
 ---
 
-### 12. Visualizing Years of Coding Experience Distribution: Histogram
+### 12. Visualizing Years of Professional Coding Experience Distribution: Histogram
 
 ```{r}
 # Create a histogram of years of pro coding experience
