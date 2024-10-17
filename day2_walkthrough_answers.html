@@ -487,7 +487,8 @@ D. To automatically improve the model’s R-squared value</p>
 <p><img src="day2_walkthrough_answers_files/figure-html/unnamed-chunk-16-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<p>A. The relationship between flipper length and body mass is the same for all islands B. The relationship between flipper length and body mass differs across species, with each island having a different slope<br>
+<p>A. The relationship between flipper length and body mass is the same for all islands<br>
+B. The relationship between flipper length and body mass differs across species, with each island having a different slope<br>
 C. The islands do not influence the relationship between flipper length and body mass<br>
 D. Only the intercept differs for each island, but the slope is the same</p>
 <hr>
@@ -559,7 +560,8 @@ In regression models, dummy variables are created for categorical variables like
       -4013.17889          40.60617        -205.37548         284.52360 </code></pre>
 </div>
 </div>
-<p><strong>Explanation:</strong> - We fit a multiple regression model predicting <code>body_mass_g</code> (body mass) using both <code>flipper_length_mm</code> (flipper length) and <code>species</code> as explanatory variables. - In this model, the effect of each explanatory variable on body mass is assumed to be independent, meaning the slopes are the same across different levels of the other variable (i.e., no interaction). - The coefficients indicate the effect of each predictor on body mass, with each variable having its own impact on the response.</p>
+<p><strong>Explanation:</strong><br>
+- We fit a multiple regression model predicting <code>body_mass_g</code> (body mass) using both <code>flipper_length_mm</code> (flipper length) and <code>species</code> as explanatory variables. - In this model, the effect of each explanatory variable on body mass is assumed to be independent, meaning the slopes are the same across different levels of the other variable (i.e., no interaction). - The coefficients indicate the effect of each predictor on body mass, with each variable having its own impact on the response.</p>
 <hr>
 </section>
 <section id="visualizing-the-parallel-slopes-model" class="level3">
@@ -574,7 +576,8 @@ In regression models, dummy variables are created for categorical variables like
 <p><img src="day2_walkthrough_answers_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
-<p><strong>Explanation:</strong> - We visualize the fitted multiple regression model without interactions using parallel slope lines. - The function <code>geom_parallel_slopes()</code> is used to create regression lines with the same slope for each species. - This helps to visualize the idea of parallel slopes, where each regression line has the same slope but different intercepts depending on the other explanatory variable (flipper length).</p>
+<p><strong>Explanation:</strong><br>
+- We visualize the fitted multiple regression model without interactions using parallel slope lines. - The function <code>geom_parallel_slopes()</code> is used to create regression lines with the same slope for each species. - This helps to visualize the idea of parallel slopes, where each regression line has the same slope but different intercepts depending on the other explanatory variable (flipper length).</p>
 <hr>
 </section>
 <section id="summarize-the-numerical-regressors-and-target-variable" class="level3">
