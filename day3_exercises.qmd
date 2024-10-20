@@ -1,7 +1,7 @@
 ---
 title: "Statistics in R with the `tidyverse`"
 author: "Dr. Chester Ismay"
-subtitle: "Day 2 Walkthrough"
+subtitle: "Day 3 Walkthrough"
 format: html
 ---
 
@@ -11,9 +11,9 @@ options(width = 120)
 ```
 
 
-# Day 2: Linear Regression in R
+# Day 3: Sampling and Estimation in R
 
-## Session 1: Simple Linear Regression Analysis
+## Session 1: Sampling
 
 ### 1. Load Necessary Packages
 
@@ -22,23 +22,36 @@ options(width = 120)
 library(dplyr)
 library(ggplot2)
 library(moderndive)
+library(infer)
 ```
 
 - These packages provide tools for data wrangling, visualization, and modeling.  
 
 ---
 
-### 2. Prepare Dataset
+### 2. Prepare Population Dataset with Generation
 
 ```{r}
-library(palmerpenguins)
+# For reproducibility
+set.seed(2024)
 
-# Only use complete rows of data
+# Create vectors of sport ball types and their proportions
+types_of_sport_balls <- c("Basketball", "Pickleball", "Tennis Ball", 
+                          "Football/Soccer", "American Football")
+proportion_of_each_type <- c(0.2, 0.15, 0.3, 0.25, 0.1)
 
+# Create a tibble of 1200 sport balls that will act as our population
+store_ball_inventory <- tibble(
+  ball_ID = 1:1200,
+  ball_type = sample(x = types_of_sport_balls,
+                     size = 1200, 
+                     replace = TRUE, 
+                     prob = proportion_of_each_type
+  )
+)
 ```
 
-- We'll be exploring the `penguins` data frame from the `palmerpenguins` package as well. It contains size measurements for three penguin species observed on three islands in the Palmer Archipelago, Antarctica. More information is [here](https://allisonhorst.github.io/palmerpenguins/articles/intro.html).  
-- We remove rows with missing values.
+- We'll be exploring a synthesized data set of an inventory at a large sporting goods store. The inventory pertains to different types of sports balls, 1200 in total.
 
 ---
 
@@ -46,70 +59,103 @@ library(palmerpenguins)
 
 ```{r}
 # Use glimpse to explore the structure of the dataset
+glimpse(store_ball_inventory)
+```
+
+
+---
+
+### 4. Population Parameters
+
+```{r}
+# Create a count of ball_type
+store_ball_inventory |> 
+  count(ball_type)
+
+# Determine the proportion of basketballs in the inventory
+p_df <- store_ball_inventory |> 
+  summarize(prop_bball = mean(ball_type == "Basketball"))
+
+# Convert p to a numeric value
+p <- p_df$prop_bball
+
+# Or using the tidyverse
+p <- p_df |> pull(prop_bball)
+```
+
+
+---
+
+### 5. Take a Sample of Balls
+
+```{r}
+# Retrieve a sample of 10 balls from the inventory
+ball_sample <- store_ball_inventory |> 
+  slice_sample(n = 10, replace = FALSE)
+
+# Determine the proportion of basketballs in the sample
+ball_sample |> 
+  summarize(prop_bball = mean(ball_type == "Basketball"))
+```
+
+---
+
+### 6. Take Another Sample of Balls
+
+```{r}
+# Retrieve another sample of 50 balls from the inventory
+ball_sample2 <- store_ball_inventory |> 
+  slice_sample(n = 10, replace = FALSE)
+
+# Determine the proportion of pickleballs in the sample
+ball_sample2 |> 
+  summarize(prop_bball = mean(ball_type == "Basketball"))
+```
+
+
+---
+
+### 7. Take 1000 Samples of Size 10 from the Population
+
+```{r}
+# Use `rep_slice_sample()` from the `infer` package
+ball_samples <- store_ball_inventory |> 
+  rep_slice_sample(n = 10, reps = 1000, replace = FALSE)
+```
+
+
+---
+
+### 8. Calculate Sample Proportions and Visualize Them
+
+```{r}
+# Determine sample proportions with `dplyr`
+props_bball <- ball_samples |> 
+  summarize(prop_bball = mean(ball_type == "Basketball"))
+
+# Create a histogram of the sample proportions with 8 bins
+ggplot(props_bball, aes(x = prop_bball)) +
+  geom_histogram(bins = 8, color = "white") +
+  labs(x = "Sample proportion", 
+       title = "Histogram of 1000 sample proportions of Basketballs") 
 
 ```
 
 
 ---
 
-### 4. Summary Statistics
+### 9. Determine a Guess at the Standard Error
 
 ```{r}
-# Summarize mean and median values for flipper length and body mass
+# Using the simulations, calculate the standard deviation of the 
+# sample proportions
+se_sample_props <- props_bball |> 
+  summarize(sd(prop_bball)) |> 
+  pull()
 
-```
-
-
----
-
-### 5. Using `tidy_summary()` Function
-
-```{r}
-# Use tidy_summary to get a clean summary of the data
-
-```
-
-
----
-
-### 6. Correlation Between Flipper Length and Body Mass
-
-```{r}
-# Compute the correlation between flipper length and body mass
-
-```
-
-
----
-
-### 7. Scatterplot of Flipper Length and Body Mass
-
-```{r}
-# Plot the relationship between flipper length and body mass
-
-```
-
-
----
-
-### 8. Regression Line
-
-```{r}
-# The same scatterplot with a regression line added
-
-```
-
-
----
-
-### 9. Fit a Regression Model
-
-```{r}
-# Fit a linear regression model
-
-
-# Get the regression coefficients
-
+# Using the formula for the standard error of a sample proportion
+n <- 10
+se_sample_props_formula <- sqrt(p * (1 - p) / n)
 ```
 
 
@@ -121,8 +167,8 @@ library(palmerpenguins)
 
 ```r
 penguins_data <- penguins |>
-  select(species, island, flipper_length_mm, body_mass_g) |>
-  na.omit()
+select(species, island, flipper_length_mm, body_mass_g) |>
+na.omit()
 ```
 
 A. It replaces missing values with the median.  
@@ -154,7 +200,7 @@ D. `penguins_data |> summarize(mean_body_mass = mean(body_mass_g))`
 
 ```r
 penguins_data |>
-  get_correlation(formula = flipper_length_mm ~ body_mass_g)
+get_correlation(formula = flipper_length_mm ~ body_mass_g)
 ```
 
 A. It fits a linear regression model.  
@@ -168,10 +214,10 @@ D. It generates summary statistics for flipper length and body mass.
 
 ```r
 ggplot(penguins_data, aes(x = flipper_length_mm, y = body_mass_g)) +
-  geom_point(alpha = 0.5) +
-  geom_smooth(method = "lm", se = FALSE) +
-  labs(x = "Flipper Length (mm)", y = "Body Mass (g)",
-       title = "Flipper Length vs. Body Mass with Regression Line")
+geom_point(alpha = 0.5) +
+geom_smooth(method = "lm", se = FALSE) +
+labs(x = "Flipper Length (mm)", y = "Body Mass (g)",
+title = "Flipper Length vs. Body Mass with Regression Line")
 ```
 
 A. It adds a smoothed curve based on a polynomial fit to the scatterplot.  
@@ -181,67 +227,13 @@ D. It calculates and displays residuals on the plot.
 
 ---
 
-## Session 2: Multiple Linear Regression Analysis (Part 1)
-
-### 10: Fitting a Simple Linear Regression with a Categorical Regressor
-
-```{r}
-# Fit a simple linear regression model with species as a predictor
-
-
-# Get regression coefficients
-
-```
-
-
----
-
-### 11: Visualizing Data with Categorical Variables
-
-```{r}
-# Scatterplot with species as color for grouping
-
-```
-
----
-
-### 12: Summarizing the Target and Regressors (One numerical and one categorical)
-
-```{r}
-# Summarize the target and regressors
-
-```
-
----
-
-### 13: Fitting a Multiple Regression Model with Interaction Terms
-
-```{r}
-# Fit a multiple regression model with interaction
-
-
-# Get regression coefficients
-
-```
-
-
----
-
-### 14: Adding Interaction Terms to the Regression Plot
-
-```{r}
-# Scatterplot with regression lines by species
-
-```
+## Session 2: Estimation using Theory-Based Methods
 
 
 ---
 
 ### Session 2 Review Questions
 
-Here is the split format of the questions and answers in the same format as Session3RQs:
-
----
 
 **(2.1)** What is the default baseline island in the simple linear regression model for predicting `body_mass_g` using `island` as a categorical variable?
 
@@ -300,60 +292,6 @@ D. Dummy variables are not necessary for categorical variables
 ---
 
 ## Session 3: Multiple Linear Regression Analysis (Part 2)
-
-### 15. Fitting a Multiple Regression Model Without Interactions
-
-```{r}
-# Fit a multiple regression model without interaction terms
-
-
-# Get regression coefficients
-
-```
-
-
----
-
-### 16. Visualizing the Parallel Slopes Model
-
-```{r}
-# Scatterplot with regression lines by species (different intercepts but same slopes)
-
-```
-
-
----
-
-### 17. Summarize the Numerical Regressors and Target Variable
-
-```{r}
-# Use tidy_summary to get a clean summary of the data for a multiple regression
-# with flipper length and bill length and regressors and body mass as the
-# outcome
-
-```
-
-
----
-
-### 18. Fitting a Multiple Regression Model with Two Numerical Predictors
-
-```{r}
-# Fit a multiple regression model
-
-
-# Get regression coefficients
-
-```
-
----
-
-### 19. Visualizing the Relationship between Variables (with SLR)
-
-```{r}
-# Create scatterplot with regression lines for both variables
-
-```
 
 ---
 
