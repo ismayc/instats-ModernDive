@@ -48,6 +48,8 @@ jobs:
         quarto render day1_exercise_answers.qmd
         quarto render day2_walkthrough_answers.qmd
         quarto render day2_exercise_answers.qmd
+        quarto render day3_walkthrough_answers.qmd
+#        quarto render day3_exercise_answers.qmd
     
     # Deploy HTML to GitHub Pages if on main or master branch
     - name: Deploy to GitHub pages from main/master 🚀

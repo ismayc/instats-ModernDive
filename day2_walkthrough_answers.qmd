@@ -383,10 +383,6 @@ We extend the scatterplot by adding regression lines for each species, showing h
 
 ### Session 2 Review Questions
 
-Here is the split format of the questions and answers in the same format as Session3RQs:
-
----
-
 **(2.1)** What is the default baseline island in the simple linear regression model for predicting `body_mass_g` using `island` as a categorical variable?
 
 A. Torgersen  
