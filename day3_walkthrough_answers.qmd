@@ -62,7 +62,6 @@ store_ball_inventory <- tibble(
 glimpse(store_ball_inventory)
 ```
 
-
 ---
 
 ### 4. Population Parameters
@@ -136,7 +135,8 @@ props_pickle <- ball_samples |>
 # Create a histogram of the sample proportions
 ggplot(props_pickle, aes(x = prop_pickle)) +
   geom_histogram(bins = 15, color = "white") +
-  labs(x = "Sample proportion", title = "Histogram of 1000 sample proportions of Pickleballs") 
+  labs(x = "Sample proportion", 
+       title = "Histogram of 1000 sample proportions of Pickleballs") 
 
 ```
 
@@ -300,6 +300,7 @@ commute_data <- tibble(
 ### 12. The Sample and the Sample Statistic
 
 ```{r}
+# Choose sample size
 sample_size <- 100
 
 # Generate a sample
@@ -530,7 +531,6 @@ one_bootstrap |>
 
 ```{r}
 # Bootstrapping 1000 samples
-set.seed(2024)
 many_bootstraps <- commute_sample |> 
   specify(response = commute_time) |> 
   generate(reps = 1000, type = "bootstrap")
@@ -577,7 +577,7 @@ bootstrap_se_ci <- bootstrap_means |>
 
 ### 25. Interpretation of the Bootstrap Confidence Interval
 
-We are "95% confident" that the true mean commute time for this population of adults is between `r bootstrap_percentile_ci$lower` and `r bootstrap_percentile_ci$upper` minutes. This is the same as saying that if we were to take many samples of size 100 and calculate the confidence interval for each sample, we would expect 95% of those intervals to contain the true population mean of `r mu`.
+We are "95% confident" that the true mean commute time for this population of adults is between `r bootstrap_percentile_ci$lower_ci` and `r bootstrap_percentile_ci$upper_ci` minutes. This is the same as saying that if we were to take many samples of size 100 and calculate the confidence interval for each sample, we would expect 95% of those intervals to contain the true population mean of `r mu`.
 
 ---
 

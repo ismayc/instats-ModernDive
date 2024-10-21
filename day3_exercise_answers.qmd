@@ -59,7 +59,7 @@ store_ball_inventory <- tibble(
 
 ```{r}
 # Use glimpse to explore the structure of the dataset
-
+glimpse(store_ball_inventory)
 ```
 
 
@@ -69,16 +69,19 @@ store_ball_inventory <- tibble(
 
 ```{r}
 # Create a count of ball_type
-
+store_ball_inventory |> 
+  count(ball_type)
 
 # Determine the proportion of basketballs in the inventory
-
+p_df <- store_ball_inventory |> 
+  summarize(prop_bball = mean(ball_type == "Basketball"))
 
 # Convert p to a numeric value
-
+p <- p_df$prop_bball
 
 # Or using the tidyverse
-
+p <- p_df |> pull(prop_bball)
+p
 ```
 
 
@@ -88,10 +91,12 @@ store_ball_inventory <- tibble(
 
 ```{r}
 # Retrieve a sample of 10 balls from the inventory
-
+ball_sample <- store_ball_inventory |> 
+  slice_sample(n = 10, replace = FALSE)
 
 # Determine the proportion of basketballs in the sample
-
+ball_sample |> 
+  summarize(prop_bball = mean(ball_type == "Basketball"))
 ```
 
 ---
@@ -100,10 +105,12 @@ store_ball_inventory <- tibble(
 
 ```{r}
 # Retrieve another sample of 50 balls from the inventory
-
+ball_sample2 <- store_ball_inventory |> 
+  slice_sample(n = 10, replace = FALSE)
 
 # Determine the proportion of pickleballs in the sample
-
+ball_sample2 |> 
+  summarize(prop_bball = mean(ball_type == "Basketball"))
 ```
 
 
@@ -113,7 +120,9 @@ store_ball_inventory <- tibble(
 
 ```{r}
 # Use `rep_slice_sample()` from the `infer` package
-
+ball_samples <- store_ball_inventory |> 
+  rep_slice_sample(n = 10, reps = 1000, replace = FALSE)
+ball_samples
 ```
 
 
@@ -123,10 +132,14 @@ store_ball_inventory <- tibble(
 
 ```{r}
 # Determine sample proportions with `dplyr`
-
+props_bball <- ball_samples |> 
+  summarize(prop_bball = mean(ball_type == "Basketball"))
 
 # Create a histogram of the sample proportions with 8 bins
-
+ggplot(props_bball, aes(x = prop_bball)) +
+  geom_histogram(bins = 8, color = "white") +
+  labs(x = "Sample proportion", 
+       title = "Histogram of 1000 sample proportions of Basketballs") 
 
 ```
 
@@ -138,10 +151,14 @@ store_ball_inventory <- tibble(
 ```{r}
 # Using the simulations, calculate the standard deviation of the 
 # sample proportions
-
+se_sample_props <- props_bball |> 
+  summarize(sd(prop_bball)) |> 
+  pull()
 
 # Using the formula for the standard error of a sample proportion
-
+n <- 10
+se_sample_props_formula <- sqrt(p * (1 - p) / n)
+se_sample_props_formula
 ```
 
 ### 10. Use Function from Walkthrough to Calculate Standard Error
@@ -162,7 +179,7 @@ se_sample_props <- function(size, repetitions = 1000, type = "Pickleball") {
 
 # Use the function to calculate the standard error for a sample size of 10
 # with 2000 repetitions for Basketball
-
+se_sample_props(10, 2000, "Basketball")
 ```
 
 ---
@@ -207,13 +224,21 @@ electricity_usage_phoenix
 sample_size <- 1000
 
 # Generate a sample
-
+set.seed(2024)
+usage_sample <- electricity_usage_phoenix |> 
+  slice_sample(n = sample_size, replace = FALSE)
 
 # Calculate the sample mean
-
+sample_mean <- usage_sample |> 
+  summarize(mean(usage_kWh)) |> 
+  pull()
+sample_mean
 
 # Calculate the standard deviation 
-
+sample_sd <- usage_sample |> 
+  summarize(sd(usage_kWh)) |> 
+  pull()
+sample_sd
 ```
 
 
@@ -221,53 +246,65 @@ sample_size <- 1000
 
 ```{r}
 # Calculate the population mean
-
+population_mean <- electricity_usage_phoenix |> 
+  summarize(mean(usage_kWh)) |> 
+  pull()
+mu <- population_mean
+mu
 
 # Calculate the population standard deviation
-
+population_sd <- electricity_usage_phoenix |> 
+  summarize(sd(usage_kWh)) |> 
+  pull()
+sigma <- population_sd
+sigma
 ```
 
 ### 14. Confidence Interval for the Population Proportion (Assuming We Know $\sigma$)
 
 ```{r}
 # Calculate the margin of error for a 90% confidence interval
-
+z_star <- qnorm(p = 0.95) # Assumes a normal distribution
+margin_of_error <- z_star * (sigma / sqrt(sample_size))
 
 # Recall the point estimate
-
+point_estimate <- sample_mean
 
 # Calculate the confidence interval
-
+lower_bound <- point_estimate - margin_of_error
+upper_bound <- point_estimate + margin_of_error
 
 # Display the confidence interval
-
+c(lower_bound, upper_bound)
 
 # Remember the population parameter (we usually don't know it)
-
+between(mu, lower_bound, upper_bound) # dplyr::between()
 ```
 
 ### 15. Confidence Interval for the Population Proportion (Assuming We Don't Know $\sigma$)
 
 ```{r}
 # Calculate the margin of error for a 90% confidence interval
-
+t_star <- qt(p = 0.95, df = sample_size - 1) # t-distribution
+margin_of_error_t <- t_star * (sample_sd / sqrt(sample_size))
 
 # Same point estimate
-
+point_estimate_t <- sample_mean
 
 # Calculate the confidence interval
-
+lower_bound_t <- point_estimate_t - margin_of_error_t
+upper_bound_t <- point_estimate_t + margin_of_error_t
 
 # Display the confidence interval
-
+c(lower_bound_t, upper_bound_t)
 
 # Remember the population parameter (we usually don't know it)
-
+between(mu, lower_bound_t, upper_bound_t)
 ```
 
 ### 16. Interpreting the Confidence Interval
 
-
+We are "95% confident" that the true mean commute time for this population of Phoenix houses is between `r lower_bound_t` and `r upper_bound_t` kilowatt-hours. This is the same as saying that if we were to take many samples of size 100 and calculate the confidence interval for each sample, we would expect 95% of those intervals to contain the true population mean of `r mu`.
 
 ---
 
@@ -277,8 +314,7 @@ sample_size <- 1000
 
 ```{r}
 # Assume we only have a sample of 1000 homes and their electricity usage
-# (What you created above)
-
+usage_sample
 ```
 
 ---
@@ -287,7 +323,11 @@ sample_size <- 1000
 
 #### Describe each step in the `infer` framework you have seen so far to calculate bootstrap statistics
 
-
+Start with the `data` and then `|>` into the following functions:  
+- `specify()`: Define the variable of interest  
+- `generate()`: Create the bootstrap samples  
+- `calculate()`: Calculate the statistic of interest  
+- `visualize()`: Visualize the bootstrap distribution  
 
 ---
 
@@ -295,7 +335,11 @@ sample_size <- 1000
 
 ```{r}
 # Bootstrapping the sample
-
+set.seed(2024)
+one_bootstrap <- usage_sample |> 
+  specify(response = usage_kWh) |> 
+  generate(reps = 1, type = "bootstrap")
+one_bootstrap
 ```
 
 ---
@@ -304,7 +348,9 @@ sample_size <- 1000
 
 ```{r}
 # Calculate the mean of the bootstrap sample
-
+one_bootstrap |> 
+  calculate(stat = "mean") |> 
+  pull()
 ```
 
 ---
@@ -313,14 +359,19 @@ sample_size <- 1000
 
 ```{r}
 # Bootstrapping 1000 samples
-
+many_bootstraps <- usage_sample |> 
+  specify(response = usage_kWh) |> 
+  generate(reps = 1000, type = "bootstrap")
+many_bootstraps
 ```
 
 ### 22. Get the Mean of Each Bootstrap Sample
 
 ```{r}
 # Calculate the mean of each bootstrap sample
-
+bootstrap_means <- many_bootstraps |> 
+  calculate(stat = "mean")
+bootstrap_means
 ```
 
 ---
@@ -329,7 +380,10 @@ sample_size <- 1000
 
 ```{r}
 # Create a histogram of the bootstrap means
-
+ggplot(bootstrap_means, aes(x = stat)) +
+  geom_histogram(bins = 30, color = "white") +
+  labs(x = "Bootstrap sample mean", 
+       title = "Histogram of 1000 bootstrap sample means")
 ```
 
 ---
@@ -338,14 +392,20 @@ sample_size <- 1000
 
 ```{r}
 # Calculate the 90% bootstrap confidence interval in two ways since bell-shaped
+bootstrap_percentile_ci <- bootstrap_means |> 
+  get_confidence_interval(level = 0.90, type = "percentile")
 
+bootstrap_se_ci <- bootstrap_means |> 
+  get_confidence_interval(level = 0.90, 
+                          type = "se",
+                          point_estimate = sample_mean)
 ```
 
 ---
 
 ### 25. Interpretation of the Bootstrap Confidence Interval
 
-
+We are "95% confident" that the true mean electricity usage for this population of adults is between `r bootstrap_percentile_ci$lower_ci` and `r bootstrap_percentile_ci$upper_ci` kilowatt-hours. This is the same as saying that if we were to take many samples of size 100 and calculate the confidence interval for each sample, we would expect 95% of those intervals to contain the true population mean of `r mu`.
 
 ---
 
@@ -354,5 +414,8 @@ sample_size <- 1000
 ```{r}
 # Show the histogram of bootstrap means with the confidence interval
 # and the population parameter (not usually known)
-
+bootstrap_means |> 
+  visualize() +
+  shade_confidence_interval(endpoints = bootstrap_percentile_ci) +
+  geom_vline(xintercept = mu, color = "purple", linewidth = 2)
 ```
