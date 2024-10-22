@@ -13,7 +13,7 @@ options(width = 120)
 
 # Day 2: Linear Regression in R
 
-## Session 1: Simple Linear Regression Analysis
+## Session 4: Simple Linear Regression Analysis
 
 ### 1. Load Necessary Libraries
 
@@ -119,7 +119,7 @@ data_dev_survey <- read_csv("data_dev_survey.csv") |>
 
 ---
 
-## Session 2: Multiple Linear Regression Analysis (Part 1)
+## Session 5: Multiple Linear Regression Analysis (Part 1)
 
 ### 10: Fitting a Simple Linear Regression with a Categorical Regressor
 
@@ -175,7 +175,7 @@ data_dev_survey <- read_csv("data_dev_survey.csv") |>
 
 ---
 
-## Session 3: Multiple Linear Regression Analysis (Part 2)
+## Session 6: Multiple Linear Regression Analysis (Part 2)
 
 ### 15. Fitting a Multiple Regression Model Without Interactions
 

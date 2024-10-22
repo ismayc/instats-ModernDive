@@ -13,7 +13,7 @@ options(width = 120)
 
 # Day 2: Linear Regression in R
 
-## Session 1: Simple Linear Regression Analysis
+## Session 4: Simple Linear Regression Analysis
 
 ### 1. Load Necessary Packages
 
@@ -115,9 +115,9 @@ library(palmerpenguins)
 
 ---
 
-### Session 1 Review Questions
+### Session 4 Review Questions
 
-**(1.1)** What is the purpose of the `na.omit()` function in the code below?
+**(4.1)** What is the purpose of the `na.omit()` function in the code below?
 
 ```r
 penguins_data <- penguins |>
@@ -132,7 +132,7 @@ D. It fills missing values with the previous non-missing value.
 
 ---
 
-**(1.2)** What does the `tidy_summary()` function do when applied to numeric columns in the `penguins_data` data frame?
+**(4.2)** What does the `tidy_summary()` function do when applied to numeric columns in the `penguins_data` data frame?
 
 A. It generates summary statistics for each column in the data frame.  
 B. It prints the first 6 rows of the data frame.  
@@ -141,7 +141,7 @@ D. It creates a scatterplot of the variables in the data frame.
 
 ---
 
-**(1.3)** Which of the following correctly calculates the mean body mass in the `penguins_data` data frame?
+**(4.3)** Which of the following correctly calculates the mean body mass in the `penguins_data` data frame?
 
 A. `summarize |> penguins_data(mean_flipper = mean(body_mass_g))`  
 B. `summarize(mean(body_mass_g))`  
@@ -150,7 +150,7 @@ D. `penguins_data |> summarize(mean_body_mass = mean(body_mass_g))`
 
 ---
 
-**(1.4)** What does the `get_correlation()` function do when applied in the code below?
+**(4.4)** What does the `get_correlation()` function do when applied in the code below?
 
 ```r
 penguins_data |>
@@ -164,7 +164,7 @@ D. It generates summary statistics for flipper length and body mass.
 
 ---
 
-**(1.5)** In the following code, what is the purpose of `geom_smooth(method = "lm", se = FALSE)`?
+**(4.5)** In the following code, what is the purpose of `geom_smooth(method = "lm", se = FALSE)`?
 
 ```r
 ggplot(penguins_data, aes(x = flipper_length_mm, y = body_mass_g)) +
@@ -181,7 +181,7 @@ D. It calculates and displays residuals on the plot.
 
 ---
 
-## Session 2: Multiple Linear Regression Analysis (Part 1)
+## Session 5: Multiple Linear Regression Analysis (Part 1)
 
 ### 10: Fitting a Simple Linear Regression with a Categorical Regressor
 
@@ -237,13 +237,9 @@ D. It calculates and displays residuals on the plot.
 
 ---
 
-### Session 2 Review Questions
+### Session 5 Review Questions
 
-Here is the split format of the questions and answers in the same format as Session3RQs:
-
----
-
-**(2.1)** What is the default baseline island in the simple linear regression model for predicting `body_mass_g` using `island` as a categorical variable?
+**(5.1)** What is the default baseline island in the simple linear regression model for predicting `body_mass_g` using `island` as a categorical variable?
 
 A. Torgersen  
 B. Biscoe  
@@ -252,7 +248,7 @@ D. The island with the highest body mass
 
 ---
 
-**(2.2)** In the following regression model with interaction terms, what does the coefficient for `flipper_length_mm:speciesGentoo` represent?
+**(5.2)** In the following regression model with interaction terms, what does the coefficient for `flipper_length_mm:speciesGentoo` represent?
 
 ```r
 multi_model_interaction <- lm(body_mass_g ~ flipper_length_mm * species, data = penguins_data)
@@ -265,7 +261,7 @@ D. The difference in intercept for Gentoo penguins compared to the baseline
 
 ---
 
-**(2.3)** What is the purpose of adding interaction terms to a multiple regression model?
+**(5.3)** What is the purpose of adding interaction terms to a multiple regression model?
 
 A. To make the model more complex without any real benefit  
 B. To estimate the relationship between each explanatory variable and the response variable independently  
@@ -274,7 +270,7 @@ D. To automatically improve the model's R-squared value
 
 ---
 
-**(2.4)** What does the following plot indicate about the relationship between flipper length and body mass for different islands?
+**(5.4)** What does the following plot indicate about the relationship between flipper length and body mass for different islands?
 
 ```{r}
 ggplot(penguins_data, aes(x = flipper_length_mm, y = body_mass_g, color = island)) +
@@ -290,7 +286,7 @@ D. Only the intercept differs for each island, but the slope is the same
 
 ---
 
-**(2.5)** In the multiple regression model with interaction terms, how are dummy variables used for categorical predictors?
+**(5.5)** In the multiple regression model with interaction terms, how are dummy variables used for categorical predictors?
 
 A. Dummy variables are used to represent the different categories of a categorical variable 
 B. Dummy variables are used to represent each numerical variable  
@@ -299,7 +295,7 @@ D. Dummy variables are not necessary for categorical variables
 
 ---
 
-## Session 3: Multiple Linear Regression Analysis (Part 2)
+## Session 6: Multiple Linear Regression Analysis (Part 2)
 
 ### 15. Fitting a Multiple Regression Model Without Interactions
 
@@ -357,9 +353,9 @@ D. Dummy variables are not necessary for categorical variables
 
 ---
 
-### Session 3 Review Questions
+### Session 6 Review Questions
 
-**`(3.1)`** What is the main assumption in a multiple regression model without interaction terms?
+**`(6.1)`** What is the main assumption in a multiple regression model without interaction terms?
 
 A. The relationship between the explanatory variables and the response is always quadratic.  
 B. The slope of the regression line is different for each level of the categorical variable.  
@@ -368,7 +364,7 @@ D. The intercept of the regression line is the same for all levels of the catego
 
 ---
 
-**`(3.2)`** In the model `lm(body_mass_g ~ flipper_length_mm + species, data = penguins_data)`, what does the coefficient for `speciesGentoo` represent?
+**`(6.2)`** In the model `lm(body_mass_g ~ flipper_length_mm + species, data = penguins_data)`, what does the coefficient for `speciesGentoo` represent?
 
 A. The effect of being a Gentoo penguin on body mass compared to the baseline species (Adélie).  
 B. The effect of flipper length on body mass for Gentoo penguins only.  
@@ -377,7 +373,7 @@ D. The effect of body mass on flipper length for Gentoo penguins.
 
 ---
 
-**`(3.3)`** What does the function `geom_parallel_slopes()` do in a regression plot?
+**`(6.3)`** What does the function `geom_parallel_slopes()` do in a regression plot?
 
 A. It fits regression lines with different slopes for each group.  
 B. It plots regression lines with the same slope but different intercepts for each group.  
@@ -386,7 +382,7 @@ D. It visualizes interaction effects between the variables.
 
 ---
 
-**`(3.4)`** In the model `lm(body_mass_g ~ flipper_length_mm + bill_length_mm, data = penguins_data)`, what do the coefficients for `flipper_length_mm` and `bill_length_mm` represent?
+**`(6.4)`** In the model `lm(body_mass_g ~ flipper_length_mm + bill_length_mm, data = penguins_data)`, what do the coefficients for `flipper_length_mm` and `bill_length_mm` represent?
 
 A. The total body mass of each penguin species.  
 B. The predicted body mass for penguins with average bill and flipper lengths.
@@ -395,7 +391,7 @@ D. The effect of bill length on body mass, controlling for flipper length, and v
 
 ---
 
-**`(3.5)`** What does a regression model without interaction terms assume about the relationship between the explanatory variables and the response variable?
+**`(6.5)`** What does a regression model without interaction terms assume about the relationship between the explanatory variables and the response variable?
 
 A. The explanatory variables are not related to the response.  
 B. The relationship between the explanatory variables and the response is independent of one another.  

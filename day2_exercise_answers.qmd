@@ -13,7 +13,7 @@ options(width = 120)
 
 # Day 2: Linear Regression in R
 
-## Session 1: Simple Linear Regression Analysis
+## Session 4: Simple Linear Regression Analysis
 
 ### 1. Load Necessary Libraries
 
@@ -133,7 +133,7 @@ coef(salary_slr_model)
 
 ---
 
-## Session 2: Multiple Linear Regression Analysis (Part 1)
+## Session 5: Multiple Linear Regression Analysis (Part 1)
 
 ### 10: Fitting a Simple Linear Regression with a Categorical Regressor
 
@@ -201,7 +201,7 @@ ggplot(data_dev_survey, aes(x = work_exp, y = converted_comp_yearly, color = ai_
 
 ---
 
-## Session 3: Multiple Linear Regression Analysis (Part 2)
+## Session 6: Multiple Linear Regression Analysis (Part 2)
 
 ### 15. Fitting a Multiple Regression Model Without Interactions
 

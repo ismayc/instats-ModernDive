@@ -13,7 +13,7 @@ options(width = 120)
 
 # Day 3: Sampling and Estimation in R
 
-## Session 1: Sampling
+## Session 7: Sampling
 
 ### 1. Load Necessary Packages
 
@@ -167,7 +167,7 @@ se_sample_props <- function(size, repetitions = 1000, type = "Pickleball") {
 
 ---
 
-## Session 2: Estimation using Theory-based Methods
+## Session 8: Estimation using Theory-based Methods
 
 ### 11. Population Data with Numeric Variable of Interest
 
@@ -271,7 +271,7 @@ sample_size <- 1000
 
 ---
 
-## Session 3: Estimation via Bootstrapping Methods
+## Session 9: Estimation via Bootstrapping Methods
 
 ### 17. Assume We Only Have A Sample
 
