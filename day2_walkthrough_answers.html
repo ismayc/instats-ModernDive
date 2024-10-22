@@ -104,8 +104,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="day-2-linear-regression-in-r" class="level1">
 <h1>Day 2: Linear Regression in R</h1>
-<section id="session-1-simple-linear-regression-analysis" class="level2">
-<h2 class="anchored" data-anchor-id="session-1-simple-linear-regression-analysis">Session 1: Simple Linear Regression Analysis</h2>
+<section id="session-4-simple-linear-regression-analysis" class="level2">
+<h2 class="anchored" data-anchor-id="session-4-simple-linear-regression-analysis">Session 4: Simple Linear Regression Analysis</h2>
 <section id="load-necessary-libraries" class="level3">
 <h3 class="anchored" data-anchor-id="load-necessary-libraries">1. Load Necessary Libraries</h3>
 <div class="cell">
@@ -273,9 +273,9 @@ $ year              &lt;int&gt; 2007, 2007, 2007, 2007, 2007, 2007, 2007, 2007, 
 <p>Here, we fit a linear model to predict <code>body_mass_g</code> using <code>flipper_length_mm</code> and extract the coefficients of the model.</p>
 <hr>
 </section>
-<section id="session-1-review-questions" class="level3">
-<h3 class="anchored" data-anchor-id="session-1-review-questions">Session 1 Review Questions</h3>
-<p><strong>(1.1)</strong> What is the purpose of the <code>na.omit()</code> function in the code below?</p>
+<section id="session-4-review-questions" class="level3">
+<h3 class="anchored" data-anchor-id="session-4-review-questions">Session 4 Review Questions</h3>
+<p><strong>(4.1)</strong> What is the purpose of the <code>na.omit()</code> function in the code below?</p>
 <div class="sourceCode" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>penguins_data <span class="ot">&lt;-</span> penguins <span class="sc">|&gt;</span></span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(species, island, flipper_length_mm, body_mass_g) <span class="sc">|&gt;</span></span>
 <span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">na.omit</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -284,25 +284,25 @@ B. It removes any rows that contain missing values.<br>
 C. It converts missing values to zeros.<br>
 D. It fills missing values with the previous non-missing value.</p>
 <hr>
-<p><strong>(1.2)</strong> What does the <code>tidy_summary()</code> function do when applied to numeric columns in the <code>penguins_data</code> data frame?</p>
+<p><strong>(4.2)</strong> What does the <code>tidy_summary()</code> function do when applied to numeric columns in the <code>penguins_data</code> data frame?</p>
 <p>A. It generates summary statistics for each column in the data frame.<br>
 B. It prints the first 6 rows of the data frame.<br>
 C. It provides a compact overview of the data, including column names and data types.<br>
 D. It creates a scatterplot of the variables in the data frame.</p>
 <hr>
-<p><strong>(1.3)</strong> Which of the following correctly calculates the mean body mass in the <code>penguins_data</code> data frame?</p>
+<p><strong>(4.3)</strong> Which of the following correctly calculates the mean body mass in the <code>penguins_data</code> data frame?</p>
 <p>A. <code>summarize |&gt; penguins_data(mean_flipper = mean(body_mass_g))</code><br>
 B. <code>summarize(mean(body_mass_g))</code><br>
 C. <code>summarize(penguins_data, mean = body_mass_g)</code> D. <code>penguins_data |&gt; summarize(mean_body_mass = mean(body_mass_g))</code></p>
 <hr>
-<p><strong>(1.4)</strong> What does the <code>get_correlation()</code> function do when applied in the code below?</p>
+<p><strong>(4.4)</strong> What does the <code>get_correlation()</code> function do when applied in the code below?</p>
 <div class="sourceCode" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>penguins_data <span class="sc">|&gt;</span></span>
 <span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">get_correlation</span>(<span class="at">formula =</span> flipper_length_mm <span class="sc">~</span> body_mass_g)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>A. It fits a linear regression model.<br>
 B. It gives a measure of the linear relationship between flipper length and body mass. C. It plots a scatterplot of flipper length and body mass.<br>
 D. It generates summary statistics for flipper length and body mass.</p>
 <hr>
-<p><strong>(1.5)</strong> In the following code, what is the purpose of <code>geom_smooth(method = "lm", se = FALSE)</code>?</p>
+<p><strong>(4.5)</strong> In the following code, what is the purpose of <code>geom_smooth(method = "lm", se = FALSE)</code>?</p>
 <div class="sourceCode" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(penguins_data, <span class="fu">aes</span>(<span class="at">x =</span> flipper_length_mm, <span class="at">y =</span> body_mass_g)) <span class="sc">+</span></span>
 <span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
 <span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">se =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
@@ -314,27 +314,27 @@ C. It adjusts the transparency of the points in the scatterplot.<br>
 D. It calculates and displays residuals on the plot.</p>
 <hr>
 </section>
-<section id="session-1-review-question-answers" class="level3">
-<h3 class="anchored" data-anchor-id="session-1-review-question-answers">Session 1 Review Question Answers</h3>
-<p><strong>(1.1)</strong> What is the purpose of the <code>na.omit()</code> function in the code below?</p>
+<section id="session-4-review-question-answers" class="level3">
+<h3 class="anchored" data-anchor-id="session-4-review-question-answers">Session 4 Review Question Answers</h3>
+<p><strong>(4.1)</strong> What is the purpose of the <code>na.omit()</code> function in the code below?</p>
 <p><strong>Correct Answer:</strong><br>
 B. It removes any rows that contain missing values.</p>
 <p><strong>Explanation:</strong><br>
 The <code>na.omit()</code> function is used to filter out rows that have missing values, ensuring the analysis is performed on complete cases only.</p>
 <hr>
-<p><strong>(1.2)</strong> What does the <code>tidy_summary()</code> function do when applied to numeric columns in the <code>penguins_data</code> data frame?</p>
+<p><strong>(4.2)</strong> What does the <code>tidy_summary()</code> function do when applied to numeric columns in the <code>penguins_data</code> data frame?</p>
 <p><strong>Correct Answer:</strong><br>
 A. It generates summary statistics for each column in the data frame.</p>
 <p><strong>Explanation:</strong><br>
 <code>tidy_summary()</code> in the <code>moderndive</code> package produces summary statistics for each selected numeric column in the data frame provided.</p>
 <hr>
-<p><strong>(1.3)</strong> Which of the following correctly calculates the mean body mass in the <code>penguins_data</code> data frame?</p>
+<p><strong>(4.3)</strong> Which of the following correctly calculates the mean body mass in the <code>penguins_data</code> data frame?</p>
 <p><strong>Correct Answer:</strong><br>
 D. <code>penguins_data |&gt; summarize(mean_body_mass = mean(body_mass_g)</code></p>
 <p><strong>Explanation:</strong><br>
 The correct syntax includes both column names and calculated statistics for each variable using the <code>summarize()</code> function.</p>
 <hr>
-<p><strong>(1.4)</strong> What does the <code>get_correlation()</code> function do when applied in the code below?</p>
+<p><strong>(4.4)</strong> What does the <code>get_correlation()</code> function do when applied in the code below?</p>
 <div class="sourceCode" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>penguins_data <span class="sc">|&gt;</span></span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">get_correlation</span>(<span class="at">formula =</span> flipper_length_mm <span class="sc">~</span> body_mass_g)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><strong>Correct Answer:</strong><br>
@@ -342,7 +342,7 @@ B. It gives a measure of the linear relationship between flipper length and body
 <p><strong>Explanation:</strong><br>
 The <code>get_correlation()</code> function computes the correlation coefficient between the two specified variables, indicating the strength and direction of their linear relationship.</p>
 <hr>
-<p><strong>(1.5)</strong> In the following code, what is the purpose of <code>geom_smooth(method = "lm", se = FALSE)</code>?</p>
+<p><strong>(4.5)</strong> In the following code, what is the purpose of <code>geom_smooth(method = "lm", se = FALSE)</code>?</p>
 <div class="sourceCode" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(penguins_data, <span class="fu">aes</span>(<span class="at">x =</span> flipper_length_mm, <span class="at">y =</span> body_mass_g)) <span class="sc">+</span></span>
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">alpha =</span> <span class="fl">0.5</span>) <span class="sc">+</span></span>
 <span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_smooth</span>(<span class="at">method =</span> <span class="st">"lm"</span>, <span class="at">se =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
@@ -355,8 +355,8 @@ B. It adds a linear regression line to the scatterplot without displaying the co
 <hr>
 </section>
 </section>
-<section id="session-2-multiple-linear-regression-analysis-part-1" class="level2">
-<h2 class="anchored" data-anchor-id="session-2-multiple-linear-regression-analysis-part-1">Session 2: Multiple Linear Regression Analysis (Part 1)</h2>
+<section id="session-5-multiple-linear-regression-analysis-part-1" class="level2">
+<h2 class="anchored" data-anchor-id="session-5-multiple-linear-regression-analysis-part-1">Session 5: Multiple Linear Regression Analysis (Part 1)</h2>
 <section id="fitting-a-simple-linear-regression-with-a-categorical-regressor" class="level3">
 <h3 class="anchored" data-anchor-id="fitting-a-simple-linear-regression-with-a-categorical-regressor">10: Fitting a Simple Linear Regression with a Categorical Regressor</h3>
 <div class="cell">
@@ -504,28 +504,28 @@ We fit a multiple regression model that includes both <code>flipper_length_mm</c
 We extend the scatterplot by adding regression lines for each species, showing how the relationship between <code>flipper_length_mm</code> and <code>body_mass_g</code> differs across species. Each line represents a separate slope for each species, which reflects the interaction between flipper length and species in the model.</p>
 <hr>
 </section>
-<section id="session-2-review-questions" class="level3">
-<h3 class="anchored" data-anchor-id="session-2-review-questions">Session 2 Review Questions</h3>
-<p><strong>(2.1)</strong> What is the default baseline island in the simple linear regression model for predicting <code>body_mass_g</code> using <code>island</code> as a categorical variable?</p>
+<section id="session-5-review-questions" class="level3">
+<h3 class="anchored" data-anchor-id="session-5-review-questions">Session 5 Review Questions</h3>
+<p><strong>(5.1)</strong> What is the default baseline island in the simple linear regression model for predicting <code>body_mass_g</code> using <code>island</code> as a categorical variable?</p>
 <p>A. Torgersen<br>
 B. Biscoe<br>
 C. Dream<br>
 D. The island with the highest body mass</p>
 <hr>
-<p><strong>(2.2)</strong> In the following regression model with interaction terms, what does the coefficient for <code>flipper_length_mm:speciesGentoo</code> represent?</p>
+<p><strong>(5.2)</strong> In the following regression model with interaction terms, what does the coefficient for <code>flipper_length_mm:speciesGentoo</code> represent?</p>
 <div class="sourceCode" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>multi_model_interaction <span class="ot">&lt;-</span> <span class="fu">lm</span>(body_mass_g <span class="sc">~</span> flipper_length_mm <span class="sc">*</span> species, <span class="at">data =</span> penguins_data)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>A. The slope of the regression line for Gentoo penguins<br>
 B. The average body mass of Gentoo penguins<br>
 C. The change in the relationship between flipper length and body mass for Gentoo penguins compared to the baseline<br>
 D. The difference in intercept for Gentoo penguins compared to the baseline</p>
 <hr>
-<p><strong>(2.3)</strong> What is the purpose of adding interaction terms to a multiple regression model?</p>
+<p><strong>(5.3)</strong> What is the purpose of adding interaction terms to a multiple regression model?</p>
 <p>A. To make the model more complex without any real benefit<br>
 B. To estimate the relationship between each explanatory variable and the response variable independently<br>
 C. To account for how the relationship between one explanatory variable and the response depends on another explanatory variable<br>
 D. To automatically improve the model’s R-squared value</p>
 <hr>
-<p><strong>(2.4)</strong> What does the following plot indicate about the relationship between flipper length and body mass for different islands?</p>
+<p><strong>(5.4)</strong> What does the following plot indicate about the relationship between flipper length and body mass for different islands?</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(penguins_data, <span class="fu">aes</span>(<span class="at">x =</span> flipper_length_mm, <span class="at">y =</span> body_mass_g, <span class="at">color =</span> island)) <span class="sc">+</span></span>
 <span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
@@ -543,33 +543,33 @@ B. The relationship between flipper length and body mass differs across species,
 C. The islands do not influence the relationship between flipper length and body mass<br>
 D. Only the intercept differs for each island, but the slope is the same</p>
 <hr>
-<p><strong>(2.5)</strong> In the multiple regression model with interaction terms, how are dummy variables used for categorical predictors?</p>
+<p><strong>(5.5)</strong> In the multiple regression model with interaction terms, how are dummy variables used for categorical predictors?</p>
 <p>A. Dummy variables are used to represent the different categories of a categorical variable B. Dummy variables are used to represent each numerical variable<br>
 C. Dummy variables are used to replace the intercept in the regression model<br>
 D. Dummy variables are not necessary for categorical variables</p>
 <hr>
 </section>
-<section id="session-2-review-question-answers" class="level3">
-<h3 class="anchored" data-anchor-id="session-2-review-question-answers">Session 2 Review Question Answers</h3>
-<p><strong>(2.1)</strong> What is the default baseline island in the simple linear regression model for predicting <code>body_mass_g</code> using <code>island</code> as a categorical variable?</p>
+<section id="session-5-review-question-answers" class="level3">
+<h3 class="anchored" data-anchor-id="session-5-review-question-answers">Session 5 Review Question Answers</h3>
+<p><strong>(5.1)</strong> What is the default baseline island in the simple linear regression model for predicting <code>body_mass_g</code> using <code>island</code> as a categorical variable?</p>
 <p><strong>Correct Answer:</strong><br>
 B. Biscoe</p>
 <p><strong>Explanation:</strong><br>
 In a regression model with categorical variables, the baseline group is typically the first level alphabetically. Since <code>Biscoe</code> comes first, it is the baseline for comparison.</p>
 <hr>
-<p><strong>(2.2)</strong> In the following regression model with interaction terms, what does the coefficient for <code>flipper_length_mm:speciesGentoo</code> represent?</p>
+<p><strong>(5.2)</strong> In the following regression model with interaction terms, what does the coefficient for <code>flipper_length_mm:speciesGentoo</code> represent?</p>
 <p><strong>Correct Answer:</strong><br>
 D. The change in the relationship between flipper length and body mass for Gentoo penguins compared to the baseline</p>
 <p><strong>Explanation:</strong><br>
 The interaction term <code>flipper_length_mm:speciesGentoo</code> represents how the effect of <code>flipper_length_mm</code> on <code>body_mass_g</code> changes for Gentoo penguins compared to the baseline species, Adélie.</p>
 <hr>
-<p><strong>(2.3)</strong> What is the purpose of adding interaction terms to a multiple regression model?</p>
+<p><strong>(5.3)</strong> What is the purpose of adding interaction terms to a multiple regression model?</p>
 <p><strong>Correct Answer:</strong><br>
 C. To account for how the relationship between one explanatory variable and the response depends on another explanatory variable</p>
 <p><strong>Explanation:</strong><br>
 Interaction terms allow us to model how the effect of one predictor (e.g., flipper length) on the outcome (body mass) changes depending on the level of another predictor (e.g., species).</p>
 <hr>
-<p><strong>(2.4)</strong> What does the following plot indicate about the relationship between flipper length and body mass for different islands?</p>
+<p><strong>(5.4)</strong> What does the following plot indicate about the relationship between flipper length and body mass for different islands?</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(penguins_data, <span class="fu">aes</span>(<span class="at">x =</span> flipper_length_mm, <span class="at">y =</span> body_mass_g, <span class="at">color =</span> island)) <span class="sc">+</span></span>
 <span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
@@ -587,7 +587,7 @@ B. The relationship between flipper length and body mass differs across species,
 <p><strong>Explanation:</strong><br>
 The plot shows separate regression lines for each species, indicating that the relationship between <code>flipper_length_mm</code> and <code>body_mass_g</code> varies by species, with each species having a unique slope.</p>
 <hr>
-<p><strong>(2.5)</strong> In the multiple regression model with interaction terms, how are dummy variables used for categorical predictors?</p>
+<p><strong>(5.5)</strong> In the multiple regression model with interaction terms, how are dummy variables used for categorical predictors?</p>
 <p><strong>Correct Answer:</strong><br>
 A. Dummy variables are used to represent the different categories of a categorical variable</p>
 <p><strong>Explanation:</strong><br>
@@ -595,8 +595,8 @@ In regression models, dummy variables are created for categorical variables like
 <hr>
 </section>
 </section>
-<section id="session-3-multiple-linear-regression-analysis-part-2" class="level2">
-<h2 class="anchored" data-anchor-id="session-3-multiple-linear-regression-analysis-part-2">Session 3: Multiple Linear Regression Analysis (Part 2)</h2>
+<section id="session-6-multiple-linear-regression-analysis-part-2" class="level2">
+<h2 class="anchored" data-anchor-id="session-6-multiple-linear-regression-analysis-part-2">Session 6: Multiple Linear Regression Analysis (Part 2)</h2>
 <section id="fitting-a-multiple-regression-model-without-interactions" class="level3">
 <h3 class="anchored" data-anchor-id="fitting-a-multiple-regression-model-without-interactions">15. Fitting a Multiple Regression Model Without Interactions</h3>
 <div class="cell">
@@ -748,65 +748,65 @@ In regression models, dummy variables are created for categorical variables like
 <p>These scatterplots display the relationships individually between <code>flipper_length_mm</code> and <code>body_mass_g</code>, and between <code>bill_length_mm</code> and <code>body_mass_g</code>, with linear regression lines added.</p>
 <hr>
 </section>
-<section id="session-3-review-questions" class="level3">
-<h3 class="anchored" data-anchor-id="session-3-review-questions">Session 3 Review Questions</h3>
-<p><strong><code>(3.1)</code></strong> What is the main assumption in a multiple regression model without interaction terms?</p>
+<section id="session-6-review-questions" class="level3">
+<h3 class="anchored" data-anchor-id="session-6-review-questions">Session 6 Review Questions</h3>
+<p><strong><code>(6.1)</code></strong> What is the main assumption in a multiple regression model without interaction terms?</p>
 <p>A. The relationship between the explanatory variables and the response is always quadratic.<br>
 B. The slope of the regression line is different for each level of the categorical variable.<br>
 C. The slope of the regression line is the same for all levels of the categorical variable.<br>
 D. The intercept of the regression line is the same for all levels of the categorical variable.</p>
 <hr>
-<p><strong><code>(3.2)</code></strong> In the model <code>lm(body_mass_g ~ flipper_length_mm + species, data = penguins_data)</code>, what does the coefficient for <code>speciesGentoo</code> represent?</p>
+<p><strong><code>(6.2)</code></strong> In the model <code>lm(body_mass_g ~ flipper_length_mm + species, data = penguins_data)</code>, what does the coefficient for <code>speciesGentoo</code> represent?</p>
 <p>A. The effect of being a Gentoo penguin on body mass compared to the baseline species (Adélie).<br>
 B. The effect of flipper length on body mass for Gentoo penguins only.<br>
 C. The change in flipper length due to species.<br>
 D. The effect of body mass on flipper length for Gentoo penguins.</p>
 <hr>
-<p><strong><code>(3.3)</code></strong> What does the function <code>geom_parallel_slopes()</code> do in a regression plot?</p>
+<p><strong><code>(6.3)</code></strong> What does the function <code>geom_parallel_slopes()</code> do in a regression plot?</p>
 <p>A. It fits regression lines with different slopes for each group.<br>
 B. It plots regression lines with the same slope but different intercepts for each group.<br>
 C. It creates a scatterplot without any regression lines.<br>
 D. It visualizes interaction effects between the variables.</p>
 <hr>
-<p><strong><code>(3.4)</code></strong> In the model <code>lm(body_mass_g ~ flipper_length_mm + bill_length_mm, data = penguins_data)</code>, what do the coefficients for <code>flipper_length_mm</code> and <code>bill_length_mm</code> represent?</p>
+<p><strong><code>(6.4)</code></strong> In the model <code>lm(body_mass_g ~ flipper_length_mm + bill_length_mm, data = penguins_data)</code>, what do the coefficients for <code>flipper_length_mm</code> and <code>bill_length_mm</code> represent?</p>
 <p>A. The total body mass of each penguin species.<br>
 B. The predicted body mass for penguins with average bill and flipper lengths. C. The interaction effect between flipper length and bill length.<br>
 D. The effect of bill length on body mass, controlling for flipper length, and vice versa.</p>
 <hr>
-<p><strong><code>(3.5)</code></strong> What does a regression model without interaction terms assume about the relationship between the explanatory variables and the response variable?</p>
+<p><strong><code>(6.5)</code></strong> What does a regression model without interaction terms assume about the relationship between the explanatory variables and the response variable?</p>
 <p>A. The explanatory variables are not related to the response.<br>
 B. The relationship between the explanatory variables and the response is independent of one another.<br>
 C. The explanatory variables interact to affect the response.<br>
 D. The response variable depends only on the categorical variables.</p>
 <hr>
 </section>
-<section id="session-3-review-question-answers" class="level3">
-<h3 class="anchored" data-anchor-id="session-3-review-question-answers">Session 3 Review Question Answers</h3>
-<p><strong><code>(3.1)</code></strong> What is the main assumption in a multiple regression model without interaction terms?</p>
+<section id="session-6-review-question-answers" class="level3">
+<h3 class="anchored" data-anchor-id="session-6-review-question-answers">Session 6 Review Question Answers</h3>
+<p><strong><code>(6.1)</code></strong> What is the main assumption in a multiple regression model without interaction terms?</p>
 <p><strong>Correct Answer:</strong><br>
 C. The slope of the regression line is the same for all levels of the categorical variable.</p>
 <p><strong>Explanation:</strong><br>
 In a multiple regression model without interactions, the slopes are assumed to be the same across all levels of the categorical variable. Only the intercepts are allowed to differ by group.</p>
 <hr>
-<p><strong><code>(3.2)</code></strong> In the model <code>lm(body_mass_g ~ flipper_length_mm + species, data = penguins_data)</code>, what does the coefficient for <code>speciesGentoo</code> represent?</p>
+<p><strong><code>(6.2)</code></strong> In the model <code>lm(body_mass_g ~ flipper_length_mm + species, data = penguins_data)</code>, what does the coefficient for <code>speciesGentoo</code> represent?</p>
 <p><strong>Correct Answer:</strong><br>
 A. The effect of being a Gentoo penguin on body mass compared to the baseline species (Adélie).</p>
 <p><strong>Explanation:</strong><br>
 In regression models with categorical variables, the coefficient for a level like <code>speciesGentoo</code> represents the difference in the response variable (body mass) for Gentoo penguins compared to the baseline species (Adélie).</p>
 <hr>
-<p><strong><code>(3.3)</code></strong> What does the function <code>geom_parallel_slopes()</code> do in a regression plot?</p>
+<p><strong><code>(6.3)</code></strong> What does the function <code>geom_parallel_slopes()</code> do in a regression plot?</p>
 <p><strong>Correct Answer:</strong><br>
 B. It plots regression lines with the same slope but different intercepts for each group.</p>
 <p><strong>Explanation:</strong><br>
 The <code>geom_parallel_slopes()</code> function is used to visualize regression models without interaction terms, where each group has the same slope but different intercepts.</p>
 <hr>
-<p><strong><code>(3.4)</code></strong> In the model <code>lm(body_mass_g ~ flipper_length_mm + bill_length_mm, data = penguins_data)</code>, what do the coefficients for <code>flipper_length_mm</code> and <code>bill_length_mm</code> represent?</p>
+<p><strong><code>(6.4)</code></strong> In the model <code>lm(body_mass_g ~ flipper_length_mm + bill_length_mm, data = penguins_data)</code>, what do the coefficients for <code>flipper_length_mm</code> and <code>bill_length_mm</code> represent?</p>
 <p><strong>Correct Answer:</strong><br>
 D. The effect of bill length on body mass, controlling for flipper length, and vice versa.</p>
 <p><strong>Explanation:</strong><br>
 In a multiple regression model, each coefficient represents the effect of that variable on the response, while controlling for the other variables in the model.</p>
 <hr>
-<p><strong><code>(3.5)</code></strong> What does a regression model without interaction terms assume about the relationship between the explanatory variables and the response variable?</p>
+<p><strong><code>(6.5)</code></strong> What does a regression model without interaction terms assume about the relationship between the explanatory variables and the response variable?</p>
 <p><strong>Correct Answer:</strong><br>
 B. The relationship between the explanatory variables and the response is independent of one another.</p>
 <p><strong>Explanation:</strong><br>
