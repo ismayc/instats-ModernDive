@@ -382,14 +382,14 @@ mean of x
 <p><img src="day4_walkthrough_answers_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid" width="672"></p>
 </div>
 <div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Find the theoretical p-value</span></span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>theory_p_value <span class="ot">&lt;-</span> null_dist_t <span class="sc">|&gt;</span> </span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>theory_p_value <span class="ot">&lt;-</span> null_distro_t <span class="sc">|&gt;</span> </span>
 <span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">get_p_value</span>(<span class="at">obs_stat =</span> obs_statistic_t, <span class="at">direction =</span> <span class="st">"two sided"</span>)</span>
 <span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>theory_p_value</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 1 × 1
   p_value
     &lt;dbl&gt;
-1   0.654</code></pre>
+1   0.655</code></pre>
 </div>
 </div>
 <p><strong>Bonus</strong>: This can also be done directly in R, but requires us to change the format of the data a little bit. We have a <code>t_test()</code> function in <code>infer</code> that wraps the data, so we don’t have to do this extra step.</p>
