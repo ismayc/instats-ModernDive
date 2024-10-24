@@ -24,6 +24,7 @@ options(width = 120)
 ### 1. Load Necessary Packages
 
 ```{r}
+#| message: false
 # Load the required packages
 library(dplyr)
 library(ggplot2)
