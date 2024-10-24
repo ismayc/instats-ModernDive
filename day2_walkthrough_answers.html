@@ -72,10 +72,56 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </head>
 
-<body class="fullcontent">
+<body>
 
-<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
-
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article toc-left">
+<div id="quarto-sidebar-toc-left" class="sidebar toc-left">
+  <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Contents</h2>
+   
+  <ul>
+  <li><a href="#day-2-linear-regression-in-r" id="toc-day-2-linear-regression-in-r" class="nav-link active" data-scroll-target="#day-2-linear-regression-in-r">Day 2: Linear Regression in R</a>
+  <ul class="collapse">
+  <li><a href="#session-4-simple-linear-regression-analysis" id="toc-session-4-simple-linear-regression-analysis" class="nav-link" data-scroll-target="#session-4-simple-linear-regression-analysis">Session 4: Simple Linear Regression Analysis</a>
+  <ul class="collapse">
+  <li><a href="#load-necessary-libraries" id="toc-load-necessary-libraries" class="nav-link" data-scroll-target="#load-necessary-libraries">1. Load Necessary Libraries</a></li>
+  <li><a href="#prepare-dataset" id="toc-prepare-dataset" class="nav-link" data-scroll-target="#prepare-dataset">2. Prepare Dataset</a></li>
+  <li><a href="#exploring-dataset-structure" id="toc-exploring-dataset-structure" class="nav-link" data-scroll-target="#exploring-dataset-structure">3. Exploring Dataset Structure</a></li>
+  <li><a href="#summary-statistics" id="toc-summary-statistics" class="nav-link" data-scroll-target="#summary-statistics">4. Summary Statistics</a></li>
+  <li><a href="#using-tidy_summary-function" id="toc-using-tidy_summary-function" class="nav-link" data-scroll-target="#using-tidy_summary-function">5. Using <code>tidy_summary()</code> Function</a></li>
+  <li><a href="#correlation-between-flipper-length-and-body-mass" id="toc-correlation-between-flipper-length-and-body-mass" class="nav-link" data-scroll-target="#correlation-between-flipper-length-and-body-mass">6. Correlation Between Flipper Length and Body Mass</a></li>
+  <li><a href="#scatterplot-of-flipper-length-and-body-mass" id="toc-scatterplot-of-flipper-length-and-body-mass" class="nav-link" data-scroll-target="#scatterplot-of-flipper-length-and-body-mass">7. Scatterplot of Flipper Length and Body Mass</a></li>
+  <li><a href="#regression-line" id="toc-regression-line" class="nav-link" data-scroll-target="#regression-line">8. Regression Line</a></li>
+  <li><a href="#fit-a-regression-model" id="toc-fit-a-regression-model" class="nav-link" data-scroll-target="#fit-a-regression-model">9. Fit a Regression Model</a></li>
+  <li><a href="#session-4-review-questions" id="toc-session-4-review-questions" class="nav-link" data-scroll-target="#session-4-review-questions">Session 4 Review Questions</a></li>
+  <li><a href="#session-4-review-question-answers" id="toc-session-4-review-question-answers" class="nav-link" data-scroll-target="#session-4-review-question-answers">Session 4 Review Question Answers</a></li>
+  </ul></li>
+  <li><a href="#session-5-multiple-linear-regression-analysis-part-1" id="toc-session-5-multiple-linear-regression-analysis-part-1" class="nav-link" data-scroll-target="#session-5-multiple-linear-regression-analysis-part-1">Session 5: Multiple Linear Regression Analysis (Part 1)</a>
+  <ul class="collapse">
+  <li><a href="#fitting-a-simple-linear-regression-with-a-categorical-regressor" id="toc-fitting-a-simple-linear-regression-with-a-categorical-regressor" class="nav-link" data-scroll-target="#fitting-a-simple-linear-regression-with-a-categorical-regressor">10: Fitting a Simple Linear Regression with a Categorical Regressor</a></li>
+  <li><a href="#visualizing-data-with-categorical-variables" id="toc-visualizing-data-with-categorical-variables" class="nav-link" data-scroll-target="#visualizing-data-with-categorical-variables">11: Visualizing Data with Categorical Variables</a></li>
+  <li><a href="#summarizing-the-target-and-regressors-one-numerical-and-one-categorical" id="toc-summarizing-the-target-and-regressors-one-numerical-and-one-categorical" class="nav-link" data-scroll-target="#summarizing-the-target-and-regressors-one-numerical-and-one-categorical">12: Summarizing the Target and Regressors (One numerical and one categorical)</a></li>
+  <li><a href="#fitting-a-multiple-regression-model-with-interaction-terms" id="toc-fitting-a-multiple-regression-model-with-interaction-terms" class="nav-link" data-scroll-target="#fitting-a-multiple-regression-model-with-interaction-terms">13: Fitting a Multiple Regression Model with Interaction Terms</a></li>
+  <li><a href="#adding-interaction-terms-to-the-regression-plot" id="toc-adding-interaction-terms-to-the-regression-plot" class="nav-link" data-scroll-target="#adding-interaction-terms-to-the-regression-plot">14: Adding Interaction Terms to the Regression Plot</a></li>
+  <li><a href="#session-5-review-questions" id="toc-session-5-review-questions" class="nav-link" data-scroll-target="#session-5-review-questions">Session 5 Review Questions</a></li>
+  <li><a href="#session-5-review-question-answers" id="toc-session-5-review-question-answers" class="nav-link" data-scroll-target="#session-5-review-question-answers">Session 5 Review Question Answers</a></li>
+  </ul></li>
+  <li><a href="#session-6-multiple-linear-regression-analysis-part-2" id="toc-session-6-multiple-linear-regression-analysis-part-2" class="nav-link" data-scroll-target="#session-6-multiple-linear-regression-analysis-part-2">Session 6: Multiple Linear Regression Analysis (Part 2)</a>
+  <ul class="collapse">
+  <li><a href="#fitting-a-multiple-regression-model-without-interactions" id="toc-fitting-a-multiple-regression-model-without-interactions" class="nav-link" data-scroll-target="#fitting-a-multiple-regression-model-without-interactions">15. Fitting a Multiple Regression Model Without Interactions</a></li>
+  <li><a href="#visualizing-the-parallel-slopes-model" id="toc-visualizing-the-parallel-slopes-model" class="nav-link" data-scroll-target="#visualizing-the-parallel-slopes-model">16. Visualizing the Parallel Slopes Model</a></li>
+  <li><a href="#summarize-the-numerical-regressors-and-target-variable" id="toc-summarize-the-numerical-regressors-and-target-variable" class="nav-link" data-scroll-target="#summarize-the-numerical-regressors-and-target-variable">17. Summarize the Numerical Regressors and Target Variable</a></li>
+  <li><a href="#fitting-a-multiple-regression-model-with-two-numerical-predictors" id="toc-fitting-a-multiple-regression-model-with-two-numerical-predictors" class="nav-link" data-scroll-target="#fitting-a-multiple-regression-model-with-two-numerical-predictors">18. Fitting a Multiple Regression Model with Two Numerical Predictors</a></li>
+  <li><a href="#visualizing-the-relationship-between-variables-with-slr" id="toc-visualizing-the-relationship-between-variables-with-slr" class="nav-link" data-scroll-target="#visualizing-the-relationship-between-variables-with-slr">19. Visualizing the Relationship between Variables (with SLR)</a></li>
+  <li><a href="#session-6-review-questions" id="toc-session-6-review-questions" class="nav-link" data-scroll-target="#session-6-review-questions">Session 6 Review Questions</a></li>
+  <li><a href="#session-6-review-question-answers" id="toc-session-6-review-question-answers" class="nav-link" data-scroll-target="#session-6-review-question-answers">Session 6 Review Question Answers</a></li>
+  </ul></li>
+  </ul></li>
+  </ul>
+</nav>
+</div>
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+</div>
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">

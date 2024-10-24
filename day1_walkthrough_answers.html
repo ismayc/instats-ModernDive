@@ -72,10 +72,65 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </head>
 
-<body class="fullcontent">
+<body>
 
-<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
-
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article toc-left">
+<div id="quarto-sidebar-toc-left" class="sidebar toc-left">
+  <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Contents</h2>
+   
+  <ul>
+  <li><a href="#working-with-data-in-r---explore-visualize-wrangle-import" id="toc-working-with-data-in-r---explore-visualize-wrangle-import" class="nav-link active" data-scroll-target="#working-with-data-in-r---explore-visualize-wrangle-import">Working with Data in R - Explore, Visualize, Wrangle, Import</a>
+  <ul class="collapse">
+  <li><a href="#session-1-introduction-to-r-and-rstudio" id="toc-session-1-introduction-to-r-and-rstudio" class="nav-link" data-scroll-target="#session-1-introduction-to-r-and-rstudio">Session 1: Introduction to R and RStudio</a>
+  <ul class="collapse">
+  <li><a href="#installing-r-and-rstudio" id="toc-installing-r-and-rstudio" class="nav-link" data-scroll-target="#installing-r-and-rstudio">1. Installing R and RStudio</a></li>
+  <li><a href="#exploring-the-rstudio-interface" id="toc-exploring-the-rstudio-interface" class="nav-link" data-scroll-target="#exploring-the-rstudio-interface">2. Exploring the RStudio Interface</a></li>
+  <li><a href="#installing-packages" id="toc-installing-packages" class="nav-link" data-scroll-target="#installing-packages">3. Installing Packages</a></li>
+  <li><a href="#loading-packages" id="toc-loading-packages" class="nav-link" data-scroll-target="#loading-packages">4. Loading Packages</a></li>
+  <li><a href="#viewing-a-dataset" id="toc-viewing-a-dataset" class="nav-link" data-scroll-target="#viewing-a-dataset">5. Viewing a Dataset</a></li>
+  <li><a href="#exploring-dataset-structure-and-data-types" id="toc-exploring-dataset-structure-and-data-types" class="nav-link" data-scroll-target="#exploring-dataset-structure-and-data-types">6. Exploring Dataset Structure and Data Types</a></li>
+  <li><a href="#accessing-a-single-column" id="toc-accessing-a-single-column" class="nav-link" data-scroll-target="#accessing-a-single-column">7. Accessing a Single Column</a></li>
+  <li><a href="#checking-the-first-few-rows" id="toc-checking-the-first-few-rows" class="nav-link" data-scroll-target="#checking-the-first-few-rows">8. Checking the First Few Rows</a></li>
+  <li><a href="#basic-operations-in-r" id="toc-basic-operations-in-r" class="nav-link" data-scroll-target="#basic-operations-in-r">9. Basic Operations in R</a></li>
+  <li><a href="#using-functions-in-r" id="toc-using-functions-in-r" class="nav-link" data-scroll-target="#using-functions-in-r">10. Using Functions in R</a></li>
+  <li><a href="#session-1-review-questions" id="toc-session-1-review-questions" class="nav-link" data-scroll-target="#session-1-review-questions">Session 1 Review Questions</a></li>
+  <li><a href="#session-1-review-question-answers" id="toc-session-1-review-question-answers" class="nav-link" data-scroll-target="#session-1-review-question-answers">Session 1 Review Question Answers</a></li>
+  </ul></li>
+  <li><a href="#session-2-data-visualization-with-ggplot2" id="toc-session-2-data-visualization-with-ggplot2" class="nav-link" data-scroll-target="#session-2-data-visualization-with-ggplot2">Session 2: Data Visualization with <code>ggplot2</code></a>
+  <ul class="collapse">
+  <li><a href="#installing-and-loading-necessary-packages" id="toc-installing-and-loading-necessary-packages" class="nav-link" data-scroll-target="#installing-and-loading-necessary-packages">11. Installing and Loading Necessary Packages</a></li>
+  <li><a href="#visualizing-population-distribution-histogram" id="toc-visualizing-population-distribution-histogram" class="nav-link" data-scroll-target="#visualizing-population-distribution-histogram">12. Visualizing Population Distribution: Histogram</a></li>
+  <li><a href="#visualizing-life-expectancy-side-by-side-boxplot" id="toc-visualizing-life-expectancy-side-by-side-boxplot" class="nav-link" data-scroll-target="#visualizing-life-expectancy-side-by-side-boxplot">13. Visualizing Life Expectancy: Side-by-side Boxplot</a></li>
+  <li><a href="#comparing-number-of-countries-by-continent-barplot" id="toc-comparing-number-of-countries-by-continent-barplot" class="nav-link" data-scroll-target="#comparing-number-of-countries-by-continent-barplot">14. Comparing Number of Countries by Continent: Barplot</a></li>
+  <li><a href="#scatterplot-gdp-per-capita-vs.-life-expectancy" id="toc-scatterplot-gdp-per-capita-vs.-life-expectancy" class="nav-link" data-scroll-target="#scatterplot-gdp-per-capita-vs.-life-expectancy">15. Scatterplot: GDP per Capita vs.&nbsp;Life Expectancy</a></li>
+  <li><a href="#faceted-scatterplot-gdp-per-capita-vs.-life-expectancy-by-continent" id="toc-faceted-scatterplot-gdp-per-capita-vs.-life-expectancy-by-continent" class="nav-link" data-scroll-target="#faceted-scatterplot-gdp-per-capita-vs.-life-expectancy-by-continent">16. Faceted Scatterplot: GDP per Capita vs.&nbsp;Life Expectancy by Continent</a></li>
+  <li><a href="#pie-chart-vs-bar-chart-region-distribution" id="toc-pie-chart-vs-bar-chart-region-distribution" class="nav-link" data-scroll-target="#pie-chart-vs-bar-chart-region-distribution">17. Pie Chart vs Bar Chart: Region Distribution</a></li>
+  <li><a href="#line-graph-time-series-data" id="toc-line-graph-time-series-data" class="nav-link" data-scroll-target="#line-graph-time-series-data">18. Line Graph: Time Series Data</a></li>
+  <li><a href="#session-2-review-questions" id="toc-session-2-review-questions" class="nav-link" data-scroll-target="#session-2-review-questions">Session 2 Review Questions</a></li>
+  <li><a href="#session-2-review-question-answers" id="toc-session-2-review-question-answers" class="nav-link" data-scroll-target="#session-2-review-question-answers">Session 2 Review Question Answers</a></li>
+  </ul></li>
+  <li><a href="#session-3-data-wrangling-and-tidy-data" id="toc-session-3-data-wrangling-and-tidy-data" class="nav-link" data-scroll-target="#session-3-data-wrangling-and-tidy-data">Session 3: Data Wrangling and Tidy Data</a>
+  <ul class="collapse">
+  <li><a href="#filtering-rows-with-filter" id="toc-filtering-rows-with-filter" class="nav-link" data-scroll-target="#filtering-rows-with-filter">19. Filtering Rows with <code>filter()</code></a></li>
+  <li><a href="#summarizing-data-with-summarize" id="toc-summarizing-data-with-summarize" class="nav-link" data-scroll-target="#summarizing-data-with-summarize">20. Summarizing Data with <code>summarize()</code></a></li>
+  <li><a href="#grouping-data-with-group_by" id="toc-grouping-data-with-group_by" class="nav-link" data-scroll-target="#grouping-data-with-group_by">21. Grouping Data with <code>group_by()</code></a></li>
+  <li><a href="#creating-new-variables-with-mutate" id="toc-creating-new-variables-with-mutate" class="nav-link" data-scroll-target="#creating-new-variables-with-mutate">22. Creating New Variables with <code>mutate()</code></a></li>
+  <li><a href="#arranging-rows-with-arrange" id="toc-arranging-rows-with-arrange" class="nav-link" data-scroll-target="#arranging-rows-with-arrange">23. Arranging Rows with <code>arrange()</code></a></li>
+  <li><a href="#selecting-specific-columns-with-select" id="toc-selecting-specific-columns-with-select" class="nav-link" data-scroll-target="#selecting-specific-columns-with-select">24. Selecting Specific Columns with <code>select()</code></a></li>
+  <li><a href="#putting-a-whole-line-together" id="toc-putting-a-whole-line-together" class="nav-link" data-scroll-target="#putting-a-whole-line-together">25. Putting a Whole <code>|&gt;</code>line Together</a></li>
+  <li><a href="#creating-data-for-geom_col-use" id="toc-creating-data-for-geom_col-use" class="nav-link" data-scroll-target="#creating-data-for-geom_col-use">26. Creating data for <code>geom_col()</code> use</a></li>
+  <li><a href="#converting-wide-data-into-tidy-data" id="toc-converting-wide-data-into-tidy-data" class="nav-link" data-scroll-target="#converting-wide-data-into-tidy-data">27. Converting wide data into tidy data</a></li>
+  <li><a href="#importing-data-from-a-csv-file" id="toc-importing-data-from-a-csv-file" class="nav-link" data-scroll-target="#importing-data-from-a-csv-file">28. Importing data from a CSV file</a></li>
+  <li><a href="#session-3-review-questions" id="toc-session-3-review-questions" class="nav-link" data-scroll-target="#session-3-review-questions">Session 3 Review Questions</a></li>
+  <li><a href="#session-3-review-question-answers" id="toc-session-3-review-question-answers" class="nav-link" data-scroll-target="#session-3-review-question-answers">Session 3 Review Question Answers</a></li>
+  </ul></li>
+  </ul></li>
+  </ul>
+</nav>
+</div>
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+</div>
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">

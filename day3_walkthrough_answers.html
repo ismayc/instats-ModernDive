@@ -74,10 +74,63 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 </head>
 
-<body class="fullcontent">
+<body>
 
-<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
-
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article toc-left">
+<div id="quarto-sidebar-toc-left" class="sidebar toc-left">
+  <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Contents</h2>
+   
+  <ul>
+  <li><a href="#day-3-sampling-and-estimation-in-r" id="toc-day-3-sampling-and-estimation-in-r" class="nav-link active" data-scroll-target="#day-3-sampling-and-estimation-in-r">Day 3: Sampling and Estimation in R</a>
+  <ul class="collapse">
+  <li><a href="#session-7-sampling" id="toc-session-7-sampling" class="nav-link" data-scroll-target="#session-7-sampling">Session 7: Sampling</a>
+  <ul class="collapse">
+  <li><a href="#load-necessary-packages" id="toc-load-necessary-packages" class="nav-link" data-scroll-target="#load-necessary-packages">1. Load Necessary Packages</a></li>
+  <li><a href="#prepare-population-dataset-with-generation" id="toc-prepare-population-dataset-with-generation" class="nav-link" data-scroll-target="#prepare-population-dataset-with-generation">2. Prepare Population Dataset with Generation</a></li>
+  <li><a href="#exploring-dataset-structure" id="toc-exploring-dataset-structure" class="nav-link" data-scroll-target="#exploring-dataset-structure">3. Exploring Dataset Structure</a></li>
+  <li><a href="#population-parameters" id="toc-population-parameters" class="nav-link" data-scroll-target="#population-parameters">4. Population Parameters</a></li>
+  <li><a href="#take-a-sample-of-balls" id="toc-take-a-sample-of-balls" class="nav-link" data-scroll-target="#take-a-sample-of-balls">5. Take a Sample of Balls</a></li>
+  <li><a href="#take-another-sample-of-balls" id="toc-take-another-sample-of-balls" class="nav-link" data-scroll-target="#take-another-sample-of-balls">6. Take Another Sample of Balls</a></li>
+  <li><a href="#take-1000-samples-of-size-50-from-the-population" id="toc-take-1000-samples-of-size-50-from-the-population" class="nav-link" data-scroll-target="#take-1000-samples-of-size-50-from-the-population">7. Take 1000 Samples of Size 50 from the Population</a></li>
+  <li><a href="#calculate-sample-proportions-and-visualize-them" id="toc-calculate-sample-proportions-and-visualize-them" class="nav-link" data-scroll-target="#calculate-sample-proportions-and-visualize-them">8. Calculate Sample Proportions and Visualize Them</a></li>
+  <li><a href="#determine-a-guess-at-the-standard-error" id="toc-determine-a-guess-at-the-standard-error" class="nav-link" data-scroll-target="#determine-a-guess-at-the-standard-error">9. Determine a Guess at the Standard Error</a></li>
+  <li><a href="#repeat-for-different-sample-sizes" id="toc-repeat-for-different-sample-sizes" class="nav-link" data-scroll-target="#repeat-for-different-sample-sizes">10. Repeat for Different Sample Sizes</a></li>
+  <li><a href="#session-7-review-questions" id="toc-session-7-review-questions" class="nav-link" data-scroll-target="#session-7-review-questions">Session 7 Review Questions</a></li>
+  <li><a href="#session-7-review-question-answers" id="toc-session-7-review-question-answers" class="nav-link" data-scroll-target="#session-7-review-question-answers">Session 7 Review Question Answers</a></li>
+  </ul></li>
+  <li><a href="#session-8-estimation-using-theory-based-methods" id="toc-session-8-estimation-using-theory-based-methods" class="nav-link" data-scroll-target="#session-8-estimation-using-theory-based-methods">Session 8: Estimation using Theory-Based Methods</a>
+  <ul class="collapse">
+  <li><a href="#population-data-with-numeric-variable-of-interest" id="toc-population-data-with-numeric-variable-of-interest" class="nav-link" data-scroll-target="#population-data-with-numeric-variable-of-interest">11. Population Data with Numeric Variable of Interest</a></li>
+  <li><a href="#the-sample-and-the-sample-statistic" id="toc-the-sample-and-the-sample-statistic" class="nav-link" data-scroll-target="#the-sample-and-the-sample-statistic">12. The Sample and the Sample Statistic</a></li>
+  <li><a href="#population-parameter" id="toc-population-parameter" class="nav-link" data-scroll-target="#population-parameter">13. Population Parameter</a></li>
+  <li><a href="#confidence-interval-for-the-population-proportion-assuming-we-know-sigma" id="toc-confidence-interval-for-the-population-proportion-assuming-we-know-sigma" class="nav-link" data-scroll-target="#confidence-interval-for-the-population-proportion-assuming-we-know-sigma">14. Confidence Interval for the Population Proportion (Assuming We Know <span class="math inline">\(\sigma\)</span>)</a></li>
+  <li><a href="#confidence-interval-for-the-population-proportion-assuming-we-dont-know-sigma" id="toc-confidence-interval-for-the-population-proportion-assuming-we-dont-know-sigma" class="nav-link" data-scroll-target="#confidence-interval-for-the-population-proportion-assuming-we-dont-know-sigma">15. Confidence Interval for the Population Proportion (Assuming We Don’t Know <span class="math inline">\(\sigma\)</span>)</a></li>
+  <li><a href="#interpreting-the-confidence-interval" id="toc-interpreting-the-confidence-interval" class="nav-link" data-scroll-target="#interpreting-the-confidence-interval">16. Interpreting the Confidence Interval</a></li>
+  <li><a href="#session-8-review-questions" id="toc-session-8-review-questions" class="nav-link" data-scroll-target="#session-8-review-questions">Session 8 Review Questions</a></li>
+  <li><a href="#session-8-review-question-answers" id="toc-session-8-review-question-answers" class="nav-link" data-scroll-target="#session-8-review-question-answers">Session 8 Review Question Answers</a></li>
+  </ul></li>
+  <li><a href="#session-9-estimation-using-bootstrapping-methods" id="toc-session-9-estimation-using-bootstrapping-methods" class="nav-link" data-scroll-target="#session-9-estimation-using-bootstrapping-methods">Session 9: Estimation Using Bootstrapping Methods</a>
+  <ul class="collapse">
+  <li><a href="#assume-we-only-have-a-sample" id="toc-assume-we-only-have-a-sample" class="nav-link" data-scroll-target="#assume-we-only-have-a-sample">17. Assume We Only Have A Sample</a></li>
+  <li><a href="#going-over-the-infer-framework" id="toc-going-over-the-infer-framework" class="nav-link" data-scroll-target="#going-over-the-infer-framework">18. Going Over the <code>infer</code> Framework</a></li>
+  <li><a href="#bootstrapping-the-sample" id="toc-bootstrapping-the-sample" class="nav-link" data-scroll-target="#bootstrapping-the-sample">19. Bootstrapping the Sample</a></li>
+  <li><a href="#determine-the-mean-of-the-bootstrap-sample" id="toc-determine-the-mean-of-the-bootstrap-sample" class="nav-link" data-scroll-target="#determine-the-mean-of-the-bootstrap-sample">20. Determine the Mean of the Bootstrap Sample</a></li>
+  <li><a href="#bootstrapping-1000-samples" id="toc-bootstrapping-1000-samples" class="nav-link" data-scroll-target="#bootstrapping-1000-samples">21. Bootstrapping 1000 Samples</a></li>
+  <li><a href="#get-the-mean-of-each-bootstrap-sample" id="toc-get-the-mean-of-each-bootstrap-sample" class="nav-link" data-scroll-target="#get-the-mean-of-each-bootstrap-sample">22. Get the Mean of Each Bootstrap Sample</a></li>
+  <li><a href="#visualizing-the-bootstrap-distribution" id="toc-visualizing-the-bootstrap-distribution" class="nav-link" data-scroll-target="#visualizing-the-bootstrap-distribution">23. Visualizing the Bootstrap Distribution</a></li>
+  <li><a href="#calculate-the-bootstrap-confidence-interval" id="toc-calculate-the-bootstrap-confidence-interval" class="nav-link" data-scroll-target="#calculate-the-bootstrap-confidence-interval">24. Calculate the Bootstrap Confidence Interval</a></li>
+  <li><a href="#interpretation-of-the-bootstrap-confidence-interval" id="toc-interpretation-of-the-bootstrap-confidence-interval" class="nav-link" data-scroll-target="#interpretation-of-the-bootstrap-confidence-interval">25. Interpretation of the Bootstrap Confidence Interval</a></li>
+  <li><a href="#visualize-confidence-interval-on-top-of-bootstrap-distribution" id="toc-visualize-confidence-interval-on-top-of-bootstrap-distribution" class="nav-link" data-scroll-target="#visualize-confidence-interval-on-top-of-bootstrap-distribution">26. Visualize Confidence Interval on Top of Bootstrap Distribution</a></li>
+  <li><a href="#session-9-review-questions" id="toc-session-9-review-questions" class="nav-link" data-scroll-target="#session-9-review-questions">Session 9 Review Questions</a></li>
+  <li><a href="#session-9-review-question-answers" id="toc-session-9-review-question-answers" class="nav-link" data-scroll-target="#session-9-review-question-answers">Session 9 Review Question Answers</a></li>
+  </ul></li>
+  </ul></li>
+  </ul>
+</nav>
+</div>
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+</div>
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
