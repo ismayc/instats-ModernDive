@@ -17,7 +17,7 @@ options(width = 120)
 ```
 
 
-# Working with Data in R - Explore, Visualize, Wrangle, Import
+# Day 1: Working with Data in R - Explore, Visualize, Wrangle, Import
 
 ## Session 1: Introduction to R and RStudio
 
