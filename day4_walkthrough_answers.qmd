@@ -239,7 +239,7 @@ visualize(null_distro_t) +
   shade_p_value(obs_statistic_t, direction = "two sided")
 
 # Find the theoretical p-value
-theory_p_value <- null_dist_t |> 
+theory_p_value <- null_distro_t |> 
   get_p_value(obs_stat = obs_statistic_t, direction = "two sided")
 theory_p_value
 ```
