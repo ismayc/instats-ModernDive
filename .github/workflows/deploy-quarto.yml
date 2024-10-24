@@ -34,7 +34,7 @@ jobs:
     - name: Install system dependencies
       run: |
         sudo apt-get update
-        sudo apt-get install -y libcurl4-openssl-dev libxml2-dev libssl-dev    
+        sudo apt-get install -y libcurl4-openssl-dev libxml2-dev libssl-dev libharfbuzz-dev libfribidi-dev libfreetype6-dev libpng-dev   
     
     - name: Install dependencies with renv
       run: Rscript -e 'renv::restore()'
