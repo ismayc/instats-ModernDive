@@ -2,7 +2,13 @@
 title: "Statistics in R with the `tidyverse`"
 author: "Dr. Chester Ismay"
 subtitle: "Day 3 Walkthrough"
-format: html
+format: 
+  html:
+    toc: true
+    toc-title: "Contents"  # Optional, customize the title of the TOC
+    toc-location: left     # Specifies the location of the TOC (can also be 'right')
+    toc-float: true        # Enables the floating TOC
+    toc-depth: 3           # Sets the depth of the TOC (levels of headers)
 ---
 
 ```{r}
