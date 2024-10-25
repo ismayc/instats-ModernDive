@@ -1,0 +1,1179 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.340">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Dr.&nbsp;Chester Ismay">
+
+<title>Statistics in R with the tidyverse</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+</head>
+
+<body class="nav-sidebar floating nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">ModernDive v2 Seminar with Dr.&nbsp;Chester Ismay</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../index.html" rel="" target="">
+ <span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../answers.html" rel="" target="">
+ <span class="menu-text">Code Walkthrough and Exercise Answers</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../slides.html" rel="" target="">
+ <span class="menu-text">Slides</span></a>
+  </li>  
+</ul>
+            <div class="quarto-navbar-tools ms-auto">
+</div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item">Statistics in R with the <code>tidyverse</code></li></ol></nav>
+      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+      </a>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
+    <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Contents</h2>
+   
+  <ul>
+  <li><a href="#day-4-hypothesis-testing-and-inference-for-regression-in-r" id="toc-day-4-hypothesis-testing-and-inference-for-regression-in-r" class="nav-link active" data-scroll-target="#day-4-hypothesis-testing-and-inference-for-regression-in-r">Day 4: Hypothesis Testing and Inference for Regression in R</a>
+  <ul class="collapse">
+  <li><a href="#session-10-one-and-two-sample-hypothesis-testing" id="toc-session-10-one-and-two-sample-hypothesis-testing" class="nav-link" data-scroll-target="#session-10-one-and-two-sample-hypothesis-testing">Session 10: One and Two-Sample Hypothesis Testing</a>
+  <ul class="collapse">
+  <li><a href="#load-necessary-packages" id="toc-load-necessary-packages" class="nav-link" data-scroll-target="#load-necessary-packages">1. Load Necessary Packages</a></li>
+  <li><a href="#hypothesis-testing-framework" id="toc-hypothesis-testing-framework" class="nav-link" data-scroll-target="#hypothesis-testing-framework">2. Hypothesis Testing Framework</a></li>
+  <li><a href="#one-sample-mean-problem-simulation-based-approach-with-bootstrapping" id="toc-one-sample-mean-problem-simulation-based-approach-with-bootstrapping" class="nav-link" data-scroll-target="#one-sample-mean-problem-simulation-based-approach-with-bootstrapping">3. One Sample Mean Problem: Simulation-Based Approach with Bootstrapping</a></li>
+  <li><a href="#one-sample-mean-problem-traditional-approach-with-t-test" id="toc-one-sample-mean-problem-traditional-approach-with-t-test" class="nav-link" data-scroll-target="#one-sample-mean-problem-traditional-approach-with-t-test">4. One Sample Mean Problem: Traditional Approach with t-test</a></li>
+  <li><a href="#two-sample-mean-problem-simulation-based-approach-with-a-permutation-test" id="toc-two-sample-mean-problem-simulation-based-approach-with-a-permutation-test" class="nav-link" data-scroll-target="#two-sample-mean-problem-simulation-based-approach-with-a-permutation-test">5. Two Sample Mean Problem: Simulation-Based Approach with a Permutation Test</a></li>
+  <li><a href="#two-sample-mean-problem-traditional-approach-with-t-test" id="toc-two-sample-mean-problem-traditional-approach-with-t-test" class="nav-link" data-scroll-target="#two-sample-mean-problem-traditional-approach-with-t-test">6. Two Sample Mean Problem: Traditional Approach with t-test</a></li>
+  <li><a href="#comparing-to-confidence-intervals-checking-for-the-0-value" id="toc-comparing-to-confidence-intervals-checking-for-the-0-value" class="nav-link" data-scroll-target="#comparing-to-confidence-intervals-checking-for-the-0-value">7. Comparing to Confidence Intervals: Checking for the 0 Value</a></li>
+  <li><a href="#session-10-review-questions" id="toc-session-10-review-questions" class="nav-link" data-scroll-target="#session-10-review-questions">Session 10 Review Questions</a></li>
+  <li><a href="#session-10-review-question-answers" id="toc-session-10-review-question-answers" class="nav-link" data-scroll-target="#session-10-review-question-answers">Session 10 Review Question Answers</a></li>
+  </ul></li>
+  <li><a href="#session-11-inference-for-regression" id="toc-session-11-inference-for-regression" class="nav-link" data-scroll-target="#session-11-inference-for-regression">Session 11: Inference for Regression</a>
+  <ul class="collapse">
+  <li><a href="#recall-one-of-our-previous-multiple-linear-regression-models" id="toc-recall-one-of-our-previous-multiple-linear-regression-models" class="nav-link" data-scroll-target="#recall-one-of-our-previous-multiple-linear-regression-models">8. Recall One of Our Previous Multiple Linear Regression Models</a></li>
+  <li><a href="#visualize-the-relationship-between-predictors-and-response" id="toc-visualize-the-relationship-between-predictors-and-response" class="nav-link" data-scroll-target="#visualize-the-relationship-between-predictors-and-response">9. Visualize the Relationship Between Predictors and Response</a></li>
+  <li><a href="#theory-based-hypothesis-testing-for-regression-coefficients" id="toc-theory-based-hypothesis-testing-for-regression-coefficients" class="nav-link" data-scroll-target="#theory-based-hypothesis-testing-for-regression-coefficients">10. Theory-Based Hypothesis Testing for Regression Coefficients</a></li>
+  <li><a href="#check-model-fit-and-diagnostics" id="toc-check-model-fit-and-diagnostics" class="nav-link" data-scroll-target="#check-model-fit-and-diagnostics">11. Check Model Fit and Diagnostics</a></li>
+  <li><a href="#bootstrap-confidence-intervals-for-regression-coefficients" id="toc-bootstrap-confidence-intervals-for-regression-coefficients" class="nav-link" data-scroll-target="#bootstrap-confidence-intervals-for-regression-coefficients">12. Bootstrap Confidence Intervals for Regression Coefficients</a></li>
+  <li><a href="#hypothesis-tests-for-regression-coefficients-using-permutation-tests" id="toc-hypothesis-tests-for-regression-coefficients-using-permutation-tests" class="nav-link" data-scroll-target="#hypothesis-tests-for-regression-coefficients-using-permutation-tests">13. Hypothesis Tests for Regression Coefficients using Permutation Tests</a></li>
+  <li><a href="#session-11-review-questions" id="toc-session-11-review-questions" class="nav-link" data-scroll-target="#session-11-review-questions">Session 11 Review Questions</a></li>
+  <li><a href="#session-11-review-question-answers" id="toc-session-11-review-question-answers" class="nav-link" data-scroll-target="#session-11-review-question-answers">Session 11 Review Question Answers</a></li>
+  </ul></li>
+  <li><a href="#session-12-storytelling-with-data" id="toc-session-12-storytelling-with-data" class="nav-link" data-scroll-target="#session-12-storytelling-with-data">Session 12: Storytelling with Data</a>
+  <ul class="collapse">
+  <li><a href="#lets-load-the-tidyverse" id="toc-lets-load-the-tidyverse" class="nav-link" data-scroll-target="#lets-load-the-tidyverse">14. Let’s Load the <code>tidyverse</code></a></li>
+  </ul></li>
+  </ul></li>
+  </ul>
+</nav>
+</nav>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Statistics in R with the <code>tidyverse</code></h1>
+<p class="subtitle lead">Day 4 Walkthrough</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Dr.&nbsp;Chester Ismay </p>
+          </div>
+  </div>
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="day-4-hypothesis-testing-and-inference-for-regression-in-r" class="level1">
+<h1>Day 4: Hypothesis Testing and Inference for Regression in R</h1>
+<section id="session-10-one-and-two-sample-hypothesis-testing" class="level2">
+<h2 class="anchored" data-anchor-id="session-10-one-and-two-sample-hypothesis-testing">Session 10: One and Two-Sample Hypothesis Testing</h2>
+<section id="load-necessary-packages" class="level3">
+<h3 class="anchored" data-anchor-id="load-necessary-packages">1. Load Necessary Packages</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the required packages</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(moderndive)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(infer)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="co"># We'll again use `palmerspenguins` for data in this session</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(palmerpenguins)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co"># We'll use GGally when creating a scatterplot matrix later in Session 11</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages("GGally")</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(GGally)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li>These packages provide tools for data wrangling, visualization, modeling, and inference.<br>
+</li>
+<li>The <code>infer</code> package is particularly useful for hypothesis testing and confidence intervals.</li>
+</ul>
+<hr>
+</section>
+<section id="hypothesis-testing-framework" class="level3">
+<h3 class="anchored" data-anchor-id="hypothesis-testing-framework">2. Hypothesis Testing Framework</h3>
+<p><img src="https://moderndive.com/v2/images/copyright/there_is_only_one_test.png" class="img-fluid"> <img src="https://moderndive.com/v2/images/flowcharts/infer/ht.png" class="img-fluid"></p>
+<hr>
+</section>
+<section id="one-sample-mean-problem-simulation-based-approach-with-bootstrapping" class="level3">
+<h3 class="anchored" data-anchor-id="one-sample-mean-problem-simulation-based-approach-with-bootstrapping">3. One Sample Mean Problem: Simulation-Based Approach with Bootstrapping</h3>
+<p>We have recently discovered that the food sources for the penguins near Palmer Station has changed over the last year. There is some evidence that the penguins have more food available to them. Previously the penguins had an average body mass of 4100 grams. Suppose we want to test the claim that the average body mass of penguins is different than this hypothesized value of 4100 grams. We have a sample of 333 penguins from the <code>penguins</code> dataset after removing values.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Prepare the data</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>penguins_data <span class="ot">&lt;-</span> penguins <span class="sc">|&gt;</span> </span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">na.omit</span>()</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Set hypothesized value for use throughout</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>mu_hypothesized <span class="ot">&lt;-</span> <span class="dv">4100</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Set significance level</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>alpha <span class="ot">&lt;-</span> <span class="fl">0.05</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate the observed test statistic (from our sample data)</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>observed_mean_mass <span class="ot">&lt;-</span> penguins_data <span class="sc">|&gt;</span> </span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">observe</span>(<span class="at">response =</span> body_mass_g, <span class="at">stat =</span> <span class="st">"mean"</span>)</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Can also be done by skipping over the `generate()` step</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>observed_mean_mass <span class="ot">&lt;-</span> penguins_data <span class="sc">|&gt;</span> </span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">specify</span>(<span class="at">response =</span> body_mass_g) <span class="sc">|&gt;</span> </span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">calculate</span>(<span class="at">stat =</span> <span class="st">"mean"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">2024</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Walk through the infer steps</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>null_distribution <span class="ot">&lt;-</span> penguins_data <span class="sc">|&gt;</span> </span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">specify</span>(<span class="at">response =</span> body_mass_g) <span class="sc">|&gt;</span> </span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">hypothesize</span>(<span class="at">null =</span> <span class="st">"point"</span>, <span class="at">mu =</span> mu_hypothesized) <span class="sc">|&gt;</span> </span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">generate</span>(<span class="at">reps =</span> <span class="dv">1000</span>, <span class="at">type =</span> <span class="st">"bootstrap"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">calculate</span>(<span class="at">stat =</span> <span class="st">"mean"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualize the null distribution and p-value</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>null_distribution <span class="sc">|&gt;</span> </span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">visualize</span>() <span class="sc">+</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">shade_p_value</span>(<span class="at">obs_stat =</span> observed_mean_mass, <span class="at">direction =</span> <span class="st">"right"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="day4_walkthrough_answers_files/figure-html/unnamed-chunk-5-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Retrieve the p-value</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>boot_p_value <span class="ot">&lt;-</span> null_distribution <span class="sc">|&gt;</span> </span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">get_p_value</span>(<span class="at">obs_stat =</span> observed_mean_mass, <span class="at">direction =</span> <span class="st">"right"</span>)</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>boot_p_value</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 1
+  p_value
+    &lt;dbl&gt;
+1   0.012</code></pre>
+</div>
+</div>
+<section id="interpret-the-results-of-the-test" class="level4">
+<h4 class="anchored" data-anchor-id="interpret-the-results-of-the-test">Interpret the results of the test</h4>
+<p>Since the p-value = 0.012 is less than <span class="math inline">\(\alpha = 0.05\)</span>, we reject the null hypothesis. We, therefore, have enough evidence to suggest that the average body mass of penguins is greater than the previously assumed value of 4100 grams.</p>
+<hr>
+</section>
+</section>
+<section id="one-sample-mean-problem-traditional-approach-with-t-test" class="level3">
+<h3 class="anchored" data-anchor-id="one-sample-mean-problem-traditional-approach-with-t-test">4. One Sample Mean Problem: Traditional Approach with t-test</h3>
+<p>We can also use the traditional approach to test the same hypothesis using a <span class="math inline">\(t\)</span>-test with <code>infer</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Conduct the t-test</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>obs_stat_t <span class="ot">&lt;-</span> penguins_data <span class="sc">|&gt;</span> </span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">specify</span>(<span class="at">response =</span> body_mass_g) <span class="sc">|&gt;</span> </span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">hypothesize</span>(<span class="at">null =</span> <span class="st">"point"</span>, <span class="at">mu =</span> mu_hypothesized) <span class="sc">|&gt;</span> </span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">calculate</span>(<span class="at">stat =</span> <span class="st">"t"</span>)</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Construct the theoretical null distribution</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>null_dist_t <span class="ot">&lt;-</span> penguins_data <span class="sc">|&gt;</span> </span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">specify</span>(<span class="at">response =</span> body_mass_g) <span class="sc">|&gt;</span> </span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">assume</span>(<span class="at">distribution =</span> <span class="st">"t"</span>)</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualize the null distribution and p-value</span></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a><span class="fu">visualize</span>(null_dist_t) <span class="sc">+</span></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">shade_p_value</span>(obs_stat_t, <span class="at">direction =</span> <span class="st">"right"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="day4_walkthrough_answers_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Find the theoretical p-value</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>t_p_value <span class="ot">&lt;-</span> null_dist_t <span class="sc">|&gt;</span> </span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">get_p_value</span>(<span class="at">obs_stat =</span> obs_stat_t, <span class="at">direction =</span> <span class="st">"right"</span>)</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>t_p_value</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 1
+  p_value
+    &lt;dbl&gt;
+1 0.00790</code></pre>
+</div>
+</div>
+<p>The interpretation is the same as for the simulation-based test with bootstrapping.</p>
+<p><strong>Bonus</strong>: This can also be done directly in R, with much less code overall, but not all tests work like this and without a common framework it can get confusing in my opinion.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Conduct the t-test directly in R</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="fu">t.test</span>(penguins_data<span class="sc">$</span>body_mass_g, </span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>       <span class="at">mu =</span> mu_hypothesized,</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>       <span class="at">alternative =</span> <span class="st">"greater"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    One Sample t-test
+
+data:  penguins_data$body_mass_g
+t = 2.4262, df = 332, p-value = 0.007895
+alternative hypothesis: true mean is greater than 4100
+95 percent confidence interval:
+ 4134.274      Inf
+sample estimates:
+mean of x 
+ 4207.057 </code></pre>
+</div>
+</div>
+<hr>
+</section>
+<section id="two-sample-mean-problem-simulation-based-approach-with-a-permutation-test" class="level3">
+<h3 class="anchored" data-anchor-id="two-sample-mean-problem-simulation-based-approach-with-a-permutation-test">5. Two Sample Mean Problem: Simulation-Based Approach with a Permutation Test</h3>
+<p>We now want to test the claim that the average body mass of Adelie penguins is statistically discernibly different than the average body mass of Chinstrap penguins.</p>
+<p><span class="math inline">\(H_0: \mu_{\text{Adelie}} = \mu_{\text{Chinstrap}}\)</span><br>
+<span class="math inline">\(H_A: \mu_{\text{Adelie}} \ne \mu_{\text{Chinstrap}}\)</span></p>
+<p>OR</p>
+<p><span class="math inline">\(H_0: \mu_{\text{Adelie}} - \mu_{\text{Chinstrap}} = 0\)</span><br>
+<span class="math inline">\(H_A: \mu_{\text{Adelie}} - \mu_{\text{Chinstrap}} \ne 0\)</span></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Set significance level</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>alpha <span class="ot">&lt;-</span> <span class="fl">0.1</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Prepare the data</span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>adelie_chinstrap_data <span class="ot">&lt;-</span> penguins_data <span class="sc">|&gt;</span> </span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(species <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"Adelie"</span>, <span class="st">"Chinstrap"</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>  <span class="co"># Not necessary, but will remove the warning seen if not done</span></span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">droplevels</span>()</span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate the observed test statistic (from our sample data)</span></span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>observed_diff_mean_mass <span class="ot">&lt;-</span> adelie_chinstrap_data <span class="sc">|&gt;</span> </span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">specify</span>(<span class="at">formula =</span> body_mass_g <span class="sc">~</span> species) <span class="sc">|&gt;</span> </span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">calculate</span>(<span class="at">stat =</span> <span class="st">"diff in means"</span>, <span class="at">order =</span> <span class="fu">c</span>(<span class="st">"Adelie"</span>, <span class="st">"Chinstrap"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Do some data visualization</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> adelie_chinstrap_data, <span class="fu">aes</span>(<span class="at">x =</span> species, <span class="at">y =</span> body_mass_g)) <span class="sc">+</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Body Mass of Adelie and Chinstrap Penguins"</span>,</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>       <span class="at">x =</span> <span class="st">"Species"</span>,</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"Body Mass (g)"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="day4_walkthrough_answers_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">2024</span>)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Walk through the infer steps</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>null_dist <span class="ot">&lt;-</span> adelie_chinstrap_data <span class="sc">|&gt;</span> </span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">specify</span>(<span class="at">formula =</span> body_mass_g <span class="sc">~</span> species) <span class="sc">|&gt;</span> </span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">hypothesize</span>(<span class="at">null =</span> <span class="st">"independence"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">generate</span>(<span class="at">reps =</span> <span class="dv">1000</span>, <span class="at">type =</span> <span class="st">"permute"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">calculate</span>(<span class="at">stat =</span> <span class="st">"diff in means"</span>, <span class="at">order =</span> <span class="fu">c</span>(<span class="st">"Adelie"</span>, <span class="st">"Chinstrap"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualize the null distribution and p-value</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>null_dist <span class="sc">|&gt;</span> </span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">visualize</span>() <span class="sc">+</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">shade_p_value</span>(<span class="at">obs_stat =</span> observed_diff_mean_mass, <span class="at">direction =</span> <span class="st">"two sided"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="day4_walkthrough_answers_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Retrieve the p-value</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>permute_p_value <span class="ot">&lt;-</span> null_dist <span class="sc">|&gt;</span> </span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">get_p_value</span>(<span class="at">obs_stat =</span> observed_diff_mean_mass, <span class="at">direction =</span> <span class="st">"two sided"</span>)</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>permute_p_value</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 1
+  p_value
+    &lt;dbl&gt;
+1    0.69</code></pre>
+</div>
+</div>
+<p>Check out <code>?get_p_value</code> to see the options for <code>direction</code>.</p>
+<section id="interpret-the-results-of-the-test-1" class="level4">
+<h4 class="anchored" data-anchor-id="interpret-the-results-of-the-test-1">Interpret the results of the test</h4>
+<p>Since the p-value = 0.69 is greater than <span class="math inline">\(\alpha = 0.1\)</span>, we fail to reject the null hypothesis. We, therefore, do not have enough evidence to suggest that the average body mass of penguins is different for the Adelie group compared to the Chinstrap group.</p>
+<hr>
+</section>
+</section>
+<section id="two-sample-mean-problem-traditional-approach-with-t-test" class="level3">
+<h3 class="anchored" data-anchor-id="two-sample-mean-problem-traditional-approach-with-t-test">6. Two Sample Mean Problem: Traditional Approach with t-test</h3>
+<p>We can also use the traditional approach to test the same hypothesis using a <span class="math inline">\(t\)</span>-test with <code>infer</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Conduct the t-test</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>obs_statistic_t <span class="ot">&lt;-</span> adelie_chinstrap_data <span class="sc">|&gt;</span> </span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">specify</span>(<span class="at">formula =</span> body_mass_g <span class="sc">~</span> species) <span class="sc">|&gt;</span> </span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">hypothesize</span>(<span class="at">null =</span> <span class="st">"independence"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">calculate</span>(<span class="at">stat =</span> <span class="st">"t"</span>, <span class="at">order =</span> <span class="fu">c</span>(<span class="st">"Adelie"</span>, <span class="st">"Chinstrap"</span>))</span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Construct the theoretical null distribution</span></span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>null_distro_t <span class="ot">&lt;-</span> adelie_chinstrap_data <span class="sc">|&gt;</span> </span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">specify</span>(<span class="at">formula =</span> body_mass_g <span class="sc">~</span> species) <span class="sc">|&gt;</span> </span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">assume</span>(<span class="at">distribution =</span> <span class="st">"t"</span>)</span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualize the null distribution and p-value</span></span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a><span class="fu">visualize</span>(null_distro_t) <span class="sc">+</span></span>
+<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">shade_p_value</span>(obs_statistic_t, <span class="at">direction =</span> <span class="st">"two sided"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="day4_walkthrough_answers_files/figure-html/unnamed-chunk-14-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Find the theoretical p-value</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>theory_p_value <span class="ot">&lt;-</span> null_distro_t <span class="sc">|&gt;</span> </span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">get_p_value</span>(<span class="at">obs_stat =</span> obs_statistic_t, <span class="at">direction =</span> <span class="st">"two sided"</span>)</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>theory_p_value</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 1
+  p_value
+    &lt;dbl&gt;
+1   0.655</code></pre>
+</div>
+</div>
+<p><strong>Bonus</strong>: This can also be done directly in R, but unfortunately the formula notation isn’t available for all tests in the <code>stats</code> package.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Conduct the t-test directly</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>adelie_chinstrap_data <span class="sc">|&gt;</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">t.test</span>(<span class="at">formula =</span> body_mass_g <span class="sc">~</span> species, </span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>         <span class="co"># Can use the _ to pass into arguments when they aren't the first one</span></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">data =</span> _, </span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">alternative =</span> <span class="st">"two.sided"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Welch Two Sample t-test
+
+data:  body_mass_g by species
+t = -0.44793, df = 154.03, p-value = 0.6548
+alternative hypothesis: true difference in means between group Adelie and group Chinstrap is not equal to 0
+95 percent confidence interval:
+ -145.66494   91.81724
+sample estimates:
+   mean in group Adelie mean in group Chinstrap 
+               3706.164                3733.088 </code></pre>
+</div>
+</div>
+<p>We have a <code>t_test()</code> function in <code>infer</code> that follows a common framework across all tests that are implemented.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Can use one of the `infer` wrapper functions too</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>adelie_chinstrap_data <span class="sc">|&gt;</span> </span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">t_test</span>(<span class="at">formula =</span> body_mass_g <span class="sc">~</span> species,</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>         <span class="at">order =</span> <span class="fu">c</span>(<span class="st">"Adelie"</span>, <span class="st">"Chinstrap"</span>),</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">alternative =</span> <span class="st">"two.sided"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 7
+  statistic  t_df p_value alternative estimate lower_ci upper_ci
+      &lt;dbl&gt; &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;          &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
+1    -0.448  154.   0.655 two.sided      -26.9    -146.     91.8</code></pre>
+</div>
+</div>
+</section>
+<section id="comparing-to-confidence-intervals-checking-for-the-0-value" class="level3">
+<h3 class="anchored" data-anchor-id="comparing-to-confidence-intervals-checking-for-the-0-value">7. Comparing to Confidence Intervals: Checking for the 0 Value</h3>
+<p>We can also check if the 0 value is in the confidence interval for the difference in means. If it is, we fail to reject the null hypothesis at the <span class="math inline">\(\alpha\)</span> level of significance. In order for this to work, <span class="math inline">\(\alpha\)</span> should be 100% - the confidence level.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate the confidence interval</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>boot_dist <span class="ot">&lt;-</span> adelie_chinstrap_data <span class="sc">|&gt;</span> </span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">specify</span>(<span class="at">formula =</span> body_mass_g <span class="sc">~</span> species) <span class="sc">|&gt;</span> </span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a><span class="co">#  hypothesize(null = "independence") |&gt; </span></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">generate</span>(<span class="at">reps =</span> <span class="dv">1000</span>, <span class="at">type =</span> <span class="st">"bootstrap"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a><span class="co">#           type = "permute") |&gt; </span></span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">calculate</span>(<span class="at">stat =</span> <span class="st">"diff in means"</span>, <span class="at">order =</span> <span class="fu">c</span>(<span class="st">"Adelie"</span>, <span class="st">"Chinstrap"</span>))</span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>boot_dist <span class="sc">|&gt;</span> </span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">get_confidence_interval</span>(<span class="at">level =</span> <span class="fl">0.9</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1 × 2
+  lower_ci upper_ci
+     &lt;dbl&gt;    &lt;dbl&gt;
+1    -127.     71.7</code></pre>
+</div>
+</div>
+<p>The value of 0 is contained in the interval, so it is a plausible value for the difference of <span class="math inline">\(\mu_{\text{Adelie}} - \mu_{\text{Chinstrap}}\)</span>. Thus, from the confidence interval, we fail to reject the null hypothesis. Notice that I used a confidence level of 0.9 to match up with the 0.1 significance level we used earlier.</p>
+<hr>
+</section>
+<section id="session-10-review-questions" class="level3">
+<h3 class="anchored" data-anchor-id="session-10-review-questions">Session 10 Review Questions</h3>
+<p>Here are five multiple-choice questions covering the content from Session 10 on One- and Two-Sample Hypothesis Tests:</p>
+<hr>
+<p><strong><code>(10.1)</code></strong> What is the null hypothesis for the one-sample mean test conducted on the penguin body mass data?</p>
+<p>A. The mean body mass of penguins is greater than 4100 grams.<br>
+B. The mean body mass of penguins is less than 4100 grams.<br>
+C. The mean body mass of penguins is different from 4100 grams. D. The mean body mass of penguins is equal to 4100 grams.</p>
+<hr>
+<p><strong><code>(10.2)</code></strong> When performing a two-sample mean test comparing the flipper length between the penguins from the islands of Biscoe and Dream, what does the null hypothesis represent?</p>
+<p>A. The flipper length of penguins on Biscoe Island is greater than that of penguins on Dream Island.<br>
+B. The flipper length of penguins on Biscoe Island is less than that of penguins on Dream Island.<br>
+C. The mean flipper length of penguins on Biscoe Island is equal to the mean flipper length of penguins on Dream Island.<br>
+D. The difference in flipper length between penguins on Biscoe and Dream Islands is significant.</p>
+<hr>
+<p><strong><code>(10.3)</code></strong> In the one-sample hypothesis test using bootstrapping, what does a <span class="math inline">\(p\)</span>-value less than <span class="math inline">\(\alpha\)</span> indicate?</p>
+<p>A. The sample mean is equal to the hypothesized mean.<br>
+B. We reject the null hypothesis and have support for the alternative hypothesis.<br>
+C. We fail to reject the null hypothesis and conclude that the null hypothesis is true.<br>
+D. The sample is not large enough to make any conclusions.</p>
+<hr>
+<p><strong><code>(10.4)</code></strong> What does the shaded area in the null distribution represent when visualizing the hypothesis test?</p>
+<p>A. The <span class="math inline">\(p\)</span>-value, which is the probability of obtaining a test statistic as extreme as the observed one under the null hypothesis.<br>
+B. The confidence interval for the difference in means.<br>
+C. The mean value of the population.<br>
+D. The observed test statistic.</p>
+<hr>
+<p><strong><code>(10.5)</code></strong> In a two-sample means hypothesis test, if the <span class="math inline">\(p\)</span>-value is greater than the significance level, what can we conclude?</p>
+<p>A. We reject the null hypothesis and conclude that the means are statistically different.<br>
+B. We fail to reject the null hypothesis and conclude that there is no evidence of a difference in means.<br>
+C. The null hypothesis is incorrect.<br>
+D. The test is invalid, and no conclusions can be drawn.</p>
+<hr>
+</section>
+<section id="session-10-review-question-answers" class="level3">
+<h3 class="anchored" data-anchor-id="session-10-review-question-answers">Session 10 Review Question Answers</h3>
+<p><strong><code>(10.1)</code></strong> What is the null hypothesis for the one-sample mean test conducted on the penguin body mass data?</p>
+<p><strong>Correct Answer:</strong><br>
+D. The mean body mass of penguins is equal to 4100 grams.</p>
+<p><strong>Explanation:</strong><br>
+The null hypothesis in this case states that there is no difference between the true mean body mass of penguins and the hypothesized value of 4100 grams.</p>
+<hr>
+<p><strong><code>(10.2)</code></strong> When performing a two-sample mean test comparing the flipper length between the penguins from the island of Biscoe to those from Dream, what does the null hypothesis represent?</p>
+<p><strong>Correct Answer:</strong><br>
+C. The mean flipper length of penguins on Biscoe Island is equal to the mean flipper length of penguins on Dream Island.</p>
+<p><strong>Explanation:</strong><br>
+The null hypothesis in a two-sample test asserts that there is no difference between the mean flipper lengths of penguins on Biscoe and Dream Islands, meaning any observed difference is due to random variation in the sample.</p>
+<hr>
+<p><strong><code>(10.3)</code></strong> In a one-sample hypothesis test using bootstrapping, what does a <span class="math inline">\(p\)</span>-value less than <span class="math inline">\(\alpha\)</span> indicate?</p>
+<p><strong>Correct Answer:</strong><br>
+B. We reject the null hypothesis and have support for the alternative hypothesis.</p>
+<p><strong>Explanation:</strong><br>
+A <span class="math inline">\(p\)</span>-value below <span class="math inline">\(\alpha\)</span> suggests that there is sufficient evidence to reject the null hypothesis, meaning the sample data provides evidence that the mean body mass is not 4100 grams.</p>
+<hr>
+<p><strong><code>(10.4)</code></strong> What does the shaded area in the null distribution represent when visualizing the hypothesis test?</p>
+<p><strong>Correct Answer:</strong><br>
+A. The <span class="math inline">\(p\)</span>-value, which is the probability of obtaining a test statistic as extreme as the observed one under the null hypothesis.</p>
+<p><strong>Explanation:</strong><br>
+The shaded region represents the p-value, which quantifies how likely it is to observe a test statistic as extreme or more extreme than the one obtained, assuming the null hypothesis is true.</p>
+<hr>
+<p><strong><code>(10.5)</code></strong> In a two-sample hypothesis test, if the <span class="math inline">\(p\)</span>-value is greater than the significance level, what can we conclude?</p>
+<p><strong>Correct Answer:</strong><br>
+B. We fail to reject the null hypothesis and conclude that there is no evidence of a difference in means.</p>
+<p><strong>Explanation:</strong><br>
+A <span class="math inline">\(p\)</span>-value greater than the significance level means we do not have enough evidence to reject the null hypothesis, so we conclude that there is no statistically significant difference between the two group means.</p>
+<hr>
+</section>
+</section>
+<section id="session-11-inference-for-regression" class="level2">
+<h2 class="anchored" data-anchor-id="session-11-inference-for-regression">Session 11: Inference for Regression</h2>
+<section id="recall-one-of-our-previous-multiple-linear-regression-models" class="level3">
+<h3 class="anchored" data-anchor-id="recall-one-of-our-previous-multiple-linear-regression-models">8. Recall One of Our Previous Multiple Linear Regression Models</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Fit a multiple regression model without interaction terms</span></span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>multi_model_no_interaction <span class="ot">&lt;-</span> <span class="fu">lm</span>(body_mass_g <span class="sc">~</span> flipper_length_mm <span class="sc">+</span> species, </span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>                              <span class="at">data =</span> penguins_data)</span>
+<span id="cb27-4"><a href="#cb27-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb27-5"><a href="#cb27-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Get regression coefficients</span></span>
+<span id="cb27-6"><a href="#cb27-6" aria-hidden="true" tabindex="-1"></a><span class="fu">coef</span>(multi_model_no_interaction)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>      (Intercept) flipper_length_mm  speciesChinstrap     speciesGentoo 
+      -4013.17889          40.60617        -205.37548         284.52360 </code></pre>
+</div>
+</div>
+<hr>
+</section>
+<section id="visualize-the-relationship-between-predictors-and-response" class="level3">
+<h3 class="anchored" data-anchor-id="visualize-the-relationship-between-predictors-and-response">9. Visualize the Relationship Between Predictors and Response</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Focus on only the columns of interest</span></span>
+<span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>model_data <span class="ot">&lt;-</span> penguins_data <span class="sc">|&gt;</span> </span>
+<span id="cb29-3"><a href="#cb29-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(body_mass_g, flipper_length_mm, species)</span>
+<span id="cb29-4"><a href="#cb29-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb29-5"><a href="#cb29-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Plot a matrix to view the relationships between variables</span></span>
+<span id="cb29-6"><a href="#cb29-6" aria-hidden="true" tabindex="-1"></a><span class="fu">ggpairs</span>(model_data, <span class="at">columns =</span> <span class="dv">1</span><span class="sc">:</span><span class="dv">3</span>, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">color =</span> species))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.
+`stat_bin()` using `bins = 30`. Pick better value with `binwidth`.</code></pre>
+</div>
+<div class="cell-output-display">
+<p><img src="day4_walkthrough_answers_files/figure-html/unnamed-chunk-19-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<hr>
+</section>
+<section id="theory-based-hypothesis-testing-for-regression-coefficients" class="level3">
+<h3 class="anchored" data-anchor-id="theory-based-hypothesis-testing-for-regression-coefficients">10. Theory-Based Hypothesis Testing for Regression Coefficients</h3>
+<p>We can perform hypothesis tests to determine if the regression (partial slope) coefficients are significantly different from zero using the <code>moderndive</code> package.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Conduct hypothesis tests for regression coefficients</span></span>
+<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a><span class="fu">get_regression_table</span>(multi_model_no_interaction)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4 × 7
+  term               estimate std_error statistic p_value lower_ci upper_ci
+  &lt;chr&gt;                 &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;   &lt;dbl&gt;    &lt;dbl&gt;    &lt;dbl&gt;
+1 intercept           -4013.     586.       -6.85   0      -5166.   -2860. 
+2 flipper_length_mm      40.6      3.08     13.2    0         34.5     46.7
+3 species: Chinstrap   -205.      57.6      -3.57   0       -319.     -92.1
+4 species: Gentoo       285.      95.4       2.98   0.003     96.8    472. </code></pre>
+</div>
+</div>
+<p>The <code>p_value</code> column in the output table provides the <span class="math inline">\(p\)</span>-values for testing the null hypothesis that each coefficient is equal to zero. Each of these <code>p_value</code>s is very small, indicating that the coefficients are significantly different from zero. This corresponds to each of them being significant predictors in the model. Note also that none of the confidence intervals in the <code>lower_ci</code> to <code>upper_ci</code> columns contain zero when looking at each row.</p>
+<p>Review <a href="https://moderndive.com/v2/inference-for-regression.html#theory-multiple-regression">Section 10.5 of ModernDive Second Edition</a> for more details on the theory behind hypothesis testing and confidence intervals for regression coefficients.</p>
+</section>
+<section id="check-model-fit-and-diagnostics" class="level3">
+<h3 class="anchored" data-anchor-id="check-model-fit-and-diagnostics">11. Check Model Fit and Diagnostics</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Get fitted values and residuals:</span></span>
+<span id="cb33-2"><a href="#cb33-2" aria-hidden="true" tabindex="-1"></a>fit_and_res_mult <span class="ot">&lt;-</span> <span class="fu">get_regression_points</span>(multi_model_no_interaction)</span>
+<span id="cb33-3"><a href="#cb33-3" aria-hidden="true" tabindex="-1"></a>fit_and_res_mult</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 333 × 6
+      ID body_mass_g flipper_length_mm species body_mass_g_hat residual
+   &lt;int&gt;       &lt;int&gt;             &lt;int&gt; &lt;fct&gt;             &lt;dbl&gt;    &lt;dbl&gt;
+ 1     1        3750               181 Adelie            3337.    413. 
+ 2     2        3800               186 Adelie            3540.    260. 
+ 3     3        3250               195 Adelie            3905.   -655. 
+ 4     4        3450               193 Adelie            3824.   -374. 
+ 5     5        3650               190 Adelie            3702.    -52.0
+ 6     6        3625               181 Adelie            3337.    288. 
+ 7     7        4675               195 Adelie            3905.    770. 
+ 8     8        3200               182 Adelie            3377.   -177. 
+ 9     9        3800               191 Adelie            3743.     57.4
+10    10        4400               198 Adelie            4027.    373. 
+# ℹ 323 more rows</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualize the fitted values and the residuals</span></span>
+<span id="cb35-2"><a href="#cb35-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(fit_and_res_mult, <span class="fu">aes</span>(<span class="at">x =</span> body_mass_g_hat, <span class="at">y =</span> residual)) <span class="sc">+</span></span>
+<span id="cb35-3"><a href="#cb35-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>() <span class="sc">+</span></span>
+<span id="cb35-4"><a href="#cb35-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"fitted values (body mass in grams)"</span>, <span class="at">y =</span> <span class="st">"residual"</span>) <span class="sc">+</span></span>
+<span id="cb35-5"><a href="#cb35-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_hline</span>(<span class="at">yintercept =</span> <span class="dv">0</span>, <span class="at">col =</span> <span class="st">"blue"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="day4_walkthrough_answers_files/figure-html/unnamed-chunk-22-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualize the residuals using a QQ plot</span></span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(fit_and_res_mult, <span class="fu">aes</span>(<span class="at">sample =</span> residual)) <span class="sc">+</span></span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_qq</span>() <span class="sc">+</span></span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_qq_line</span>(<span class="at">col=</span><span class="st">"blue"</span>, <span class="at">linewidth =</span> <span class="fl">0.5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="day4_walkthrough_answers_files/figure-html/unnamed-chunk-22-2.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>More details on checking model fit and model assumptions can be found in <a href="https://moderndive.com/v2/inference-for-regression.html#model-fit">Subsection 10.2.6 of ModernDive Second Edition</a>.</p>
+<ul>
+<li>The first plot shows the residuals against the fitted values, which should be randomly scattered around the horizontal line at zero. We don’t see much deviation from this line, which is a good sign, and evidence for the both the of assumptions of <em>L</em>inearity and <em>E</em>qual (constant) variance.</li>
+<li>We also do not have any reason to assume that <em>I</em>ndependence is violated based on how the penguins were likely sampled for study.</li>
+<li>The second plot shows the residuals against a theoretical normal distribution. The residuals should fall along the line, which they do for the most part. There is a slight deviation at the tails, but this is not a major concern. Thus, the <em>N</em>ormality assumption is not violated.</li>
+</ul>
+<p>By checking the LINE acrostic, we can feel confident in the model fit and assumptions.</p>
+<hr>
+</section>
+<section id="bootstrap-confidence-intervals-for-regression-coefficients" class="level3">
+<h3 class="anchored" data-anchor-id="bootstrap-confidence-intervals-for-regression-coefficients">12. Bootstrap Confidence Intervals for Regression Coefficients</h3>
+<p>We can also use simulation-based inference to test the significance of the regression coefficients. Here, we will use bootstrapping to generate confidence intervals for the partial slope coefficients. Bootstrapping now bootstraps the entire row of data, instead of just a single variable</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Get the observed model fit</span></span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a>observed_fit <span class="ot">&lt;-</span> penguins_data <span class="sc">|&gt;</span> </span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">specify</span>(<span class="at">formula =</span> body_mass_g <span class="sc">~</span> flipper_length_mm <span class="sc">+</span> species) <span class="sc">|&gt;</span> </span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fit</span>()</span>
+<span id="cb37-5"><a href="#cb37-5" aria-hidden="true" tabindex="-1"></a>observed_fit</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4 × 2
+  term              estimate
+  &lt;chr&gt;                &lt;dbl&gt;
+1 intercept          -4013. 
+2 flipper_length_mm     40.6
+3 speciesChinstrap    -205. 
+4 speciesGentoo        285. </code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Bootstrap distribution for the partial slope coefficients</span></span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">2024</span>)</span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>mlr_resamples <span class="ot">&lt;-</span> penguins_data <span class="sc">|&gt;</span> </span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">specify</span>(<span class="at">formula =</span> body_mass_g <span class="sc">~</span> flipper_length_mm <span class="sc">+</span> species) <span class="sc">|&gt;</span> </span>
+<span id="cb39-5"><a href="#cb39-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">generate</span>(<span class="at">reps =</span> <span class="dv">1000</span>, <span class="at">type =</span> <span class="st">"bootstrap"</span>)</span>
+<span id="cb39-6"><a href="#cb39-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb39-7"><a href="#cb39-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Then fit a linear regression model to each replicate of data</span></span>
+<span id="cb39-8"><a href="#cb39-8" aria-hidden="true" tabindex="-1"></a>bootstrap_models <span class="ot">&lt;-</span> mlr_resamples <span class="sc">|&gt;</span> </span>
+<span id="cb39-9"><a href="#cb39-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fit</span>()</span>
+<span id="cb39-10"><a href="#cb39-10" aria-hidden="true" tabindex="-1"></a>bootstrap_models</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4,000 × 3
+# Groups:   replicate [1,000]
+   replicate term              estimate
+       &lt;int&gt; &lt;chr&gt;                &lt;dbl&gt;
+ 1         1 intercept          -5067. 
+ 2         1 flipper_length_mm     46.3
+ 3         1 speciesChinstrap    -320. 
+ 4         1 speciesGentoo         92.3
+ 5         2 intercept          -3609. 
+ 6         2 flipper_length_mm     38.4
+ 7         2 speciesChinstrap    -147. 
+ 8         2 speciesGentoo        371. 
+ 9         3 intercept          -2408. 
+10         3 flipper_length_mm     32.3
+# ℹ 3,990 more rows</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualize the bootstrap distribution for the partial slope coefficients</span></span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a><span class="fu">visualize</span>(bootstrap_models)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="day4_walkthrough_answers_files/figure-html/unnamed-chunk-23-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Get the confidence intervals for the partial slope coefficients</span></span>
+<span id="cb42-2"><a href="#cb42-2" aria-hidden="true" tabindex="-1"></a>confidence_intervals_mlr <span class="ot">&lt;-</span> bootstrap_models <span class="sc">|&gt;</span> </span>
+<span id="cb42-3"><a href="#cb42-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">get_confidence_interval</span>(</span>
+<span id="cb42-4"><a href="#cb42-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">level =</span> <span class="fl">0.95</span>,</span>
+<span id="cb42-5"><a href="#cb42-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">type =</span> <span class="st">"percentile"</span>,</span>
+<span id="cb42-6"><a href="#cb42-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">point_estimate =</span> observed_fit)</span>
+<span id="cb42-7"><a href="#cb42-7" aria-hidden="true" tabindex="-1"></a>confidence_intervals_mlr</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4 × 3
+  term              lower_ci upper_ci
+  &lt;chr&gt;                &lt;dbl&gt;    &lt;dbl&gt;
+1 flipper_length_mm     35.2     46.9
+2 intercept          -5210.   -2991. 
+3 speciesChinstrap    -315.    -105. 
+4 speciesGentoo         77.1    466. </code></pre>
+</div>
+</div>
+<p>We see similar results here compared to the coefficients produced by <code>get_regression_table()</code> for the theoretical results:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="fu">get_regression_table</span>(multi_model_no_interaction) <span class="sc">|&gt;</span> </span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(term, lower_ci, upper_ci)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4 × 3
+  term               lower_ci upper_ci
+  &lt;chr&gt;                 &lt;dbl&gt;    &lt;dbl&gt;
+1 intercept           -5166.   -2860. 
+2 flipper_length_mm      34.5     46.7
+3 species: Chinstrap   -319.     -92.1
+4 species: Gentoo        96.8    472. </code></pre>
+</div>
+</div>
+<hr>
+</section>
+<section id="hypothesis-tests-for-regression-coefficients-using-permutation-tests" class="level3">
+<h3 class="anchored" data-anchor-id="hypothesis-tests-for-regression-coefficients-using-permutation-tests">13. Hypothesis Tests for Regression Coefficients using Permutation Tests</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb46"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb46-1"><a href="#cb46-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate the null distributions for each of the regression coefficients</span></span>
+<span id="cb46-2"><a href="#cb46-2" aria-hidden="true" tabindex="-1"></a>null_distribution_mlr <span class="ot">&lt;-</span> penguins_data <span class="sc">|&gt;</span></span>
+<span id="cb46-3"><a href="#cb46-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">specify</span>(<span class="at">formula =</span> body_mass_g <span class="sc">~</span> flipper_length_mm <span class="sc">+</span> species) <span class="sc">|&gt;</span> </span>
+<span id="cb46-4"><a href="#cb46-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">hypothesize</span>(<span class="at">null =</span> <span class="st">"independence"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb46-5"><a href="#cb46-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">generate</span>(<span class="at">reps =</span> <span class="dv">1000</span>, <span class="at">type =</span> <span class="st">"permute"</span>) <span class="sc">|&gt;</span></span>
+<span id="cb46-6"><a href="#cb46-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">fit</span>()</span>
+<span id="cb46-7"><a href="#cb46-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb46-8"><a href="#cb46-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualize and shade the p-value for each regressor</span></span>
+<span id="cb46-9"><a href="#cb46-9" aria-hidden="true" tabindex="-1"></a>null_distribution_mlr <span class="sc">|&gt;</span> </span>
+<span id="cb46-10"><a href="#cb46-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">visualize</span>() <span class="sc">+</span></span>
+<span id="cb46-11"><a href="#cb46-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">shade_p_value</span>(<span class="at">obs_stat =</span> observed_fit, <span class="at">direction =</span> <span class="st">"two sided"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="day4_walkthrough_answers_files/figure-html/unnamed-chunk-25-1.png" class="img-fluid" width="672"></p>
+</div>
+<div class="sourceCode cell-code" id="cb47"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Get the p-values</span></span>
+<span id="cb47-2"><a href="#cb47-2" aria-hidden="true" tabindex="-1"></a>null_distribution_mlr <span class="sc">|&gt;</span></span>
+<span id="cb47-3"><a href="#cb47-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">get_p_value</span>(<span class="at">obs_stat =</span> observed_fit, <span class="at">direction =</span> <span class="st">"two-sided"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Warning: Please be cautious in reporting a p-value of 0. This result is an approximation based on the number of `reps` chosen in
+the `generate()` step.
+ℹ See `get_p_value()` (`?infer::get_p_value()`) for more information.
+Please be cautious in reporting a p-value of 0. This result is an approximation based on the number of `reps` chosen in
+the `generate()` step.
+ℹ See `get_p_value()` (`?infer::get_p_value()`) for more information.</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 4 × 2
+  term              p_value
+  &lt;chr&gt;               &lt;dbl&gt;
+1 flipper_length_mm   0    
+2 intercept           0    
+3 speciesChinstrap    0.098
+4 speciesGentoo       0.18 </code></pre>
+</div>
+</div>
+<p>We see different results for species Gentoo with the simulation-based methods. Further analysis should be done to check the normality assumption on the Gentoo data.</p>
+<hr>
+</section>
+<section id="session-11-review-questions" class="level3">
+<h3 class="anchored" data-anchor-id="session-11-review-questions">Session 11 Review Questions</h3>
+<p><strong><code>(11.1)</code></strong> What is the null hypothesis when performing a hypothesis test on a regression coefficient in a multiple regression model?</p>
+<p>A. The coefficient is significantly different from zero.<br>
+B. The coefficient is equal to the observed mean.<br>
+C. The coefficient is equal to zero, indicating no effect of the predictor on the response variable.<br>
+D. The coefficient is greater than zero, indicating a positive effect of the predictor on the response variable.</p>
+<hr>
+<p><strong><code>(11.2)</code></strong> When interpreting the p-value for a regression coefficient, what does a small <span class="math inline">\(p\)</span>-value (e.g., &lt; 0.05) indicate?</p>
+<p>A. The predictor is not a significant variable in the model.<br>
+B. There is strong evidence against the null hypothesis, suggesting the coefficient is significantly different from zero.<br>
+C. The model fit is poor, and assumptions of linearity are violated.<br>
+D. The residuals are not normally distributed.</p>
+<hr>
+<p><strong><code>(11.3)</code></strong> In multiple regression, what does it mean when a confidence interval for a regression coefficient does not contain zero?</p>
+<p>A. The coefficient is not statistically significant.<br>
+B. The coefficient is equal to zero.<br>
+C. The residuals are randomly distributed around zero. D. The coefficient is statistically significant/discernible, and the predictor has an effect on the response variable.</p>
+<hr>
+<p><strong><code>(11.4)</code></strong> Why is it important to check the residuals of a multiple regression model using diagnostic plots like the residual plot and the QQ plot?</p>
+<p>A. To ensure that the response variable is correctly predicted by the model.<br>
+B. To verify that the assumptions of linearity, normality, and constant variance are not violated.<br>
+C. To determine the p-value for each coefficient in the model.<br>
+D. To check if the confidence intervals contain zero.</p>
+<hr>
+<p><strong><code>(11.5)</code></strong> What is the purpose of bootstrapping in the context of multiple regression?</p>
+<p>A. To simulate many different regression models and estimate the sampling distribution of the regression coefficients.<br>
+B. To generate random samples from the population to estimate new coefficients.<br>
+C. To test the normality of the residuals.<br>
+D. To calculate the exact p-values for the regression coefficients.</p>
+<hr>
+</section>
+<section id="session-11-review-question-answers" class="level3">
+<h3 class="anchored" data-anchor-id="session-11-review-question-answers">Session 11 Review Question Answers</h3>
+<p><strong><code>(11.1)</code></strong> What is the null hypothesis when performing a hypothesis test on a regression coefficient in a multiple regression model?</p>
+<p><strong>Correct Answer:</strong><br>
+C. The coefficient is equal to zero, indicating no effect of the predictor on the response variable.</p>
+<p><strong>Explanation:</strong><br>
+The null hypothesis in a regression test is that the coefficient equals zero, meaning the predictor does not significantly influence the response variable.</p>
+<hr>
+<p><strong><code>(11.2)</code></strong> When interpreting the p-value for a regression coefficient, what does a small p-value (e.g., &lt; 0.05) indicate?</p>
+<p><strong>Correct Answer:</strong><br>
+B. There is strong evidence against the null hypothesis, suggesting the coefficient is significantly different from zero.</p>
+<p><strong>Explanation:</strong><br>
+A small p-value suggests that the coefficient is statistically significant and that the predictor has an effect on the response variable.</p>
+<hr>
+<p><strong><code>(11.3)</code></strong> In multiple regression, what does it mean when a confidence interval for a regression coefficient does not contain zero?</p>
+<p><strong>Correct Answer:</strong><br>
+D. The coefficient is statistically significant, and the predictor has an effect on the response variable.</p>
+<p><strong>Explanation:</strong><br>
+If the confidence interval does not contain zero, the coefficient is considered significant, indicating that the predictor likely has an effect on the response variable.</p>
+<hr>
+<p><strong><code>(11.4)</code></strong> Why is it important to check the residuals of a multiple regression model using diagnostic plots like the residual plot and the QQ plot?</p>
+<p><strong>Correct Answer:</strong><br>
+B. To verify that the assumptions of linearity, normality, and constant variance are not violated.</p>
+<p><strong>Explanation:</strong><br>
+Diagnostic plots help confirm that the model assumptions (linearity, normality, constant variance) are satisfied, ensuring the validity of the regression results.</p>
+<hr>
+<p><strong><code>(11.5)</code></strong> What is the purpose of bootstrapping in the context of multiple regression?</p>
+<p><strong>Correct Answer:</strong><br>
+A. To simulate many different regression models and estimate the sampling distribution of the regression coefficients.</p>
+<p><strong>Explanation:</strong><br>
+Bootstrapping resamples the data and fits new regression models to estimate the sampling distribution of the coefficients, allowing for confidence intervals and significance tests.</p>
+<hr>
+</section>
+</section>
+<section id="session-12-storytelling-with-data" class="level2">
+<h2 class="anchored" data-anchor-id="session-12-storytelling-with-data">Session 12: Storytelling with Data</h2>
+<p><img src="https://moderndive.com/v2/images/flowcharts/flowchart/flowchart.002.png" class="img-fluid"></p>
+<section id="lets-load-the-tidyverse" class="level3">
+<h3 class="anchored" data-anchor-id="lets-load-the-tidyverse">14. Let’s Load the <code>tidyverse</code></h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="co"># install.packages("tidyverse")</span></span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── Attaching core tidyverse packages ──────────────────────────────────────────────────────────────── tidyverse 2.0.0 ──
+✔ forcats   1.0.0     ✔ stringr   1.5.1
+✔ lubridate 1.9.3     ✔ tibble    3.2.1
+✔ purrr     1.0.2     ✔ tidyr     1.3.1
+✔ readr     2.1.5     
+── Conflicts ────────────────────────────────────────────────────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter() masks stats::filter()
+✖ dplyr::lag()    masks stats::lag()
+ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
+</div>
+</div>
+<p>There are more packages in the tidyverse that we don’t cover much in the book, but I’ve found incredibly useful for data wrangling:</p>
+<ul>
+<li><code>forcats</code> for working with factors</li>
+<li><code>stringr</code> for working with strings</li>
+<li><code>purrr</code> for working with functions</li>
+</ul>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb52"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb52-1"><a href="#cb52-1" aria-hidden="true" tabindex="-1"></a><span class="co"># This is the same as running each of these individually</span></span>
+<span id="cb52-2"><a href="#cb52-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb52-3"><a href="#cb52-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb52-4"><a href="#cb52-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readr)</span>
+<span id="cb52-5"><a href="#cb52-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyr)</span>
+<span id="cb52-6"><a href="#cb52-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tibble)</span>
+<span id="cb52-7"><a href="#cb52-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(purrr)</span>
+<span id="cb52-8"><a href="#cb52-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(stringr)</span>
+<span id="cb52-9"><a href="#cb52-9" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(forcats)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>There are even more packages loaded than this though. Check out the full list on <a href="https://www.tidyverse.org/packages/">the tidyverse page</a>.</p>
+<p>The <code>infer</code> package is part of the <a href="https://www.tidymodels.org/packages/"><code>tidymodels</code></a> collection of packages that are designed to work well with the tidyverse for modeling and inference too.</p>
+<p>There’s so much more we could cover in this course. Check out <a href="https://moderndive.com/v2/thinking-with-data.html">Chapter 11 of ModernDive Second Edition</a> for an overview as well. I hope you’ve gotten a good amount of tools and theory to help you get started with data analysis and statistics in R using the <code>tidyverse</code>, <code>moderndive</code>, and <code>infer</code> to wrangle, visualize, model, and infer from your data. Go tell your story with data!</p>
+
+
+</section>
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+</body></html>
