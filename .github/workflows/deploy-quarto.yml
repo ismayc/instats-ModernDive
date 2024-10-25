@@ -38,10 +38,10 @@ jobs:
         if [ -d "renv/cache" ]; then echo "renv cache directory exists"; else echo "renv cache directory does not exist"; fi    
         
     - name: Cache R packages
-        uses: actions/cache@v4
-        with:
-          path: renv/cache
-          key: ${{ runner.os }}-r-${{ hashFiles('renv.lock') }}
+      uses: actions/cache@v4
+      with:
+        path: renv/cache
+        key: ${{ runner.os }}-r-${{ hashFiles('renv.lock') }}
     
     - name: Install Quarto
       run: |
