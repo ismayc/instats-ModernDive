@@ -244,12 +244,23 @@ theory_p_value <- null_distro_t |>
 theory_p_value
 ```
 
-**Bonus**: This can also be done directly in R, but requires us to change the
-format of the data a little bit. We have a `t_test()` function in `infer` that
-wraps the data, so we don't have to do this extra step.
+**Bonus**: This can also be done directly in R, but unfortunately the formula
+notation isn't available for all tests in the `stats` package.
 
 ```{r}
 # Conduct the t-test directly
+adelie_chinstrap_data |>
+  t.test(formula = body_mass_g ~ species, 
+         # Can use the _ to pass into arguments when they aren't the first one
+         data = _, 
+         alternative = "two.sided")
+```
+
+We have a `t_test()` function in `infer` that follows a common framework across
+all tests that are implemented.
+
+```{r}
+# Can use one of the `infer` wrapper functions too
 adelie_chinstrap_data |> 
   t_test(formula = body_mass_g ~ species,
          order = c("Adelie", "Chinstrap"),
