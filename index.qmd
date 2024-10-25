@@ -4,8 +4,6 @@ author: Dr. Chester Ismay
 page-layout: full
 about:
   template: trestles
-  image-width: 20em
-  image-shape: round
   links:
     - icon: twitter
       text: Twitter

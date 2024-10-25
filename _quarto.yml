@@ -23,12 +23,3 @@ website:
       - text: "Slides"
         href: slides.qmd
 
-  sidebar:
-    style: "floating"
-    items:
-      - text: "Home"
-        href: index.qmd
-      - text: "Code Walkthrough and Exercise Answers"
-        href: answers.qmd         
-      - text: "Slides"
-        href: slides.qmd
