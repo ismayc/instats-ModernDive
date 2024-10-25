@@ -151,13 +151,13 @@ t.test(penguins_data$body_mass_g,
 
 We now want to test the claim that the average body mass of Adelie penguins is statistically discernibly different than the average body mass of Chinstrap penguins.
 
-H_0: $\mu_{\text{Adelie}} = \mu_{\text{Chinstrap}}$
-H_A: $\mu_{\text{Adelie}} \ne \mu_{\text{Chinstrap}}$
+$H_0: \mu_{\text{Adelie}} = \mu_{\text{Chinstrap}}$  
+$H_A: \mu_{\text{Adelie}} \ne \mu_{\text{Chinstrap}}$  
 
 OR
 
-H_0: $\mu_{\text{Adelie}} - \mu_{\text{Chinstrap}} = 0$
-H_A: $\mu_{\text{Adelie}} - \mu_{\text{Chinstrap}} \ne 0$
+$H_0: \mu_{\text{Adelie}} - \mu_{\text{Chinstrap}} = 0$  
+$H_A: \mu_{\text{Adelie}} - \mu_{\text{Chinstrap}} \ne 0$  
 
 ```{r}
 # Set significance level
