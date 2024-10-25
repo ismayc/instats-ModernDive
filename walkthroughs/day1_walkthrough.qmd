@@ -415,17 +415,7 @@ library(knitr)
 
 ```{r}
 # Create a data frame for geom_col() use to count number of countries per region
-region_data <- un_member_states_2024 |> 
-  group_by(region) |> 
-  summarize(num_countries = n()) |> 
-  arrange(desc(num_countries))
-region_data
 
-# Create bargraph using geom_col()
-ggplot(region_data,
-       aes(x = reorder(region, num_countries), y = num_countries)) +
-  geom_col(fill = "skyblue") +
-  coord_flip()
 ```
 
 ### 27. Converting wide data into tidy data
@@ -444,17 +434,10 @@ wide_unemp <- tibble(
 )
 
 # Use pivot_longer to convert data
-tidy_unemp <- wide_unemp |> 
-  pivot_longer(cols = -country,
-               names_to = "year",
-               values_to = "unemployment_perc") |> 
-  mutate(year = as.integer(year))
+
 
 # Plot data as a linegraph
-ggplot(tidy_unemp, aes(x = year, y = unemployment_perc, color = country)) +
-  geom_point() +
-  geom_line() +
-  scale_x_continuous(breaks = c(2021, 2022, 2023))
+
 ```
 
 ### 28. Importing data from a CSV file
@@ -462,8 +445,10 @@ ggplot(tidy_unemp, aes(x = year, y = unemployment_perc, color = country)) +
 ```{r}
 library(readr)
 
-# Load data from data_dev_survey.csv in same file path as this .qmd file
-data_dev_survey <- read_csv("data_dev_survey.csv")
+# Load data from data_dev_survey.csv
+# Remove the ../ if placing the CSV file in the same path as
+# your .qmd file
+data_dev_survey <- read_csv("../data_dev_survey.csv")
 ```
 
 ---

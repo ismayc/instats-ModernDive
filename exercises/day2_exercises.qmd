@@ -36,7 +36,7 @@ library(readr)
 ```{r}
 # Load in the data_dev_survey CSV file as a data frame again
 # selecting the columns of interest keeping only complete rows of information
-data_dev_survey <- read_csv("data_dev_survey.csv") |> 
+data_dev_survey <- read_csv("../data_dev_survey.csv") |> 
   select(response_id, converted_comp_yearly, work_exp, 
          years_code, ai_trust) |> 
   # This code sets the levels of the ai_trust column to be more intuitive

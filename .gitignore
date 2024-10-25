@@ -60,3 +60,9 @@ day1_walkthrough_answers_files/
 *.html
 slides/*.txt
 /.quarto/
+
+# Remove the particular day files
+walkthroughs/day1_walkthrough_2024-10-15.qmd
+walkthroughs/day2_walkthrough_2024-10-17.qmd
+walkthroughs/day3_walkthrough_2024-10-22.qmd
+walkthroughs/day4_walkthrough_2024-10-24.qmd

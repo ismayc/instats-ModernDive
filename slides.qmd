@@ -1,0 +1,10 @@
+---
+title: "Slides"
+---
+
+Here are the slides for each day (PDF):
+
+- [Day 1 (Sessions 1-3)](slides/day1.pdf)
+- [Day 2 (Sessions 4-6)](slides/day2.pdf)
+- [Day 3 (Sessions 7-9)](slides/day3.pdf)
+- [Day 4 (Sessions 10-12)](slides/day4.pdf)

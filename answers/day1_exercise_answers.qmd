@@ -70,7 +70,7 @@ library(knitr)
 ```{r}
 # Load the data_dev_survey dataset 
 # (if you don't have it still loaded from the end of class)
-data_dev_survey <- read_csv("data_dev_survey.csv")
+data_dev_survey <- read_csv("../data_dev_survey.csv")
 ```
 ```{r}
 #| eval: false

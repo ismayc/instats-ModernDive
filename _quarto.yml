@@ -1,2 +1,34 @@
 project:
   output-dir: docs/
+  type: website
+  render:
+    - index.qmd
+    - slides.qmd
+    - answers.qmd
+    - answers/
+
+format:
+    html:
+      theme: cosmo  # Choose a Bootstrap theme or customize as needed
+      toc: true
+
+website:
+  navbar:
+    title: "ModernDive v2 Seminar with Dr. Chester Ismay"
+    left:
+      - text: "Home"
+        href: index.qmd
+      - text: "Code Walkthrough and Exercise Answers"
+        href: answers.qmd        
+      - text: "Slides"
+        href: slides.qmd
+
+  sidebar:
+    style: "floating"
+    items:
+      - text: "Home"
+        href: index.qmd
+      - text: "Code Walkthrough and Exercise Answers"
+        href: answers.qmd         
+      - text: "Slides"
+        href: slides.qmd

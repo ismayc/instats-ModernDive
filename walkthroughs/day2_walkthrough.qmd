@@ -273,6 +273,7 @@ D. To automatically improve the model's R-squared value
 **(5.4)** What does the following plot indicate about the relationship between flipper length and body mass for different islands?
 
 ```{r}
+#| eval: false
 ggplot(penguins_data, aes(x = flipper_length_mm, y = body_mass_g, color = island)) +
   geom_point() +
   geom_smooth(method = "lm", se = FALSE) +

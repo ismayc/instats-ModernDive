@@ -1,0 +1,24 @@
+---
+title: ModernDive v2 Seminar
+author: Dr. Chester Ismay
+page-layout: full
+about:
+  template: trestles
+  image-width: 20em
+  image-shape: round
+  links:
+    - icon: twitter
+      text: Twitter
+      href: https://twitter.com/old_man_chester
+    - icon: github
+      text: Github
+      href: https://github.com/ismayc
+    - icon: email
+      text: Email
+      href: mailto:chester.ismay3@gmail.com
+    - icon: linkedin
+      text: LinkedIn
+      href: https://www.linkedin.com/in/chesterismay/
+---
+
+Welcome to this page for the ModernDive v2 seminar! Here you will find information about the seminar, including links to the materials (slides and walkthrough/exercise answers).

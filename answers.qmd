@@ -1,0 +1,13 @@
+---
+title: "Answers"
+---
+
+Here are the answer keys for each day:
+
+- [Day 1 (Sessions 1-3) Walkthrough Answers](answers/day1_walkthrough_answers.qmd)
+- [Day 1 (Sessions 1-3) Exercise Answers](answers/day1_exercise_answers.qmd)
+- [Day 2 (Sessions 4-6) Walkthrough Answers](answers/day2_walkthrough_answers.qmd)
+- [Day 2 (Sessions 4-6) Exercise Answers](answers/day2_exercise_answers.qmd)
+- [Day 3 (Sessions 7-9) Walkthrough Answers](answers/day3_walkthrough_answers.qmd)
+- [Day 3 (Sessions 7-9) Exercise Answers](answers/day3_exercise_answers.qmd)
+- [Day 4 (Sessions 10-12) Walkthrough Answers](answers/day4_walkthrough_answers.qmd)

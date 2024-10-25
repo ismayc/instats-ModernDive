@@ -1089,8 +1089,10 @@ Let’s break down how this works with the following code to load a dataset call
 ```{r}
 library(readr)
 
-# Load data from data_dev_survey.csv in the same file path as this .qmd file
-data_dev_survey <- read_csv("data_dev_survey.csv")
+# Load data from data_dev_survey.csv
+# Remove the ../ if placing the CSV file in the same folder
+# as your .qmd file
+data_dev_survey <- read_csv("../data_dev_survey.csv")
 ```
 
 - **`library(readr)`**: This line loads the `readr` package, giving us access to the **`read_csv()`** function, which is designed to efficiently load CSV files into R.

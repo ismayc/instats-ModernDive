@@ -49,13 +49,13 @@ jobs:
     
     - name: Render Quarto files to HTML
       run: |
-        quarto render day1_walkthrough_answers.qmd
-        quarto render day1_exercise_answers.qmd
-        quarto render day2_walkthrough_answers.qmd
-        quarto render day2_exercise_answers.qmd
-        quarto render day3_walkthrough_answers.qmd
-        quarto render day3_exercise_answers.qmd
-        quarto render day4_walkthrough_answers.qmd  
+        quarto render answers/day1_walkthrough_answers.qmd
+        quarto render answers/day1_exercise_answers.qmd
+        quarto render answers/day2_walkthrough_answers.qmd
+        quarto render answers/day2_exercise_answers.qmd
+        quarto render answers/day3_walkthrough_answers.qmd
+        quarto render answers/day3_exercise_answers.qmd
+        quarto render answers/day4_walkthrough_answers.qmd  
 #        quarto render day4_exercise_answers.qmd
     
     # Deploy HTML to GitHub Pages if on main or master branch
