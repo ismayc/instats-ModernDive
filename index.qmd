@@ -13,7 +13,7 @@ about:
       href: https://github.com/ismayc
     - icon: email
       text: Email
-      href: mailto:chester.ismay3@gmail.com
+      href: mailto:chester.ismay@gmail.com
     - icon: linkedin
       text: LinkedIn
       href: https://www.linkedin.com/in/chesterismay/
